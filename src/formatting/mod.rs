@@ -27,12 +27,16 @@ mod table_row_property;
 mod table_width;
 mod underline;
 mod fonts;
+mod spacing;
+mod line_rule;
+mod indent;
+mod widow_control;
 
 // re-export
 pub use self::{
-    bold::*, border::*, borders::*, character_property::*, color::*, dstrike::*, fonts::*, indent_level::*,
+    bold::*, border::*, borders::*, character_property::*, color::*, dstrike::*, fonts::*, indent::*, indent_level::*,
     italics::*, justification::*, numbering_id::*, numbering_property::*, outline::*,
-    paragraph_property::*, size::*, strike::*, table_borders::*, table_cell_property::*,
+    paragraph_property::*, size::*, spacing::*, strike::*, table_borders::*, table_cell_property::*,
     table_indent::*, table_justification::*, table_property::*, table_row_property::*,
-    table_width::*, underline::*,
+    table_width::*, underline::*, widow_control::*,
 };
