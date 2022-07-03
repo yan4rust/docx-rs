@@ -3,7 +3,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    formatting::{Bold, Color, Dstrike, Italics, Outline, Size, Strike, Underline},
+    formatting::{Bold, Color, Dstrike, Fonts, Italics, Outline, Size, Strike, Underline},
 };
 
 /// Character Property
@@ -38,6 +38,9 @@ pub struct CharacterProperty<'a> {
     /// Specifies the font size in half points.
     #[xml(child = "w:sz")]
     pub size: Option<Size>,
+    /// Specifies the font.
+    #[xml(child = "w:rFonts")]
+    pub fonts: Option<Fonts<'a>>,
     /// Specifies that the text of the text run is to be bold.
     #[xml(child = "w:b")]
     pub bold: Option<Bold>,
@@ -68,6 +71,7 @@ impl<'a> CharacterProperty<'a> {
     __setter!(strike: Option<Strike>);
     __setter!(size: Option<Size>);
     __setter!(underline: Option<Underline<'a>>);
+    __setter!(fonts: Option<Fonts<'a>>);
 }
 
 #[derive(Debug, XmlRead, XmlWrite)]
@@ -106,4 +110,6 @@ __xml_test_suites!(
     r#"<w:rPr><w:dstrike w:val="true"/></w:rPr>"#,
     CharacterProperty::default().underline(Underline::default()),
     r#"<w:rPr><w:u/></w:rPr>"#,
+    CharacterProperty::default().fonts(Fonts::default().east_asia("宋体")),
+    r#"<w:rPr><w:rFonts w:eastAsia="宋体"/></w:rPr>"#,
 );
