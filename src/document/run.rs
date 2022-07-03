@@ -5,7 +5,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    document::{r#break::Break, text::Text},
+    document::{r#break::Break, text::Text, instrtext::InstrText, field_char::FieldChar},
     formatting::CharacterProperty,
 };
 
@@ -62,14 +62,18 @@ impl<'a> Run<'a> {
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
         self.content.iter().filter_map(|content| match content {
             RunContent::Text(Text { text, .. }) => Some(text),
+            RunContent::InstrText(InstrText {text, ..}) => Some(text),
             RunContent::Break(_) => None,
+            RunContent::FieldChar(_) => None,
         })
     }
 
     pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
         self.content.iter_mut().filter_map(|content| match content {
             RunContent::Text(Text { text, .. }) => Some(text),
+            RunContent::InstrText(InstrText {text, ..}) => Some(text),
             RunContent::Break(_) => None,
+            RunContent::FieldChar(_) => None,
         })
     }
 }
@@ -82,6 +86,10 @@ pub enum RunContent<'a> {
     Text(Text<'a>),
     #[xml(tag = "w:br")]
     Break(Break),
+    #[xml(tag = "w:fldChar")]
+    FieldChar(FieldChar),
+    #[xml(tag = "w:instrText")]
+    InstrText(InstrText<'a>),
 }
 
 __xml_test_suites!(
