@@ -44,10 +44,13 @@ pub struct Paragraph<'a> {
         child = "w:bookmarkEnd"
     )]
     pub content: Vec<ParagraphContent<'a>>,
+    #[xml(attr = "w:is_delete")]
+    pub shall_destroy: Option<bool>,
 }
 
 impl<'a> Paragraph<'a> {
     __setter!(property: ParagraphProperty<'a>);
+    __setter!(shall_destroy: Option<bool>);
 
     #[inline(always)]
     pub fn push<T: Into<ParagraphContent<'a>>>(mut self, content: T) -> Self {
