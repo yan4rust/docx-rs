@@ -12,7 +12,7 @@ use crate::__xml_test_suites;
 ///
 /// let sz = Size::from(42usize);
 /// ```
-#[derive(Debug, XmlRead, XmlWrite, Default)]
+#[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:ind")]
 pub struct Indent {

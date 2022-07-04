@@ -18,7 +18,7 @@ use crate::{
 ///     .character(CharacterProperty::default())
 ///     .paragraph(ParagraphProperty::default());
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:docDefaults")]
 pub struct DefaultStyle<'a> {
@@ -34,7 +34,7 @@ impl<'a> DefaultStyle<'a> {
 }
 
 /// Default Character Properties
-#[derive(Default, Debug, XmlRead, XmlWrite)]
+#[derive(Default, Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:rPrDefault")]
 pub struct DefaultCharacterProperty<'a> {
@@ -50,7 +50,7 @@ impl<'a, T: Into<CharacterProperty<'a>>> From<T> for DefaultCharacterProperty<'a
 }
 
 /// Default Paragraph Properties
-#[derive(Default, Debug, XmlRead, XmlWrite)]
+#[derive(Default, Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:pPrDefault")]
 pub struct DefaultParagraphProperty<'a> {

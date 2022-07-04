@@ -9,7 +9,7 @@ use crate::__xml_test_suites;
 ///
 /// let col = GridColumn::from(42);
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:gridCol")]
 pub struct GridColumn {

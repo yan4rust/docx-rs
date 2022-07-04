@@ -11,7 +11,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// let width = TableWidth::from(TableWidthUnit::Pct);
 /// let width = TableWidth::from((42, TableWidthUnit::Dxa));
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:tblW")]
 pub struct TableWidth {
@@ -48,7 +48,7 @@ impl From<(usize, TableWidthUnit)> for TableWidth {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum TableWidthUnit {
     Auto,

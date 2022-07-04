@@ -30,7 +30,7 @@ use crate::__xml_test_suites;
 use crate::schema::SCHEMA_MAIN;
 
 /// The root element of the main document part.
-#[derive(Debug, Default, XmlRead)]
+#[derive(Debug, Default, XmlRead, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:document")]
 pub struct Document<'a> {

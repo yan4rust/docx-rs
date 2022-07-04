@@ -17,7 +17,7 @@ use crate::{
 ///     .indent((50, TableIndentUnit::Pct))
 ///     .width((50, TableWidthUnit::Pct));
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:tblPr")]
 pub struct TableProperty<'a> {
@@ -41,7 +41,7 @@ impl<'a> TableProperty<'a> {
     __setter!(width: Option<TableWidth>);
 }
 
-#[derive(Debug, XmlRead, XmlWrite)]
+#[derive(Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:tblStyle")]
 pub struct TableStyleId<'a> {

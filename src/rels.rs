@@ -9,7 +9,7 @@ use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::SCHEMA_RELATIONSHIPS;
 
-#[derive(Debug, Default, XmlRead)]
+#[derive(Debug, Default, XmlRead, Clone)]
 #[xml(tag = "Relationships")]
 pub struct Relationships<'a> {
     #[xml(child = "Relationship")]
@@ -60,7 +60,7 @@ impl<'a> Relationships<'a> {
     }
 }
 
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[xml(tag = "Relationship")]
 pub struct Relationship<'a> {
     #[xml(attr = "Id")]

@@ -8,7 +8,7 @@ use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::{SCHEMAS_EXTENDED, SCHEMA_DOC_PROPS_V_TYPES};
 
-#[derive(Debug, XmlRead)]
+#[derive(Debug, XmlRead, Clone)]
 #[xml(tag = "Properties")]
 pub struct App<'a> {
     #[xml(flatten_text = "Template")]

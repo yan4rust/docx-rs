@@ -19,7 +19,7 @@ use crate::{
 };
 
 /// A WordprocessingML package
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct Docx<'a> {
     /// Specifies package-level properties part
     pub app: Option<App<'a>>,

@@ -11,7 +11,7 @@ use crate::{__setter, __string_enum, __xml_test_suites};
 ///
 /// let sz = Size::from(42usize);
 /// ```
-#[derive(Debug, XmlRead, XmlWrite, Default)]
+#[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:rFonts")]
 pub struct Fonts<'a> {
@@ -31,7 +31,7 @@ impl<'a> Fonts<'a> {
     __setter!(h_ansi: Option<Cow<'a, str>>);
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum FontHint {
     /// Text restarts on the next column.

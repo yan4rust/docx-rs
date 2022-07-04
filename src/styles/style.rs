@@ -20,7 +20,7 @@ use crate::{
 ///     .paragraph(ParagraphProperty::default())
 ///     .character(CharacterProperty::default());
 /// ```
-#[derive(Debug, XmlRead, XmlWrite)]
+#[derive(Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:style")]
 pub struct Style<'a> {
@@ -60,7 +60,7 @@ impl<'a> Style<'a> {
     __setter!(character: CharacterProperty<'a>);
 }
 
-#[derive(Debug, XmlRead, XmlWrite)]
+#[derive(Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:name")]
 pub struct StyleName<'a> {
@@ -74,7 +74,7 @@ impl<'a, S: Into<Cow<'a, str>>> From<S> for StyleName<'a> {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum StyleType {
     Character,

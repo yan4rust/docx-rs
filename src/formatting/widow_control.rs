@@ -10,7 +10,7 @@ use crate::__xml_test_suites;
 /// let WidowControl = WidowControl::from(false);
 /// let WidowControl = WidowControl::from(true);
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:widowControl")]
 pub struct WidowControl {

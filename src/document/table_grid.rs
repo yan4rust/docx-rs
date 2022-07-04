@@ -14,7 +14,7 @@ use crate::document::GridColumn;
 ///     .push_column(42)
 ///     .push_column(42);
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:tblGrid")]
 pub struct TableGrid {

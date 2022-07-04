@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:pitch")]
 pub struct Pitch<'a> {

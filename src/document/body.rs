@@ -7,7 +7,7 @@ use crate::document::{Paragraph, Table};
 /// Document Body
 ///
 /// This is the main document editing surface.
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:body")]
 pub struct Body<'a> {
@@ -42,7 +42,7 @@ impl<'a> Body<'a> {
 }
 
 /// A set of elements that can be contained in the body
-#[derive(Debug, From, XmlRead, XmlWrite)]
+#[derive(Debug, From, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum BodyContent<'a> {
     #[xml(tag = "w:p")]

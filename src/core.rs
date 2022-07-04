@@ -8,7 +8,7 @@ use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::SCHEMA_CORE;
 
-#[derive(Debug, Default, XmlRead)]
+#[derive(Debug, Default, XmlRead, Clone)]
 #[xml(tag = "cp:coreProperties")]
 pub struct Core<'a> {
     #[xml(flatten_text = "dc:title")]

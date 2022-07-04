@@ -24,7 +24,7 @@ use crate::{
 ///     .push_text((" text ", TextSpace::Preserve))
 ///     .push_break(BreakType::Column);
 /// ```
-#[derive(Debug, Default, XmlRead, XmlWrite)]
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:r")]
 pub struct Run<'a> {
@@ -79,7 +79,7 @@ impl<'a> Run<'a> {
 }
 
 /// A set of elements that can be contained as the content of a run.
-#[derive(Debug, From, XmlRead, XmlWrite)]
+#[derive(Debug, From, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum RunContent<'a> {
     #[xml(tag = "w:t")]

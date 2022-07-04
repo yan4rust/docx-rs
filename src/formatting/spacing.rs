@@ -15,7 +15,7 @@ use super::line_rule::LineRule;
 ///
 /// let sz = Size::from(42usize);
 /// ```
-#[derive(Debug, XmlRead, XmlWrite, Default)]
+#[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:spacing")]
 pub struct Spacing {
