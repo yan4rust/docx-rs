@@ -1,8 +1,8 @@
 use derive_more::From;
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::__xml_test_suites;
 use crate::document::{Paragraph, Table};
+use crate::{DocxResult, __xml_test_suites};
 
 /// Document Body
 ///
@@ -20,6 +20,45 @@ impl<'a> Body<'a> {
     pub fn push<T: Into<BodyContent<'a>>>(&mut self, content: T) -> &mut Self {
         self.content.push(content.into());
         self
+    }
+
+    pub fn text(&self) -> String {
+        let v: Vec<_> = self
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                BodyContent::Paragraph(para) => Some(para.iter_text()),
+                BodyContent::Table(_) => None,
+            })
+            .flatten()
+            .map(|t| t.to_string())
+            .collect();
+        v.join("")
+    }
+
+    pub fn replace_text_simple<S>(&mut self, old: S, new: S)
+    where
+        S: AsRef<str>,
+    {
+        let dic = (old, new);
+        let dic = vec![dic];
+        let _d = self.replace_text(&dic);
+    }
+
+    pub fn replace_text<'b, T, S>(&mut self, dic: T) -> crate::DocxResult<()>
+    where
+        S: AsRef<str> + 'b,
+        T: IntoIterator<Item = &'b (S, S)> + std::marker::Copy,
+    {
+        for content in self.content.iter_mut() {
+            match content {
+                BodyContent::Paragraph(p) => {
+                    let _d = p.replace_text(dic)?;
+                }
+                BodyContent::Table(_) => {}
+            }
+        }
+        Ok(())
     }
 
     // pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {

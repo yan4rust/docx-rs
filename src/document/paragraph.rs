@@ -88,6 +88,23 @@ impl<'a> Paragraph<'a> {
             })
             .flatten()
     }
+
+    pub fn replace_text<'b, T, S>(&mut self, dic: T) -> crate::DocxResult<()>
+    where
+        S: AsRef<str> + 'b,
+        T: IntoIterator<Item = &'b (S, S)> + std::marker::Copy,
+    {
+        for content in self.content.iter_mut() {
+            match content {
+                ParagraphContent::Run(r) => {
+                    let _d = r.replace_text(dic)?;
+                }
+                _ => {}
+            }
+        }
+
+        Ok(())
+    }
 }
 
 /// A set of elements that can be contained as the content of a paragraph.

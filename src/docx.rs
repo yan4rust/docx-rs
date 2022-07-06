@@ -107,6 +107,9 @@ impl<'a> Docx<'a> {
     }
 
     pub fn write_file<P: AsRef<Path>>(&mut self, path: P) -> DocxResult<File> {
+        if let Some(p) = path.as_ref().parent() {
+            std::fs::create_dir_all(p)?;
+        }
         let file = File::create(path)?;
         self.write(file)
     }

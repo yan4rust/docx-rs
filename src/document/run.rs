@@ -5,8 +5,9 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    document::{r#break::Break, text::Text, instrtext::InstrText, field_char::FieldChar},
+    document::{field_char::FieldChar, instrtext::InstrText, r#break::Break, text::Text},
     formatting::CharacterProperty,
+    DocxResult,
 };
 
 /// Run
@@ -33,10 +34,15 @@ pub struct Run<'a> {
     /// Just as paragraph, a run's properties is applied to all the contents of the run.
     #[xml(default, child = "w:rPr")]
     pub property: CharacterProperty<'a>,
-    #[xml(child = "w:t", child = "w:br", child = "w:fldChar", child = "w:instrText")]
+    #[xml(
+        child = "w:t",
+        child = "w:br",
+        child = "w:fldChar",
+        child = "w:instrText"
+    )]
     /// Specifies the content of a run
     pub content: Vec<RunContent<'a>>,
-    #[xml(attr ="w:is_delete")]
+    #[xml(attr = "w:is_delete")]
     pub shall_destroy: Option<bool>,
 }
 
@@ -65,7 +71,7 @@ impl<'a> Run<'a> {
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
         self.content.iter().filter_map(|content| match content {
             RunContent::Text(Text { text, .. }) => Some(text),
-            RunContent::InstrText(InstrText {text, ..}) => Some(text),
+            RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
             RunContent::FieldChar(_) => None,
         })
@@ -74,10 +80,40 @@ impl<'a> Run<'a> {
     pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
         self.content.iter_mut().filter_map(|content| match content {
             RunContent::Text(Text { text, .. }) => Some(text),
-            RunContent::InstrText(InstrText {text, ..}) => Some(text),
+            RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
             RunContent::FieldChar(_) => None,
         })
+    }
+
+    pub fn replace_text_simple<S>(&mut self, old: S, new: S)
+    where
+        S: AsRef<str>,
+    {
+        let dic = (old, new);
+        let dic = vec![dic];
+        self.replace_text(&dic);
+    }
+
+    pub fn replace_text<'b, T, S>(&mut self, dic: T) -> DocxResult<()>
+    where
+        S: AsRef<str> + 'b,
+        T: IntoIterator<Item = &'b (S, S)> + std::marker::Copy,
+    {
+        for c in self.content.iter_mut() {
+            match c {
+                RunContent::Text(t) => {
+                    let mut tc = t.text.to_string();
+                    for p in dic {
+                        tc = tc.replace(p.0.as_ref(), p.1.as_ref());
+                    }
+                    t.text = tc.into();
+                }
+                _ => {}
+            }
+        }
+
+        Ok(())
     }
 }
 
