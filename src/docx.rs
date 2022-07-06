@@ -50,15 +50,15 @@ impl<'a> Docx<'a> {
         // ==== Add Relationships ====
 
         if self.app.is_some() {
-            //self.rels.add_rel(SCHEMA_REL_EXTENDED, "docProps/app.xml");
+            self.rels.add_rel(SCHEMA_REL_EXTENDED, "docProps/app.xml");
         }
 
         if self.core.is_some() {
-            //self.rels.add_rel(SCHEMA_CORE, "docProps/core.xml");
+            self.rels.add_rel(SCHEMA_CORE, "docProps/core.xml");
         }
 
-        //self.rels
-        //    .add_rel(SCHEMA_OFFICE_DOCUMENT, "word/document.xml");
+        self.rels
+            .add_rel(SCHEMA_OFFICE_DOCUMENT, "word/document.xml");
 
         self.document_rels
             .get_or_insert(Relationships::default())
