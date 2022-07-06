@@ -29,11 +29,19 @@ use crate::{
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:p")]
 pub struct Paragraph<'a> {
+    //#[xml(attr = "w14:paraId")]
+    //pub id: Option<Cow<'a, str>>,
+    //#[xml(attr = "w14:textId")]
+    //pub text_id: Option<Cow<'a, str>>,
+    #[xml(attr = "w:rsidR")]
+    pub rsid_r: Option<Cow<'a, str>>,
+    #[xml(attr = "w:rsidRDefault")]
+    pub rsid_r_default: Option<Cow<'a, str>>,
     /// Specifies the properties of a paragraph
     ///
     /// This information is applied to all the contents of the paragraph.
-    #[xml(default, child = "w:pPr")]
-    pub property: ParagraphProperty<'a>,
+    #[xml(child = "w:pPr")]
+    pub property: Option<ParagraphProperty<'a>>,
     /// Specifes the run contents of a paragraph
     ///
     /// Run is a region of text with properties. Each paragraph containes one or more runs.
@@ -49,7 +57,7 @@ pub struct Paragraph<'a> {
 }
 
 impl<'a> Paragraph<'a> {
-    __setter!(property: ParagraphProperty<'a>);
+    __setter!(property: Option<ParagraphProperty<'a>>);
     __setter!(shall_destroy: Option<bool>);
 
     #[inline(always)]
@@ -124,13 +132,13 @@ pub enum ParagraphContent<'a> {
 __xml_test_suites!(
     Paragraph,
     Paragraph::default(),
-    r#"<w:p><w:pPr/></w:p>"#,
+    r#"<w:p/>"#,
     Paragraph::default().push(Run::default()),
-    r#"<w:p><w:pPr/><w:r><w:rPr/></w:r></w:p>"#,
+    r#"<w:p><w:r><w:rPr/></w:r></w:p>"#,
     Paragraph::default().push(Hyperlink::default()),
-    r#"<w:p><w:pPr/><w:hyperlink><w:r><w:rPr/></w:r></w:hyperlink></w:p>"#,
+    r#"<w:p><w:hyperlink><w:r><w:rPr/></w:r></w:hyperlink></w:p>"#,
     Paragraph::default().push(BookmarkStart::default()),
-    r#"<w:p><w:pPr/><w:bookmarkStart/></w:p>"#,
+    r#"<w:p><w:bookmarkStart/></w:p>"#,
     Paragraph::default().push(BookmarkEnd::default()),
-    r#"<w:p><w:pPr/><w:bookmarkEnd/></w:p>"#,
+    r#"<w:p><w:bookmarkEnd/></w:p>"#,
 );

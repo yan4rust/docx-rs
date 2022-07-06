@@ -34,12 +34,17 @@ mod widow_control;
 mod lang;
 mod table_margin;
 mod margin;
+mod section_property;
+mod page_size;
+mod page_margin;
+mod page_cols;
+mod page_grid;
 
 // re-export
 pub use self::{
     bold::*, border::*, borders::*, character_property::*, color::*, dstrike::*, fonts::*, indent::*, indent_level::*,
     italics::*, justification::*, lang::*, numbering_id::*, numbering_property::*, outline::*,
-    paragraph_property::*, size::*, spacing::*, strike::*, table_borders::*, table_cell_property::*,
+    paragraph_property::*, page_cols::*, page_grid::*, page_margin::*, page_size::*, section_property::*, size::*, spacing::*, strike::*, table_borders::*, table_cell_property::*,
     table_indent::*, table_justification::*, table_property::*, table_row_property::*,
     table_width::*, underline::*, widow_control::*,
 };

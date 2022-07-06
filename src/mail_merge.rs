@@ -52,6 +52,7 @@ where
             crate::document::BodyContent::Table(_t) => {
                 
             }
+            crate::document::BodyContent::SectionProperty(_) => {}
         }
     }
     let f = docx.write_file(path)?;

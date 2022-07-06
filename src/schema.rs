@@ -14,6 +14,7 @@ pub const SCHEMA_DOC_PROPS_V_TYPES: &str =
 pub const SCHEMA_CONTENT_TYPES: &str =
     "http://schemas.openxmlformats.org/package/2006/content-types";
 pub const SCHEMA_MAIN: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+pub const SCHEMA_WORDML_14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 pub const SCHEMA_RELATIONSHIPS: &str =
     "http://schemas.openxmlformats.org/package/2006/relationships";
 pub const SCHEMAS_EXTENDED: &str =

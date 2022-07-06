@@ -57,5 +57,5 @@ pub enum TableCellContent<'a> {
 __xml_test_suites!(
     TableCell,
     TableCell::pargraph(Paragraph::default()),
-    "<w:tc><w:tcPr/><w:p><w:pPr/></w:p></w:tc>",
+    "<w:tc><w:tcPr/><w:p/></w:tc>",
 );

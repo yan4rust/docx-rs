@@ -2,6 +2,7 @@ use derive_more::From;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::document::{Paragraph, Table};
+use crate::formatting::SectionProperty;
 use crate::{DocxResult, __xml_test_suites};
 
 /// Document Body
@@ -12,7 +13,7 @@ use crate::{DocxResult, __xml_test_suites};
 #[xml(tag = "w:body")]
 pub struct Body<'a> {
     /// Specifies the contents of the body of the document.
-    #[xml(child = "w:p", child = "w:tbl")]
+    #[xml(child = "w:p", child = "w:tbl", child = "w:sectPr")]
     pub content: Vec<BodyContent<'a>>,
 }
 
@@ -29,6 +30,7 @@ impl<'a> Body<'a> {
             .filter_map(|content| match content {
                 BodyContent::Paragraph(para) => Some(para.iter_text()),
                 BodyContent::Table(_) => None,
+                BodyContent::SectionProperty(_) => None,
             })
             .flatten()
             .map(|t| t.to_string())
@@ -56,6 +58,7 @@ impl<'a> Body<'a> {
                     let _d = p.replace_text(dic)?;
                 }
                 BodyContent::Table(_) => {}
+                BodyContent::SectionProperty(_) => {}
             }
         }
         Ok(())
@@ -88,7 +91,8 @@ pub enum BodyContent<'a> {
     Paragraph(Paragraph<'a>),
     #[xml(tag = "w:tbl")]
     Table(Table<'a>),
-    // SecProp,
+    #[xml(tag = "w:sectPr")]
+    SectionProperty(SectionProperty<'a>),
 }
 
 __xml_test_suites!(
@@ -98,7 +102,7 @@ __xml_test_suites!(
     Body {
         content: vec![Paragraph::default().into()]
     },
-    r#"<w:body><w:p><w:pPr/></w:p></w:body>"#,
+    r#"<w:body><w:p/></w:body>"#,
     Body {
         content: vec![Table::default().into()]
     },
