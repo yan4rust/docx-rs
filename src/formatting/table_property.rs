@@ -6,6 +6,8 @@ use crate::{
     formatting::{TableBorders, TableIndent, TableJustification, TableWidth},
 };
 
+use super::table_margin::TableMargins;
+
 /// Table Property
 ///
 /// ```rust
@@ -29,6 +31,8 @@ pub struct TableProperty<'a> {
     pub borders: Option<TableBorders<'a>>,
     #[xml(child = "w:tblInd")]
     pub indent: Option<TableIndent>,
+    #[xml(child = "w:tblCellMar")]
+    pub margins: Option<TableMargins<'a>>,
     #[xml(child = "w:tblW")]
     pub width: Option<TableWidth>,
 }

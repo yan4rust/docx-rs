@@ -4,8 +4,10 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __string_enum, __xml_test_suites,
-    formatting::{CharacterProperty, ParagraphProperty},
+    formatting::{CharacterProperty, ParagraphProperty, TableProperty},
 };
+
+use crate::styles::priority::Priority;
 
 /// Style
 ///
@@ -37,12 +39,23 @@ pub struct Style<'a> {
     /// Specifies the primary name
     #[xml(child = "w:name")]
     pub name: Option<StyleName<'a>>,
+    #[xml(child = "w:qFormat")]
+    pub q_format: Option<QFormat>,
+    /// Specifies the priority.
+    #[xml(child = "w:uiPriority")]
+    pub priority: Option<Priority>,
+    #[xml(child = "w:semiHidden")]
+    pub semi_hidden: Option<super::semi_hidden::SemiHidden>,
+    #[xml(child = "w:unhideWhenUsed")]
+    pub unhide_when_used: Option<super::unhidden_when_used::UnhideWhenUsed>,
     /// Specifies a set of paragraph properties
     #[xml(default, child = "w:pPr")]
     pub paragraph: Option<ParagraphProperty<'a>>,
     /// Specifies a set of character properties
     #[xml(default, child = "w:rPr")]
     pub character: Option<CharacterProperty<'a>>,
+    #[xml(default, child = "w:tblPr")]
+    pub table: Option<TableProperty<'a>>,
 }
 
 impl<'a> Style<'a> {
@@ -52,8 +65,13 @@ impl<'a> Style<'a> {
             style_id: style_id.into(),
             default: None,
             name: None,
+            q_format : None,
+            priority: None,
+            semi_hidden: None,
+            unhide_when_used: None,
             paragraph: None,
             character: None,
+            table: None,
         }
     }
 
@@ -75,6 +93,14 @@ impl<'a, S: Into<Cow<'a, str>>> From<S> for StyleName<'a> {
     fn from(val: S) -> Self {
         StyleName { value: val.into() }
     }
+}
+
+#[derive(Debug, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:qFormat")]
+pub struct QFormat {
+    #[xml(attr = "w:val")]
+    pub value: Option<usize>,
 }
 
 #[derive(Debug, Clone)]

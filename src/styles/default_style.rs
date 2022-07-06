@@ -40,12 +40,12 @@ impl<'a> DefaultStyle<'a> {
 pub struct DefaultCharacterProperty<'a> {
     /// character properties
     #[xml(default, child = "w:rPr")]
-    pub inner: CharacterProperty<'a>,
+    pub inner: Option<CharacterProperty<'a>>,
 }
 
 impl<'a, T: Into<CharacterProperty<'a>>> From<T> for DefaultCharacterProperty<'a> {
     fn from(val: T) -> Self {
-        DefaultCharacterProperty { inner: val.into() }
+        DefaultCharacterProperty { inner: Some(val.into()) }
     }
 }
 
@@ -56,17 +56,17 @@ impl<'a, T: Into<CharacterProperty<'a>>> From<T> for DefaultCharacterProperty<'a
 pub struct DefaultParagraphProperty<'a> {
     /// paragraph properties
     #[xml(default, child = "w:pPr")]
-    pub inner: ParagraphProperty<'a>,
+    pub inner: Option<ParagraphProperty<'a>>,
 }
 
 impl<'a, T: Into<ParagraphProperty<'a>>> From<T> for DefaultParagraphProperty<'a> {
     fn from(val: T) -> Self {
-        DefaultParagraphProperty { inner: val.into() }
+        DefaultParagraphProperty { inner: Some(val.into()) }
     }
 }
 
 __xml_test_suites!(
     DefaultStyle,
     DefaultStyle::default(),
-    r#"<w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults>"#,
+    r#"<w:docDefaults><w:rPrDefault/><w:pPrDefault/></w:docDefaults>"#,
 );

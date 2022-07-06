@@ -32,6 +32,8 @@ mod line_rule;
 mod indent;
 mod widow_control;
 mod lang;
+mod table_margin;
+mod margin;
 
 // re-export
 pub use self::{

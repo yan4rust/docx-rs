@@ -4,7 +4,13 @@
 
 mod default_style;
 mod style;
+mod priority;
+mod semi_hidden;
+mod unhidden_when_used;
+mod latent_styles;
+mod latent_style;
 
+use self::latent_styles::LatentStyles;
 pub use self::{default_style::*, style::*};
 
 use std::io::Write;
@@ -31,6 +37,8 @@ pub struct Styles<'a> {
     /// Specifies the default set of properties.
     #[xml(default, child = "w:docDefaults")]
     pub default: DefaultStyle<'a>,
+    #[xml(child = "w:latentStyles")]
+    pub latent_styles: LatentStyles<'a>,
     /// Specifies a set of properties.
     #[xml(child = "w:style")]
     pub styles: Vec<Style<'a>>,
@@ -38,7 +46,7 @@ pub struct Styles<'a> {
 
 impl<'a> XmlWrite for Styles<'a> {
     fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {
-        let Styles { default, styles } = self;
+        let Styles { default, latent_styles, styles } = self;
 
         log::debug!("[Styles] Started writing.");
 
@@ -50,6 +58,7 @@ impl<'a> XmlWrite for Styles<'a> {
         writer.write_element_end_open()?;
 
         default.to_writer(writer)?;
+        latent_styles.to_writer(writer)?;
 
         for ele in styles {
             ele.to_writer(writer)?;
@@ -83,7 +92,7 @@ __xml_test_suites!(
     Styles,
     Styles::new(),
     format!(
-        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault/><w:pPrDefault/></w:docDefaults><w:latentStyles/></w:styles>"#,
         SCHEMA_XML,
         SCHEMA_MAIN
     )
@@ -93,7 +102,7 @@ __xml_test_suites!(
         ..Default::default()
     },
     format!(
-        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="id"/></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault/><w:pPrDefault/></w:docDefaults><w:latentStyles/><w:style w:type="paragraph" w:styleId="id"/></w:styles>"#,
         SCHEMA_XML,
         SCHEMA_MAIN
     )
