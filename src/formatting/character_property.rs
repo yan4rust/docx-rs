@@ -3,7 +3,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    formatting::{Bold, Color, Dstrike, Fonts, Italics, Outline, Size, Strike, Underline},
+    formatting::{Bold, Color, Dstrike, Fonts, Italics, Lang, Outline, Size, Strike, Underline},
 };
 
 /// Character Property
@@ -41,6 +41,9 @@ pub struct CharacterProperty<'a> {
     /// Specifies the font size in half points.
     #[xml(child = "w:sz")]
     pub size: Option<Size>,
+    /// Specifies the language to be used.
+    #[xml(child = "w:lang")]
+    pub lang: Option<Lang<'a>>,
     /// Specifies that the text of the text run is to be bold.
     #[xml(child = "w:b")]
     pub bold: Option<Bold>,
