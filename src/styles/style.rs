@@ -27,6 +27,8 @@ pub struct Style<'a> {
     /// Specifies the type of style.
     #[xml(attr = "w:type")]
     pub ty: StyleType,
+    #[xml(attr = "w:default")]
+    pub default: Option<usize>,
     /// Specifies the unique identifier
     ///
     /// This identifier is used throughout the document to apply style in content.
@@ -37,10 +39,10 @@ pub struct Style<'a> {
     pub name: Option<StyleName<'a>>,
     /// Specifies a set of paragraph properties
     #[xml(default, child = "w:pPr")]
-    pub paragraph: ParagraphProperty<'a>,
+    pub paragraph: Option<ParagraphProperty<'a>>,
     /// Specifies a set of character properties
     #[xml(default, child = "w:rPr")]
-    pub character: CharacterProperty<'a>,
+    pub character: Option<CharacterProperty<'a>>,
 }
 
 impl<'a> Style<'a> {
@@ -48,16 +50,17 @@ impl<'a> Style<'a> {
         Style {
             ty,
             style_id: style_id.into(),
+            default: None,
             name: None,
-            paragraph: ParagraphProperty::default(),
-            character: CharacterProperty::default(),
+            paragraph: None,
+            character: None,
         }
     }
 
     __setter!(ty: StyleType);
     __setter!(name: Option<StyleName<'a>>);
-    __setter!(paragraph: ParagraphProperty<'a>);
-    __setter!(character: CharacterProperty<'a>);
+    __setter!(paragraph: Option<ParagraphProperty<'a>>);
+    __setter!(character: Option<CharacterProperty<'a>>);
 }
 
 #[derive(Debug, XmlRead, XmlWrite, Clone)]
@@ -95,11 +98,11 @@ __string_enum! {
 __xml_test_suites!(
     Style,
     Style::new(StyleType::Numbering, "id"),
-    r#"<w:style w:type="numbering" w:styleId="id"><w:pPr/><w:rPr/></w:style>"#,
+    r#"<w:style w:type="numbering" w:styleId="id"/>"#,
     Style::new(StyleType::Table, "id").name("name"),
-    r#"<w:style w:type="table" w:styleId="id"><w:name w:val="name"/><w:pPr/><w:rPr/></w:style>"#,
+    r#"<w:style w:type="table" w:styleId="id"><w:name w:val="name"/></w:style>"#,
     Style::new(StyleType::Paragraph, "id"),
-    r#"<w:style w:type="paragraph" w:styleId="id"><w:pPr/><w:rPr/></w:style>"#,
+    r#"<w:style w:type="paragraph" w:styleId="id"/>"#,
     Style::new(StyleType::Character, "id"),
-    r#"<w:style w:type="character" w:styleId="id"><w:pPr/><w:rPr/></w:style>"#,
+    r#"<w:style w:type="character" w:styleId="id"/>"#,
 );
