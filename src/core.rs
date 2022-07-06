@@ -6,7 +6,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::schema::SCHEMA_CORE;
+use crate::schema::{SCHEMA_CORE, SCHEMA_XML};
 
 #[derive(Debug, Default, XmlRead, Clone)]
 #[xml(tag = "cp:coreProperties")]
@@ -40,6 +40,7 @@ impl<'a> XmlWrite for Core<'a> {
         } = self;
 
         log::debug!("[Core] Started writing.");
+        let _ = write!(writer.inner, "{}", SCHEMA_XML);
 
         writer.write_element_start("cp:coreProperties")?;
 

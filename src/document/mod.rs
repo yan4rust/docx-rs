@@ -51,6 +51,7 @@ impl<'a> XmlWrite for Document<'a> {
         let Document { body } = self;
 
         log::debug!("[Document] Started writing.");
+        let _ = write!(writer.inner, "{}", crate::schema::SCHEMA_XML);
 
         writer.write_element_start("w:document")?;
 
@@ -72,7 +73,8 @@ __xml_test_suites!(
     Document,
     Document::default(),
     format!(
-        r#"<w:document xmlns:w="{}"><w:body/></w:document>"#,
+        r#"{}<w:document xmlns:w="{}"><w:body/></w:document>"#,
+        crate::schema::SCHEMA_XML,
         SCHEMA_MAIN
     )
     .as_str(),

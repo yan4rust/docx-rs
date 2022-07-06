@@ -1,3 +1,4 @@
+pub const SCHEMA_XML : &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
 pub const SCHEMA_CORE: &str =
     "http://schemas.openxmlformats.org/officedocument/2006/relationships/metadata/core-properties";
 pub const SCHEMA_REL_EXTENDED: &str =

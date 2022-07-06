@@ -6,7 +6,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::schema::{SCHEMAS_EXTENDED, SCHEMA_DOC_PROPS_V_TYPES};
+use crate::schema::{SCHEMAS_EXTENDED, SCHEMA_DOC_PROPS_V_TYPES, SCHEMA_XML};
 
 #[derive(Debug, XmlRead, Clone)]
 #[xml(tag = "Properties")]
@@ -90,6 +90,8 @@ impl<'a> XmlWrite for App<'a> {
         } = self;
 
         log::debug!("[App] Started writing.");
+
+        let _ = write!(writer.inner, "{}", SCHEMA_XML);
 
         writer.write_element_start("Properties")?;
 

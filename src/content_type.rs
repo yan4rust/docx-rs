@@ -70,6 +70,7 @@ impl<'a> XmlWrite for ContentTypes<'a> {
         } = self;
 
         log::debug!("[ContentTypes] Started writing.");
+        let _ = write!(writer.inner, "{}", crate::schema::SCHEMA_XML);
 
         writer.write_element_start("Types")?;
 

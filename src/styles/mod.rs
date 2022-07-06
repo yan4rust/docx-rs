@@ -11,7 +11,7 @@ use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
-use crate::schema::SCHEMA_MAIN;
+use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 
 /// Styles of the document
 ///
@@ -42,6 +42,7 @@ impl<'a> XmlWrite for Styles<'a> {
 
         log::debug!("[Styles] Started writing.");
 
+        let _ = write!(writer.inner, "{}", SCHEMA_XML);
         writer.write_element_start("w:styles")?;
 
         writer.write_attribute("xmlns:w", SCHEMA_MAIN)?;
@@ -82,7 +83,8 @@ __xml_test_suites!(
     Styles,
     Styles::new(),
     format!(
-        r#"<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults></w:styles>"#,
+        SCHEMA_XML,
         SCHEMA_MAIN
     )
     .as_str(),
@@ -91,7 +93,8 @@ __xml_test_suites!(
         ..Default::default()
     },
     format!(
-        r#"<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="id"><w:pPr/><w:rPr/></w:style></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault><w:rPr/></w:rPrDefault><w:pPrDefault><w:pPr/></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="id"><w:pPr/><w:rPr/></w:style></w:styles>"#,
+        SCHEMA_XML,
         SCHEMA_MAIN
     )
     .as_str(),

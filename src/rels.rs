@@ -21,6 +21,7 @@ impl<'a> XmlWrite for Relationships<'a> {
         let Relationships { relationships } = self;
 
         log::debug!("[Relationships] Started writing.");
+        let _ = write!(writer.inner, "{}", crate::schema::SCHEMA_XML);
 
         writer.write_element_start("Relationships")?;
 
