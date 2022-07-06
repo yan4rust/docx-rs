@@ -125,6 +125,9 @@ pub struct DocxFile {
     font_table: Option<String>,
     rels: String,
     styles: Option<String>,
+    theme: Option<String>,
+    settings: Option<String>,
+    web_settings: Option<String>,
 }
 
 impl DocxFile {
@@ -163,6 +166,9 @@ impl DocxFile {
         let font_table = option_read!(FontTable, "word/fontTable.xml");
         let rels = read!(Relationships, "_rels/.rels");
         let styles = option_read!(Styles, "word/styles.xml");
+        let theme = option_read!(Theme, "word/theme/theme1.xml");
+        let settings = option_read!(Settings, "word/settings.xml");
+        let web_settings = option_read!(WebSettings, "word/webSettings.xml");
 
         Ok(DocxFile {
             app,
@@ -173,6 +179,9 @@ impl DocxFile {
             font_table,
             rels,
             styles,
+            theme,
+            settings,
+            web_settings,
         })
     }
 
