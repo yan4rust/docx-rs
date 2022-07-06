@@ -23,6 +23,9 @@ pub struct ParagraphProperty<'a> {
     /// Specifies the style ID of the paragraph style.
     #[xml(child = "w:pStyle")]
     pub style_id: Option<ParagraphStyleId<'a>>,
+    /// Specifies whether enable widow control
+    #[xml(child = "w:widowControl")]
+    pub widow_control: Option<WidowControl>,
     /// Specifies the paragraph alignment.
     #[xml(child = "w:jc")]
     pub justification: Option<Justification>,
@@ -38,9 +41,6 @@ pub struct ParagraphProperty<'a> {
     /// Specifies the paragraph indent
     #[xml(child = "w:ind")]
     pub indent: Option<Indent>,
-    /// Specifies whether enable widow control
-    #[xml(child = "w:widowControl")]
-    pub widow_control: Option<WidowControl>,
 }
 
 impl<'a> ParagraphProperty<'a> {

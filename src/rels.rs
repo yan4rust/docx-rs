@@ -46,7 +46,7 @@ impl<'a> Relationships<'a> {
     pub fn add_rel(&mut self, schema: &'a str, target: &'a str) {
         let len = self.relationships.len();
         self.relationships.push(Relationship {
-            id: format!("rId{}", len).into(),
+            id: format!("rId{}", len+1).into(),
             target: target.into(),
             ty: schema.into(),
         });

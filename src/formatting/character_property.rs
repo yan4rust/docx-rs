@@ -35,12 +35,12 @@ pub struct CharacterProperty<'a> {
     /// Specifies the color to be used to display text.
     #[xml(child = "w:color")]
     pub color: Option<Color<'a>>,
-    /// Specifies the font size in half points.
-    #[xml(child = "w:sz")]
-    pub size: Option<Size>,
     /// Specifies the font.
     #[xml(child = "w:rFonts")]
     pub fonts: Option<Fonts<'a>>,
+    /// Specifies the font size in half points.
+    #[xml(child = "w:sz")]
+    pub size: Option<Size>,
     /// Specifies that the text of the text run is to be bold.
     #[xml(child = "w:b")]
     pub bold: Option<Bold>,

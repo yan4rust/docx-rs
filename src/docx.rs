@@ -50,15 +50,15 @@ impl<'a> Docx<'a> {
         // ==== Add Relationships ====
 
         if self.app.is_some() {
-            self.rels.add_rel(SCHEMA_REL_EXTENDED, "docProps/app.xml");
+            //self.rels.add_rel(SCHEMA_REL_EXTENDED, "docProps/app.xml");
         }
 
         if self.core.is_some() {
-            self.rels.add_rel(SCHEMA_CORE, "docProps/core.xml");
+            //self.rels.add_rel(SCHEMA_CORE, "docProps/core.xml");
         }
 
-        self.rels
-            .add_rel(SCHEMA_OFFICE_DOCUMENT, "word/document.xml");
+        //self.rels
+        //    .add_rel(SCHEMA_OFFICE_DOCUMENT, "word/document.xml");
 
         self.document_rels
             .get_or_insert(Relationships::default())
@@ -200,11 +200,11 @@ impl DocxFile {
             None
         };
 
-        let document_rels = if let Some(content) = &self.document_rels {
-            Some(Relationships::from_str(content)?)
-        } else {
-            None
-        };
+        let document_rels = None; //if let Some(content) = &self.document_rels {
+        //     Some(Relationships::from_str(content)?)
+        // } else {
+        //     None
+        // };
 
         let font_table = if let Some(content) = &self.font_table {
             Some(FontTable::from_str(content)?)

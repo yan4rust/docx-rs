@@ -23,6 +23,16 @@ pub struct Fonts<'a> {
     pub east_asia: Option<Cow<'a, str>>,
     #[xml(attr = "w:hAnsi")]
     pub h_ansi: Option<Cow<'a, str>>,
+    #[xml(attr = "w:cs")]
+    pub custom: Option<Cow<'a, str>>,
+    #[xml(attr = "w:asciiTheme")]
+    pub ascii_theme: Option<Cow<'a, str>>,
+    #[xml(attr = "w:eastAsiaTheme")]
+    pub east_asia_theme: Option<Cow<'a, str>>,
+    #[xml(attr = "w:hAnsiTheme")]
+    pub h_ansi_theme: Option<Cow<'a, str>>,
+    #[xml(attr = "w:cstheme")]
+    pub cs_theme: Option<Cow<'a, str>>,
 }
 
 impl<'a> Fonts<'a> {
