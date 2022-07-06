@@ -6,7 +6,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::schema::{SCHEMA_CORE, SCHEMA_XML};
+use crate::schema::{SCHEMA_CORE, SCHEMA_XML, SCHEMA_DC, SCHEMA_CORE_2};
 
 #[derive(Debug, Default, XmlRead, Clone)]
 #[xml(tag = "cp:coreProperties")]
@@ -44,7 +44,9 @@ impl<'a> XmlWrite for Core<'a> {
 
         writer.write_element_start("cp:coreProperties")?;
 
-        writer.write_attribute("xmlns:cp", SCHEMA_CORE)?;
+        writer.write_attribute("xmlns:cp", SCHEMA_CORE_2)?;
+
+        writer.write_attribute("xmlns:dc", SCHEMA_DC)?;
 
         if title.is_none()
             && subject.is_none()
@@ -58,25 +60,25 @@ impl<'a> XmlWrite for Core<'a> {
         } else {
             writer.write_element_end_open()?;
             if let Some(val) = title {
-                writer.write_flatten_text("dc:title", val, true)?;
+                writer.write_flatten_text("dc:title", val, false)?;
             }
             if let Some(val) = subject {
-                writer.write_flatten_text("dc:subject", val, true)?;
+                writer.write_flatten_text("dc:subject", val, false)?;
             }
             if let Some(val) = creator {
-                writer.write_flatten_text("dc:creator", val, true)?;
+                writer.write_flatten_text("dc:creator", val, false)?;
             }
             if let Some(val) = keywords {
-                writer.write_flatten_text("cp:keywords", val, true)?;
+                writer.write_flatten_text("cp:keywords", val, false)?;
             }
             if let Some(val) = description {
-                writer.write_flatten_text("dc:description", val, true)?;
+                writer.write_flatten_text("dc:description", val, false)?;
             }
             if let Some(val) = last_modified_by {
-                writer.write_flatten_text("cp:lastModifiedBy", val, true)?;
+                writer.write_flatten_text("cp:lastModifiedBy", val, false)?;
             }
             if let Some(val) = revision {
-                writer.write_flatten_text("cp:revision", val, true)?;
+                writer.write_flatten_text("cp:revision", val, false)?;
             }
             writer.write_element_end_close("cp:coreProperties")?;
         }
