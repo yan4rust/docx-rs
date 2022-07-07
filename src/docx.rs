@@ -107,6 +107,22 @@ impl<'a> Docx<'a> {
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
 
+        for hd in self.headers.iter() {
+            let file_path = format!("word/{}", hd.0);
+            let content = hd.1;
+            write_xml!(
+                content => file_path
+            );
+        }
+
+        for hd in self.footers.iter() {
+            let file_path = format!("word/{}", hd.0);
+            let content = hd.1;
+            write_xml!(
+                content => file_path
+            );
+        }
+
         Ok(writer.inner.finish()?)
     }
 
@@ -228,14 +244,14 @@ impl DocxFile {
         let mut headers = HashMap::new();
         for f in self.headers.iter() {
             let hd = Header::from_str(&f.1)?;
-            let name = f.1.replace("word/","");
+            let name = f.0.replace("word/","");
             headers.insert(name,hd);
         }
 
         let mut footers = HashMap::new();
         for f in self.footers.iter() {
             let ft = Footer::from_str(&f.1)?;
-            let name = f.1.replace("word/","");
+            let name = f.0.replace("word/","");
             footers.insert(name,ft);
         }
 
