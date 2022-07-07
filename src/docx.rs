@@ -6,7 +6,8 @@ use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::document::{Footer, Header, FootNotes, EndNotes};
-use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES};
+use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES, SCHEMA_SETTINGS};
+use crate::settings::Settings;
 use crate::{
     app::App,
     content_type::ContentTypes,
@@ -44,6 +45,7 @@ pub struct Docx<'a> {
     pub footers: HashMap<String, Footer<'a>>,
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
+    pub settings: Option<Settings<'a>>,
 }
 
 impl<'a> Docx<'a> {
@@ -87,6 +89,12 @@ impl<'a> Docx<'a> {
             self.document_rels
                 .get_or_insert(Relationships::default())
                 .add_rel(SCHEMA_ENDNOTES, "endnotes.xml");
+        }
+
+        if self.settings.is_some() {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_SETTINGS, "settings.xml");
         }
 
         for hd in &self.headers {
@@ -133,6 +141,7 @@ impl<'a> Docx<'a> {
             Some(self.font_table)     => "word/fontTable.xml"
             Some(self.footnotes)      => "word/footnotes.xml"
             Some(self.endnotes)       => "word/endnotes.xml"
+            Some(self.settings)       => "word/settings.xml"
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
 
@@ -242,7 +251,7 @@ impl DocxFile {
         let web_settings = option_read!(WebSettings, "word/webSettings.xml");
         let footnotes = option_read!(Footnotes, "word/footnotes.xml");
         let endnotes = option_read!(Endnotes, "word/endnotes.xml");
-
+        
         let headers = option_read_multiple!(Headers, "word/header");
         let footers = option_read_multiple!(Footers, "word/footer");
 
@@ -321,6 +330,7 @@ impl DocxFile {
                             | crate::schema::SCHEMA_STYLES
                             | crate::schema::SCHEMA_FOOTNOTES
                             | crate::schema::SCHEMA_ENDNOTES
+                            | crate::schema::SCHEMA_SETTINGS
                     )
                 })
                 .map(|d| d.to_owned())
@@ -342,6 +352,12 @@ impl DocxFile {
 
         let endnotes = if let Some(content) = &self.endnotes {
             Some(EndNotes::from_str(content)?)
+        } else {
+            None
+        };
+
+        let settings = if let Some(content) = &self.settings {
+            Some(Settings::from_str(content)?)
         } else {
             None
         };
@@ -368,6 +384,7 @@ impl DocxFile {
             footers,
             footnotes,
             endnotes,
+            settings,
         })
     }
 }

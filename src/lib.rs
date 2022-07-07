@@ -90,6 +90,7 @@ pub mod formatting;
 pub mod rels;
 mod schema;
 pub mod styles;
+pub mod settings;
 pub mod mail_merge;
 
 pub use crate::docx::{Docx, DocxFile};
