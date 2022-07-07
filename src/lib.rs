@@ -92,6 +92,7 @@ mod schema;
 pub mod styles;
 pub mod settings;
 pub mod mail_merge;
+pub mod comments;
 
 pub use crate::docx::{Docx, DocxFile};
 pub use crate::error::{DocxError, DocxResult};

@@ -5,7 +5,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    document::{BookmarkEnd, BookmarkStart, Hyperlink, Run, RunContent, Text},
+    document::{BookmarkEnd, BookmarkStart, CommentRangeStart, CommentRangeEnd, Hyperlink, Run, RunContent, Text},
     formatting::ParagraphProperty,
 };
 
@@ -46,6 +46,8 @@ pub struct Paragraph<'a> {
     ///
     /// Run is a region of text with properties. Each paragraph containes one or more runs.
     #[xml(
+        child = "w:commentRangeStart",
+        child = "w:commentRangeEnd",
         child = "w:r",
         child = "w:hyperlink",
         child = "w:bookmarkStart",
@@ -119,6 +121,10 @@ impl<'a> Paragraph<'a> {
 #[derive(Debug, From, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum ParagraphContent<'a> {
+    #[xml(tag = "w:commentRangeStart")]
+    CommentRangeStart(CommentRangeStart<'a>),
+    #[xml(tag = "w:commentRangeEnd")]
+    CommentRangeEnd(CommentRangeEnd<'a>),
     #[xml(tag = "w:r")]
     Run(Run<'a>),
     #[xml(tag = "w:hyperlink")]

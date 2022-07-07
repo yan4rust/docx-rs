@@ -5,8 +5,9 @@ use std::path::Path;
 use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
+use crate::comments::Comments;
 use crate::document::{Footer, Header, FootNotes, EndNotes};
-use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES, SCHEMA_SETTINGS};
+use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES, SCHEMA_SETTINGS, SCHEMA_COMMENTS};
 use crate::settings::Settings;
 use crate::{
     app::App,
@@ -46,6 +47,7 @@ pub struct Docx<'a> {
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
     pub settings: Option<Settings<'a>>,
+    pub comments: Option<Comments<'a>>,
 }
 
 impl<'a> Docx<'a> {
@@ -97,6 +99,12 @@ impl<'a> Docx<'a> {
                 .add_rel(SCHEMA_SETTINGS, "settings.xml");
         }
 
+        if self.comments.is_some() {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_COMMENTS, "comments.xml");
+        }
+
         for hd in &self.headers {
             self.document_rels
                 .get_or_insert(Relationships::default())
@@ -142,6 +150,7 @@ impl<'a> Docx<'a> {
             Some(self.footnotes)      => "word/footnotes.xml"
             Some(self.endnotes)       => "word/endnotes.xml"
             Some(self.settings)       => "word/settings.xml"
+            Some(self.comments)       => "word/comments.xml"
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
 
@@ -190,6 +199,7 @@ pub struct DocxFile {
     footers: Vec<(String, String)>,
     footnotes: Option<String>,
     endnotes: Option<String>,
+    comments: Option<String>,
 }
 
 impl DocxFile {
@@ -251,7 +261,8 @@ impl DocxFile {
         let web_settings = option_read!(WebSettings, "word/webSettings.xml");
         let footnotes = option_read!(Footnotes, "word/footnotes.xml");
         let endnotes = option_read!(Endnotes, "word/endnotes.xml");
-        
+        let comments = option_read!(Comments, "word/comments.xml");
+
         let headers = option_read_multiple!(Headers, "word/header");
         let footers = option_read_multiple!(Footers, "word/footer");
 
@@ -271,6 +282,7 @@ impl DocxFile {
             footers,
             footnotes,
             endnotes,
+            comments,
         })
     }
 
@@ -331,6 +343,7 @@ impl DocxFile {
                             | crate::schema::SCHEMA_FOOTNOTES
                             | crate::schema::SCHEMA_ENDNOTES
                             | crate::schema::SCHEMA_SETTINGS
+                            | crate::schema::SCHEMA_COMMENTS
                     )
                 })
                 .map(|d| d.to_owned())
@@ -362,6 +375,12 @@ impl DocxFile {
             None
         };
 
+        let comments = if let Some(content) = &self.comments {
+            Some(Comments::from_str(content)?)
+        } else {
+            None
+        };
+
         let rels = Relationships::from_str(&self.rels)?;
 
         let styles = self
@@ -385,6 +404,7 @@ impl DocxFile {
             footnotes,
             endnotes,
             settings,
+            comments,
         })
     }
 }
