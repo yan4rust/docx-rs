@@ -87,7 +87,7 @@ pub struct DocPartUnique {
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "sdtEndPr")]
+#[xml(tag = "w:sdtEndPr")]
 pub struct SDTEndProperty {
     
 }
