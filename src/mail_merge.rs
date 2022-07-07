@@ -49,10 +49,9 @@ where
                     // if it's close part, add merged content. Otherwise, ignore it.
                 }
             },
-            crate::document::BodyContent::Table(_t) => {
-                
-            }
+            crate::document::BodyContent::Table(_t) => {}
             crate::document::BodyContent::SectionProperty(_) => {}
+            crate::document::BodyContent::Sdt(_) => {}
         }
     }
     let f = docx.write_file(path)?;

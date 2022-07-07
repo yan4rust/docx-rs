@@ -18,7 +18,7 @@ use crate::{
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:hdr")]
 pub struct Header<'a> {
-    #[xml(child = "w:p", child = "w:tbl", child = "w:sectPr")]
+    #[xml(child = "w:p", child = "w:tbl", child = "w:sectPr", child = "w:sdt")]
     pub content: Vec<BodyContent<'a>>,
 }
 

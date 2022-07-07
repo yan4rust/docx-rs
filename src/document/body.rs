@@ -5,6 +5,8 @@ use crate::document::{Paragraph, Table};
 use crate::formatting::SectionProperty;
 use crate::__xml_test_suites;
 
+use super::SDT;
+
 /// Document Body
 ///
 /// This is the main document editing surface.
@@ -13,7 +15,7 @@ use crate::__xml_test_suites;
 #[xml(tag = "w:body")]
 pub struct Body<'a> {
     /// Specifies the contents of the body of the document.
-    #[xml(child = "w:p", child = "w:tbl", child = "w:sectPr")]
+    #[xml(child = "w:p", child = "w:tbl", child = "w:sectPr", child = "w:sdt")]
     pub content: Vec<BodyContent<'a>>,
 }
 
@@ -31,6 +33,7 @@ impl<'a> Body<'a> {
                 BodyContent::Paragraph(para) => Some(para.iter_text()),
                 BodyContent::Table(_) => None,
                 BodyContent::SectionProperty(_) => None,
+                BodyContent::Sdt(_) => None,
             })
             .flatten()
             .map(|t| t.to_string())
@@ -59,6 +62,7 @@ impl<'a> Body<'a> {
                 }
                 BodyContent::Table(_) => {}
                 BodyContent::SectionProperty(_) => {}
+                BodyContent::Sdt(_) => {}
             }
         }
         Ok(())
@@ -91,6 +95,8 @@ pub enum BodyContent<'a> {
     Paragraph(Paragraph<'a>),
     #[xml(tag = "w:tbl")]
     Table(Table<'a>),
+    #[xml(tag = "w:sdt")]
+    Sdt(SDT<'a>),
     #[xml(tag = "w:sectPr")]
     SectionProperty(SectionProperty<'a>),
 }
