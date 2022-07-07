@@ -30,9 +30,9 @@ impl<'a> Hyperlink<'a> {
 __xml_test_suites!(
     Hyperlink,
     Hyperlink::default(),
-    r#"<w:hyperlink><w:r><w:rPr/></w:r></w:hyperlink>"#,
+    r#"<w:hyperlink><w:r/></w:hyperlink>"#,
     Hyperlink::default().id("id"),
-    r#"<w:hyperlink r:id="id"><w:r><w:rPr/></w:r></w:hyperlink>"#,
+    r#"<w:hyperlink r:id="id"><w:r/></w:hyperlink>"#,
     Hyperlink::default().anchor("anchor"),
-    r#"<w:hyperlink w:anchor="anchor"><w:r><w:rPr/></w:r></w:hyperlink>"#,
+    r#"<w:hyperlink w:anchor="anchor"><w:r/></w:hyperlink>"#,
 );

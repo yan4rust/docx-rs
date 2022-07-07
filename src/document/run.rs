@@ -31,9 +31,13 @@ use crate::{
 pub struct Run<'a> {
     /// Specifies the properties of a run
     ///
+    #[xml(attr = "w:rsidR")]
+    pub rsid_r: Option<Cow<'a, str>>,
+    #[xml(attr = "w:rsidRDefault")]
+    pub rsid_r_default: Option<Cow<'a, str>>,
     /// Just as paragraph, a run's properties is applied to all the contents of the run.
-    #[xml(default, child = "w:rPr")]
-    pub property: CharacterProperty<'a>,
+    #[xml(child = "w:rPr")]
+    pub property: Option<CharacterProperty<'a>>,
     #[xml(
         child = "w:t",
         child = "w:br",
@@ -47,7 +51,7 @@ pub struct Run<'a> {
 }
 
 impl<'a> Run<'a> {
-    __setter!(property: CharacterProperty<'a>);
+    __setter!(property: Option<CharacterProperty<'a>>);
     __setter!(shall_destroy: Option<bool>);
 
     #[inline(always)]
@@ -134,9 +138,9 @@ pub enum RunContent<'a> {
 __xml_test_suites!(
     Run,
     Run::default(),
-    r#"<w:r><w:rPr/></w:r>"#,
+    r#"<w:r/>"#,
     Run::default().push_break(None),
-    r#"<w:r><w:rPr/><w:br/></w:r>"#,
+    r#"<w:r><w:br/></w:r>"#,
     Run::default().push_text("text"),
-    r#"<w:r><w:rPr/><w:t>text</w:t></w:r>"#,
+    r#"<w:r><w:t>text</w:t></w:r>"#,
 );

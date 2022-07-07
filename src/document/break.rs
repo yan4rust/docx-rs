@@ -14,7 +14,7 @@ use crate::{__string_enum, __xml_test_suites};
 #[xml(tag = "w:br")]
 pub struct Break {
     /// Specifies the break type of this break.
-    #[xml(attr = "type")]
+    #[xml(attr = "w:type")]
     pub ty: Option<BreakType>,
 }
 
@@ -51,5 +51,5 @@ __xml_test_suites!(
     Break::default(),
     r#"<w:br/>"#,
     Break::from(BreakType::Page),
-    r#"<w:br type="page"/>"#,
+    r#"<w:br w:type="page"/>"#,
 );
