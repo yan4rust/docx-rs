@@ -26,12 +26,12 @@ pub struct ParagraphProperty<'a> {
     /// Specifies whether enable widow control
     #[xml(child = "w:widowControl")]
     pub widow_control: Option<WidowControl>,
-    /// Specifies the paragraph alignment.
-    #[xml(child = "w:jc")]
-    pub justification: Option<Justification>,
     /// Specifies borders for the paragraph.
     #[xml(child = "w:pBdr")]
     pub border: Option<Borders<'a>>,
+    /// Specifies the paragraph alignment.
+    #[xml(child = "w:jc")]
+    pub justification: Option<Justification>,
     /// Specifies that the paragraph should be numbered.
     #[xml(child = "w:numPr")]
     pub numbering: Option<NumberingProperty>,

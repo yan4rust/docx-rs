@@ -128,6 +128,8 @@ pub struct DocxFile {
     theme: Option<String>,
     settings: Option<String>,
     web_settings: Option<String>,
+    headers: Vec<(String, String)>,
+    footers: Vec<(String, String)>,
 }
 
 impl DocxFile {
@@ -158,6 +160,20 @@ impl DocxFile {
             };
         }
 
+        macro_rules! option_read_multiple {
+            ($xml:tt, $name:expr) => {{
+                let names:Vec<_> = zip.file_names().map(|x| x.to_string()).collect();
+                let name_and_value: Vec<_>= names.iter().filter(|n| n.contains($name)).filter_map(|f| {
+                    zip.by_name(f).ok().and_then(|mut file| {
+                        let mut buffer = String::new();
+                        file.read_to_string(&mut buffer).ok()?;
+                        Some((f.to_string(), buffer))
+                    })
+                }).collect();
+                name_and_value
+            }};
+        }
+
         let app = option_read!(App, "docProps/app.xml");
         let content_types = read!(ContentTypes, "[Content_Types].xml");
         let core = option_read!(Core, "docProps/core.xml");
@@ -169,6 +185,8 @@ impl DocxFile {
         let theme = option_read!(Theme, "word/theme/theme1.xml");
         let settings = option_read!(Settings, "word/settings.xml");
         let web_settings = option_read!(WebSettings, "word/webSettings.xml");
+        let headers = option_read_multiple!(Headers, "word/header");
+        let footers = option_read_multiple!(Footers, "word/footer");
 
         Ok(DocxFile {
             app,
@@ -182,6 +200,8 @@ impl DocxFile {
             theme,
             settings,
             web_settings,
+            headers,
+            footers,
         })
     }
 
