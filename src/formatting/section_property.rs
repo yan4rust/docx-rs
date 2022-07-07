@@ -32,18 +32,35 @@ pub struct SectionProperty<'a> {
     pub page_margin: Option<PageMargin>,
     #[xml(child = "w:cols")]
     pub cols: Option<PageCols>,
+    #[xml(child = "w:titlePg")]
+    pub title_page: Option<TitlePage>,
     #[xml(child = "w:docGrid")]
     pub grid: Option<PageGrid<'a>>,
 }
 
-// impl<'a> SectionProperty<'a> {
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:titlePg")]
+pub struct TitlePage {
+    
+}
+
+impl<'a> SectionProperty<'a> {
 //     __setter!(style_id: Option<SectionStyleId<'a>>);
 //     __setter!(justification: Option<Justification>);
 //     __setter!(border: Option<Borders<'a>>);
 //     __setter!(numbering: Option<NumberingProperty>);
 //     __setter!(spacing: Option<Spacing>);
 //     __setter!(indent: Option<Indent>);
-// }
+    fn first_page_has_diffrent_header_and_footer(&mut self, val: bool) -> &mut Self {
+        if val { 
+            self.title_page = Some(TitlePage::default());
+        } else {
+            self.title_page = None;
+        }
+        self
+    }
+}
 
 // #[derive(Debug, XmlRead, XmlWrite, Clone)]
 // #[cfg_attr(test, derive(PartialEq))]
