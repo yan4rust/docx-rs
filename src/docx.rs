@@ -1,9 +1,11 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Read, Seek, Write};
 use std::path::Path;
 use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
+use crate::document::{Header, Footer};
 use crate::{
     app::App,
     content_type::ContentTypes,
@@ -37,6 +39,8 @@ pub struct Docx<'a> {
     pub rels: Relationships<'a>,
     /// Specifies the part-level relationship to the main document part
     pub document_rels: Option<Relationships<'a>>,
+    pub headers: HashMap<String, Header<'a>>,
+    pub footers: HashMap<String, Footer<'a>>,
 }
 
 impl<'a> Docx<'a> {
@@ -221,6 +225,20 @@ impl DocxFile {
 
         let document = Document::from_str(&self.document)?;
 
+        let mut headers = HashMap::new();
+        for f in self.headers.iter() {
+            let hd = Header::from_str(&f.1)?;
+            let name = f.1.replace("word/","");
+            headers.insert(name,hd);
+        }
+
+        let mut footers = HashMap::new();
+        for f in self.footers.iter() {
+            let ft = Footer::from_str(&f.1)?;
+            let name = f.1.replace("word/","");
+            footers.insert(name,ft);
+        }
+
         let content_types = ContentTypes::from_str(&self.content_types)?;
 
         let core = if let Some(content) = &self.core {
@@ -259,6 +277,8 @@ impl DocxFile {
             font_table,
             rels,
             styles,
+            headers,
+            footers,
         })
     }
 }
