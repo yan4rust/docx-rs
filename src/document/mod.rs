@@ -14,8 +14,10 @@ mod table_row;
 mod text;
 mod field_char;
 mod instrtext;
+mod footer;
+mod header;
 
 pub use self::{
     document::*, body::*, bookmark_end::*, bookmark_start::*, field_char::*, grid_column::*, hyperlink::*, paragraph::*,
-    r#break::*, run::*, table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*,
+    r#break::*, run::*, table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*, header::*, footer::*,
 };
