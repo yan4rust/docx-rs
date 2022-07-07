@@ -5,8 +5,8 @@ use std::path::Path;
 use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
-use crate::document::{Footer, Header};
-use crate::schema::SCHEMA_HEADER;
+use crate::document::{Footer, Header, FootNotes, EndNotes};
+use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES};
 use crate::{
     app::App,
     content_type::ContentTypes,
@@ -42,6 +42,8 @@ pub struct Docx<'a> {
     pub document_rels: Option<Relationships<'a>>,
     pub headers: HashMap<String, Header<'a>>,
     pub footers: HashMap<String, Footer<'a>>,
+    pub footnotes: Option<FootNotes<'a>>,
+    pub endnotes: Option<EndNotes<'a>>,
 }
 
 impl<'a> Docx<'a> {
@@ -73,6 +75,18 @@ impl<'a> Docx<'a> {
             self.document_rels
                 .get_or_insert(Relationships::default())
                 .add_rel(SCHEMA_FONT_TABLE, "fontTable.xml");
+        }
+
+        if self.footnotes.is_some() {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_FOOTNOTES, "footnotes.xml");
+        }
+
+        if self.endnotes.is_some() {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_ENDNOTES, "endnotes.xml");
         }
 
         for hd in &self.headers {
@@ -117,6 +131,8 @@ impl<'a> Docx<'a> {
             self.document             => "word/document.xml"
             self.styles               => "word/styles.xml"
             Some(self.font_table)     => "word/fontTable.xml"
+            Some(self.footnotes)      => "word/footnotes.xml"
+            Some(self.endnotes)       => "word/endnotes.xml"
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
 
@@ -163,6 +179,8 @@ pub struct DocxFile {
     web_settings: Option<String>,
     headers: Vec<(String, String)>,
     footers: Vec<(String, String)>,
+    footnotes: Option<String>,
+    endnotes: Option<String>,
 }
 
 impl DocxFile {
@@ -222,6 +240,9 @@ impl DocxFile {
         let theme = option_read!(Theme, "word/theme/theme1.xml");
         let settings = option_read!(Settings, "word/settings.xml");
         let web_settings = option_read!(WebSettings, "word/webSettings.xml");
+        let footnotes = option_read!(Footnotes, "word/footnotes.xml");
+        let endnotes = option_read!(Endnotes, "word/endnotes.xml");
+
         let headers = option_read_multiple!(Headers, "word/header");
         let footers = option_read_multiple!(Footers, "word/footer");
 
@@ -239,6 +260,8 @@ impl DocxFile {
             web_settings,
             headers,
             footers,
+            footnotes,
+            endnotes,
         })
     }
 
@@ -296,6 +319,8 @@ impl DocxFile {
                             | crate::schema::SCHEMA_FOOTER
                             | crate::schema::SCHEMA_FONT_TABLE
                             | crate::schema::SCHEMA_STYLES
+                            | crate::schema::SCHEMA_FOOTNOTES
+                            | crate::schema::SCHEMA_ENDNOTES
                     )
                 })
                 .map(|d| d.to_owned())
@@ -305,6 +330,18 @@ impl DocxFile {
 
         let font_table = if let Some(content) = &self.font_table {
             Some(FontTable::from_str(content)?)
+        } else {
+            None
+        };
+
+        let footnotes = if let Some(content) = &self.footnotes {
+            Some(FootNotes::from_str(content)?)
+        } else {
+            None
+        };
+
+        let endnotes = if let Some(content) = &self.endnotes {
+            Some(EndNotes::from_str(content)?)
         } else {
             None
         };
@@ -329,6 +366,8 @@ impl DocxFile {
             styles,
             headers,
             footers,
+            footnotes,
+            endnotes,
         })
     }
 }

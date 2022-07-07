@@ -42,7 +42,9 @@ pub struct Run<'a> {
         child = "w:t",
         child = "w:br",
         child = "w:fldChar",
-        child = "w:instrText"
+        child = "w:instrText",
+        child = "w:separator",
+        child = "w:continuationSeparator",
     )]
     /// Specifies the content of a run
     pub content: Vec<RunContent<'a>>,
@@ -78,6 +80,8 @@ impl<'a> Run<'a> {
             RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
             RunContent::FieldChar(_) => None,
+            RunContent::Separator(_) => None,
+            RunContent::ContinuationSeparator(_) => None,
         })
     }
 
@@ -87,6 +91,8 @@ impl<'a> Run<'a> {
             RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
             RunContent::FieldChar(_) => None,
+            RunContent::Separator(_) => None,
+            RunContent::ContinuationSeparator(_) => None,
         })
     }
 
@@ -133,6 +139,24 @@ pub enum RunContent<'a> {
     FieldChar(FieldChar),
     #[xml(tag = "w:instrText")]
     InstrText(InstrText<'a>),
+    #[xml(tag = "w:separator")]
+    Separator(Separator),
+    #[xml(tag = "w:continuationSeparator")]
+    ContinuationSeparator(ContinuationSeparator),
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:separator")]
+pub struct Separator {
+   
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:continuationSeparator")]
+pub struct ContinuationSeparator {
+   
 }
 
 __xml_test_suites!(
