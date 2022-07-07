@@ -13,7 +13,7 @@ use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
-use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS, SCHEMA_XML};
+use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS, SCHEMA_XML, SCHEMA_RELATIONSHIPS_DOCUMENT};
 
 /// Font Table
 ///
@@ -42,7 +42,7 @@ impl<'a> XmlWrite for FontTable<'a> {
         writer.write_element_start("w:fonts")?;
 
         writer.write_attribute("xmlns:w", SCHEMA_MAIN)?;
-        writer.write_attribute("xmlns:r", SCHEMA_RELATIONSHIPS)?;
+        writer.write_attribute("xmlns:r", SCHEMA_RELATIONSHIPS_DOCUMENT)?;
 
         if fonts.is_empty() {
             writer.write_element_end_empty()?;
@@ -72,7 +72,7 @@ __xml_test_suites!(
     FontTable::default(),
     format!(
         r#"{}<w:fonts xmlns:w="{}" xmlns:r="{}"/>"#,
-        SCHEMA_XML, SCHEMA_MAIN, SCHEMA_RELATIONSHIPS
+        SCHEMA_XML, SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT
     )
     .as_str(),
     FontTable {
@@ -80,7 +80,7 @@ __xml_test_suites!(
     },
     format!(
         r#"{}<w:fonts xmlns:w="{}" xmlns:r="{}"><w:font w:name="Arial"/></w:fonts>"#,
-        SCHEMA_XML, SCHEMA_MAIN, SCHEMA_RELATIONSHIPS
+        SCHEMA_XML, SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT
     )
     .as_str(),
 );

@@ -20,6 +20,7 @@ pub const SCHEMA_MAIN: &str = "http://schemas.openxmlformats.org/wordprocessingm
 pub const SCHEMA_WORDML_14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 pub const SCHEMA_RELATIONSHIPS: &str =
     "http://schemas.openxmlformats.org/package/2006/relationships";
+pub const SCHEMA_RELATIONSHIPS_DOCUMENT : &str ="http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 pub const SCHEMAS_EXTENDED: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
 pub const SCHEMA_HEADER: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";

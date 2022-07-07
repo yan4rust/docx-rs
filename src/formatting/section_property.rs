@@ -3,7 +3,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    formatting::{Borders, Indent, PageCols, PageGrid, PageSize, PageMargin, Justification, NumberingProperty, Spacing, WidowControl},
+    formatting::{Borders, Indent, PageCols, PageGrid, PageSize, PageMargin, Justification, NumberingProperty, Spacing, WidowControl}, document::HeaderFooterReference,
 };
 
 /// Section Property
@@ -20,7 +20,12 @@ pub struct SectionProperty<'a> {
     pub rsid_r: Option<Cow<'a, str>>,
     #[xml(attr = "w:rsidRDefault")]
     pub rsid_r_default: Option<Cow<'a, str>>,
-    /// Specifies the style ID of the Section style.
+    #[xml(
+        child = "w:headerReference",
+        child = "w:footerReference",
+    )]
+    /// Specifies the content of a run
+    pub header_footer_references: Vec<HeaderFooterReference<'a>>,
     #[xml(child = "w:pgSz")]
     pub page_size: Option<PageSize>,
     #[xml(child = "w:pgMar")]
