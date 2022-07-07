@@ -47,9 +47,19 @@ impl<'a> Relationships<'a> {
     pub fn add_rel(&mut self, schema: &'a str, target: &'a str) {
         let has = self.relationships.iter().find(|r| r.target == target);
         if has.is_none() {
+            let ids: Vec<_>= self.relationships.iter().map(|r| r.id.to_string()).collect();
+
             let len = self.relationships.len();
+
+            let mut available = false;
+            let mut id = len;
+            while !available {
+                id += 1;
+                let idstr = format!("rId{}", id);
+                available = !ids.contains(&idstr);
+            }
             self.relationships.push(Relationship {
-                id: format!("rId{}", len + 1).into(),
+                id: format!("rId{}", id).into(),
                 target: target.into(),
                 ty: schema.into(),
             });

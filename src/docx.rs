@@ -5,7 +5,8 @@ use std::path::Path;
 use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
-use crate::document::{Header, Footer};
+use crate::document::{Footer, Header};
+use crate::schema::SCHEMA_HEADER;
 use crate::{
     app::App,
     content_type::ContentTypes,
@@ -44,7 +45,7 @@ pub struct Docx<'a> {
 }
 
 impl<'a> Docx<'a> {
-    pub fn write<W: Write + Seek>(&mut self, writer: W) -> DocxResult<W> {
+    pub fn write<W: Write + Seek>(&'a mut self, writer: W) -> DocxResult<W> {
         let mut writer = XmlWriter::new(ZipWriter::new(writer));
 
         let opt = FileOptions::default()
@@ -72,6 +73,18 @@ impl<'a> Docx<'a> {
             self.document_rels
                 .get_or_insert(Relationships::default())
                 .add_rel(SCHEMA_FONT_TABLE, "fontTable.xml");
+        }
+
+        for hd in &self.headers {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_HEADER, hd.0);
+        }
+
+        for ft in &self.footers {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_HEADER, ft.0);
         }
 
         // ==== Write Zip Item ====
@@ -126,7 +139,7 @@ impl<'a> Docx<'a> {
         Ok(writer.inner.finish()?)
     }
 
-    pub fn write_file<P: AsRef<Path>>(&mut self, path: P) -> DocxResult<File> {
+    pub fn write_file<P: AsRef<Path>>(&'a mut self, path: P) -> DocxResult<File> {
         if let Some(p) = path.as_ref().parent() {
             std::fs::create_dir_all(p)?;
         }
@@ -182,14 +195,18 @@ impl DocxFile {
 
         macro_rules! option_read_multiple {
             ($xml:tt, $name:expr) => {{
-                let names:Vec<_> = zip.file_names().map(|x| x.to_string()).collect();
-                let name_and_value: Vec<_>= names.iter().filter(|n| n.contains($name)).filter_map(|f| {
-                    zip.by_name(f).ok().and_then(|mut file| {
-                        let mut buffer = String::new();
-                        file.read_to_string(&mut buffer).ok()?;
-                        Some((f.to_string(), buffer))
+                let names: Vec<_> = zip.file_names().map(|x| x.to_string()).collect();
+                let name_and_value: Vec<_> = names
+                    .iter()
+                    .filter(|n| n.contains($name))
+                    .filter_map(|f| {
+                        zip.by_name(f).ok().and_then(|mut file| {
+                            let mut buffer = String::new();
+                            file.read_to_string(&mut buffer).ok()?;
+                            Some((f.to_string(), buffer))
+                        })
                     })
-                }).collect();
+                    .collect();
                 name_and_value
             }};
         }
@@ -244,15 +261,15 @@ impl DocxFile {
         let mut headers = HashMap::new();
         for f in self.headers.iter() {
             let hd = Header::from_str(&f.1)?;
-            let name = f.0.replace("word/","");
-            headers.insert(name,hd);
+            let name = f.0.replace("word/", "");
+            headers.insert(name, hd);
         }
 
         let mut footers = HashMap::new();
         for f in self.footers.iter() {
             let ft = Footer::from_str(&f.1)?;
-            let name = f.0.replace("word/","");
-            footers.insert(name,ft);
+            let name = f.0.replace("word/", "");
+            footers.insert(name, ft);
         }
 
         let content_types = ContentTypes::from_str(&self.content_types)?;
@@ -263,11 +280,28 @@ impl DocxFile {
             None
         };
 
-        let document_rels = None; //if let Some(content) = &self.document_rels {
-        //     Some(Relationships::from_str(content)?)
-        // } else {
-        //     None
-        // };
+        let document_rels: Option<Relationships> = if let Some(content) = &self.document_rels {
+            Some(Relationships::from_str(content)?)
+        } else {
+            None
+        };
+        let document_rels = document_rels.map(|rel: Relationships| {
+            let rrr: Vec<_> = rel
+                .relationships
+                .iter()
+                .filter(|r2| {
+                    matches!(
+                        r2.ty.to_string().as_str(),
+                        crate::schema::SCHEMA_HEADER
+                            | crate::schema::SCHEMA_FOOTER
+                            | crate::schema::SCHEMA_FONT_TABLE
+                            | crate::schema::SCHEMA_STYLES
+                    )
+                })
+                .map(|d| d.to_owned())
+                .collect();
+            Relationships { relationships: rrr }
+        });
 
         let font_table = if let Some(content) = &self.font_table {
             Some(FontTable::from_str(content)?)
