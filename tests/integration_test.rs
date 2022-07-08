@@ -1,5 +1,5 @@
-extern crate docx;
-use docx::DocxFile;
+extern crate docx_rust;
+use docx_rust::DocxFile;
 
 #[test]
 fn read_and_relace() {
