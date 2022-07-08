@@ -1,6 +1,7 @@
 //! Comments part
 //!
 //! The corresponding ZIP item is `/word/comments.xml`.
+#![allow(unused_must_use)]
 
 use std::{borrow::Cow, io::Write};
 use strong_xml::{XmlRead, XmlWrite, XmlResult, XmlWriter};

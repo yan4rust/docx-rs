@@ -23,9 +23,12 @@ mod endnotes;
 mod comment_range;
 mod tab;
 mod drawing;
+mod comments;
+mod theme;
 
 pub use self::{
     document::*, body::*, bookmark_end::*, bookmark_start::*, field_char::*, grid_column::*, hyperlink::*, paragraph::*,
     r#break::*, run::*, table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*, header::*, footer::*,
-    header_footer_reference::*, sdt::*, footnotes::*, endnotes::*, comment_range::*, tab::*, drawing::*,
+    header_footer_reference::*, sdt::*, footnotes::*, endnotes::*, comment_range::*, tab::*, drawing::*, comments::*,
+    theme::*,
 };

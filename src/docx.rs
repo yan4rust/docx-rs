@@ -5,11 +5,10 @@ use std::path::Path;
 use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
-use crate::comments::Comments;
-use crate::document::{EndNotes, FootNotes, Footer, Header};
+use crate::document::{Comments, EndNotes, FootNotes, Footer, Header, Theme};
 use crate::schema::{
     SCHEMA_COMMENTS, SCHEMA_ENDNOTES, SCHEMA_FOOTNOTES, SCHEMA_HEADER, SCHEMA_SETTINGS,
-    SCHEMA_WEB_SETTINGS,
+    SCHEMA_WEB_SETTINGS, SCHEMA_THEME,
 };
 use crate::settings::Settings;
 use crate::web_settings::WebSettings;
@@ -48,6 +47,7 @@ pub struct Docx<'a> {
     pub document_rels: Option<Relationships<'a>>,
     pub headers: HashMap<String, Header<'a>>,
     pub footers: HashMap<String, Footer<'a>>,
+    pub themes: HashMap<String, Theme<'a>>,
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
     pub settings: Option<Settings<'a>>,
@@ -128,6 +128,12 @@ impl<'a> Docx<'a> {
                 .add_rel(SCHEMA_HEADER, ft.0);
         }
 
+        for theme in &self.themes {
+            self.document_rels
+            .get_or_insert(Relationships::default())
+            .add_rel(SCHEMA_THEME, theme.0);
+        }
+
         // ==== Write Zip Item ====
 
         macro_rules! write_xml {
@@ -182,6 +188,14 @@ impl<'a> Docx<'a> {
             );
         }
 
+        for theme in self.themes.iter() {
+            let file_path = format!("word/{}", theme.0);
+            let content = theme.1;
+            write_xml!(
+                content => file_path
+            );
+        }
+
         Ok(writer.inner.finish()?)
     }
 
@@ -204,11 +218,11 @@ pub struct DocxFile {
     font_table: Option<String>,
     rels: String,
     styles: Option<String>,
-    theme: Option<String>,
     settings: Option<String>,
     web_settings: Option<String>,
     headers: Vec<(String, String)>,
     footers: Vec<(String, String)>,
+    themes: Vec<(String, String)>,
     footnotes: Option<String>,
     endnotes: Option<String>,
     comments: Option<String>,
@@ -268,7 +282,6 @@ impl DocxFile {
         let font_table = option_read!(FontTable, "word/fontTable.xml");
         let rels = read!(Relationships, "_rels/.rels");
         let styles = option_read!(Styles, "word/styles.xml");
-        let theme = option_read!(Theme, "word/theme/theme1.xml");
         let settings = option_read!(Settings, "word/settings.xml");
         let web_settings = option_read!(WebSettings, "word/webSettings.xml");
         let footnotes = option_read!(Footnotes, "word/footnotes.xml");
@@ -277,6 +290,7 @@ impl DocxFile {
 
         let headers = option_read_multiple!(Headers, "word/header");
         let footers = option_read_multiple!(Footers, "word/footer");
+        let themes = option_read_multiple!(Themes, "word/theme/theme");
 
         Ok(DocxFile {
             app,
@@ -287,11 +301,11 @@ impl DocxFile {
             font_table,
             rels,
             styles,
-            theme,
             settings,
             web_settings,
             headers,
             footers,
+            themes,
             footnotes,
             endnotes,
             comments,
@@ -328,6 +342,13 @@ impl DocxFile {
             footers.insert(name, ft);
         }
 
+        let mut themes = HashMap::new();
+        for t in self.themes.iter() {
+            let th = Theme::from_str(&t.1)?;
+            let name = t.0.replace("word/", "");
+            themes.insert(name, th);
+        }
+
         let content_types = ContentTypes::from_str(&self.content_types)?;
 
         let core = if let Some(content) = &self.core {
@@ -350,6 +371,7 @@ impl DocxFile {
                         r2.ty.to_string().as_str(),
                         crate::schema::SCHEMA_HEADER
                             | crate::schema::SCHEMA_FOOTER
+                            | crate::schema::SCHEMA_THEME
                             | crate::schema::SCHEMA_FONT_TABLE
                             | crate::schema::SCHEMA_STYLES
                             | crate::schema::SCHEMA_FOOTNOTES
@@ -420,6 +442,7 @@ impl DocxFile {
             styles,
             headers,
             footers,
+            themes,
             footnotes,
             endnotes,
             settings,

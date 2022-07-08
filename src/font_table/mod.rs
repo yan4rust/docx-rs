@@ -1,6 +1,7 @@
 //! Font Table part
 //!
 //! The corresponding ZIP item is `/word/fontTable.xml`.
+#![allow(unused_must_use)]
 
 mod charset;
 mod family;
@@ -37,7 +38,7 @@ impl<'a> XmlWrite for FontTable<'a> {
         let FontTable { fonts } = self;
 
         log::debug!("[FontTable] Started writing.");
-        let _ = write!(writer.inner, "{}", crate::schema::SCHEMA_XML);
+        let _ = write!(writer.inner, "{}", SCHEMA_XML);
 
         writer.write_element_start("w:fonts")?;
 

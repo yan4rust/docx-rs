@@ -1,8 +1,10 @@
+#![allow(dead_code)]
 use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
-    formatting::{PageCols, PageGrid, PageSize, PageMargin}, document::HeaderFooterReference,
+    document::HeaderFooterReference,
+    formatting::{PageCols, PageGrid, PageMargin, PageSize},
 };
 
 /// Section Property
@@ -19,10 +21,7 @@ pub struct SectionProperty<'a> {
     pub rsid_r: Option<Cow<'a, str>>,
     #[xml(attr = "w:rsidRDefault")]
     pub rsid_r_default: Option<Cow<'a, str>>,
-    #[xml(
-        child = "w:headerReference",
-        child = "w:footerReference",
-    )]
+    #[xml(child = "w:headerReference", child = "w:footerReference")]
     /// Specifies the content of a run
     pub header_footer_references: Vec<HeaderFooterReference<'a>>,
     #[xml(child = "w:pgSz")]
@@ -40,19 +39,17 @@ pub struct SectionProperty<'a> {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:titlePg")]
-pub struct TitlePage {
-    
-}
+pub struct TitlePage {}
 
 impl<'a> SectionProperty<'a> {
-//     __setter!(style_id: Option<SectionStyleId<'a>>);
-//     __setter!(justification: Option<Justification>);
-//     __setter!(border: Option<Borders<'a>>);
-//     __setter!(numbering: Option<NumberingProperty>);
-//     __setter!(spacing: Option<Spacing>);
-//     __setter!(indent: Option<Indent>);
+    //     __setter!(style_id: Option<SectionStyleId<'a>>);
+    //     __setter!(justification: Option<Justification>);
+    //     __setter!(border: Option<Borders<'a>>);
+    //     __setter!(numbering: Option<NumberingProperty>);
+    //     __setter!(spacing: Option<Spacing>);
+    //     __setter!(indent: Option<Indent>);
     fn first_page_has_diffrent_header_and_footer(&mut self, val: bool) -> &mut Self {
-        if val { 
+        if val {
             self.title_page = Some(TitlePage::default());
         } else {
             self.title_page = None;

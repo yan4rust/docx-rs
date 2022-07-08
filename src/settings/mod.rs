@@ -7,7 +7,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::__xml_test_suites;
+use crate::{__xml_test_suites, write_attr};
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
 
 /// The root element of the main document part.
@@ -64,16 +64,6 @@ impl<'a> XmlWrite for Settings<'a> {
 
         Ok(())
     }
-}
-
-fn write_attr<W: Write, T: XmlWrite>(
-    element: &Option<T>,
-    writer: &mut XmlWriter<W>,
-) -> Result<(), strong_xml::XmlError> {
-    if let Some(e) = element {
-        e.to_writer(writer)?;
-    };
-    Ok(())
 }
 
 __xml_test_suites!(

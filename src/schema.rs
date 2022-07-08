@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub const SCHEMA_XML: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
 pub const SCHEMA_CORE: &str =
     "http://schemas.openxmlformats.org/officedocument/2006/relationships/metadata/core-properties";
@@ -25,6 +27,7 @@ pub const SCHEMA_CONTENT_TYPES: &str =
     "http://schemas.openxmlformats.org/package/2006/content-types";
 pub const SCHEMA_MAIN: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 pub const SCHEMA_WORDML_14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
+pub const SCHEMA_DRAWINGML: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
 pub const SCHEMA_RELATIONSHIPS: &str =
     "http://schemas.openxmlformats.org/package/2006/relationships";
 pub const SCHEMA_RELATIONSHIPS_DOCUMENT: &str =
@@ -35,6 +38,7 @@ pub const SCHEMA_HEADER: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";
 pub const SCHEMA_FOOTER: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer";
+pub const SCHEMA_THEME: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
 pub const SCHEMA_COMMENTS: &str ="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
 pub const SCHEMA_COMMENTS_EXT: &str ="http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible";
 pub const SCHEMA_COMMENTS_IDS: &str ="http://schemas.microsoft.com/office/2016/09/relationships/commentsIds";

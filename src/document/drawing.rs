@@ -1,8 +1,6 @@
-
+#![allow(unused_must_use)]
 
 use strong_xml::{XmlRead, XmlWrite};
-
-
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

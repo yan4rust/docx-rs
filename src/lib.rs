@@ -92,8 +92,21 @@ mod schema;
 pub mod styles;
 pub mod settings;
 pub mod mail_merge;
-pub mod comments;
 pub mod web_settings;
+
+use std::io::Write;
+
+use strong_xml::{XmlWrite, XmlWriter};
 
 pub use crate::docx::{Docx, DocxFile};
 pub use crate::error::{DocxError, DocxResult};
+
+pub fn write_attr<W: Write, T: XmlWrite>(
+    element: &Option<T>,
+    writer: &mut XmlWriter<W>,
+) -> Result<(), strong_xml::XmlError> {
+    if let Some(e) = element {
+        e.to_writer(writer)?;
+    };
+    Ok(())
+}
