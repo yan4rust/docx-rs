@@ -2,13 +2,14 @@
 //!
 //! The corresponding ZIP item is `/word/theme/theme{n}.xml`.
 //!
+#![allow(unused_must_use)]
 #![allow(unused_imports)]
 use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::{__xml_test_suites, write_attr};
 use crate::schema::{SCHEMA_DRAWINGML, SCHEMA_MAIN, SCHEMA_WORDML_14};
+use crate::{__xml_test_suites, write_attr};
 
 /// The root element of the main document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -18,13 +19,13 @@ pub struct Theme<'a> {
     #[xml(attr = "name")]
     pub name: Option<Cow<'a, str>>,
     #[xml(child = "a:themeElements")]
-    pub elements: Option<ThemeElements<'a>>,
+    pub elements: ThemeElements<'a>,
     #[xml(child = "a:objectDefaults")]
-    pub defaults: Option<ObjectDefaults>,
+    pub defaults: ObjectDefaults,
     #[xml(child = "a:extraClrSchemeLst")]
-    pub extra_clr_scheme_lst: Option<ExtraClrSchemeLst>,
+    pub extra_clr_scheme_lst: ExtraClrSchemeLst,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: ExtLst,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -53,6 +54,78 @@ pub struct ClrScheme<'a> {
 pub struct FontScheme<'a> {
     #[xml(attr = "name")]
     pub name: Option<Cow<'a, str>>,
+    #[xml(child = "a:majorFont")]
+    pub major_font: MajorFont<'a>,
+    #[xml(child = "a:minorFont")]
+    pub minor_font: MinorFont<'a>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:majorFont")]
+pub struct MajorFont<'a> {
+    #[xml(child = "a:latin")]
+    pub latin: Option<Latin<'a>>,
+    #[xml(child = "a:ea")]
+    pub ea: Option<EA<'a>>,
+    #[xml(child = "a:cs")]
+    pub cs: Option<CS<'a>>,
+    #[xml(child = "a:font")]
+    pub fonts: Vec<Font<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:minorFont")]
+pub struct MinorFont<'a> {
+    #[xml(child = "a:latin")]
+    pub latin: Option<Latin<'a>>,
+    #[xml(child = "a:ea")]
+    pub ea: Option<EA<'a>>,
+    #[xml(child = "a:cs")]
+    pub cs: Option<CS<'a>>,
+    #[xml(child = "a:font")]
+    pub fonts: Vec<Font<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:ea")]
+pub struct EA<'a> {
+    #[xml(attr = "typeface")]
+    pub typeface: Option<Cow<'a, str>>,
+    #[xml(attr = "panose")]
+    pub panose: Option<Cow<'a, str>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:cs")]
+pub struct CS<'a> {
+    #[xml(attr = "typeface")]
+    pub typeface: Option<Cow<'a, str>>,
+    #[xml(attr = "panose")]
+    pub panose: Option<Cow<'a, str>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:latin")]
+pub struct Latin<'a> {
+    #[xml(attr = "typeface")]
+    pub typeface: Option<Cow<'a, str>>,
+    #[xml(attr = "panose")]
+    pub panose: Option<Cow<'a, str>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:font")]
+pub struct Font<'a> {
+    #[xml(attr = "script")]
+    pub script: Option<Cow<'a, str>>,
+    #[xml(attr = "typeface")]
+    pub typeface: Option<Cow<'a, str>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -61,7 +134,35 @@ pub struct FontScheme<'a> {
 pub struct FmtScheme<'a> {
     #[xml(attr = "name")]
     pub name: Option<Cow<'a, str>>,
+    #[xml(child ="a:fillStyleLst")]
+    pub fill_style_lst: FillStyleLst,
+    #[xml(child ="a:lnStyleLst")]
+    pub in_style_lst: InStyleLst,
+    #[xml(child ="a:effectStyleLst")]
+    pub effect_style_lst: EffectStyleLst,
+    #[xml(child ="a:bgFillStyleLst")]
+    pub bg_fill_style_lst: BgFillStyleLst,
 }
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:fillStyleLst")]
+pub struct FillStyleLst {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:lnStyleLst")]
+pub struct InStyleLst {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:effectStyleLst")]
+pub struct EffectStyleLst {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:bgFillStyleLst")]
+pub struct BgFillStyleLst {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -101,13 +202,10 @@ impl<'a> XmlWrite for Theme<'a> {
 
         writer.write_element_end_open()?;
 
-        write_attr(elements, writer)?;
-
-        write_attr(defaults, writer)?;
-
-        write_attr(extra_clr_scheme_lst, writer)?;
-
-        write_attr(ext_lst, writer)?;
+        elements.to_writer(writer)?;
+        defaults.to_writer(writer)?;
+        extra_clr_scheme_lst.to_writer(writer)?;
+        ext_lst.to_writer(writer)?;
 
         writer.write_element_end_close("a:theme")?;
 
@@ -121,7 +219,7 @@ __xml_test_suites!(
     Theme,
     Theme::default(),
     format!(
-        r#"{}<a:theme xmlns:a="{}"></a:theme>"#,
+        r#"{}<a:theme xmlns:a="{}"><a:themeElements/><a:objectDefaults/><a:extraClrSchemeLst/><a:extLst/></a:theme>"#,
         crate::schema::SCHEMA_XML,
         SCHEMA_DRAWINGML,
     )

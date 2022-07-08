@@ -343,11 +343,12 @@ impl DocxFile {
         }
 
         let mut themes = HashMap::new();
-        for t in self.themes.iter() {
-            let th = Theme::from_str(&t.1)?;
-            let name = t.0.replace("word/", "");
-            themes.insert(name, th);
-        }
+        // turn off for now
+        // for t in self.themes.iter() {
+        //     let th = Theme::from_str(&t.1)?;
+        //     let name = t.0.replace("word/", "");
+        //     themes.insert(name, th);
+        // }
 
         let content_types = ContentTypes::from_str(&self.content_types)?;
 
@@ -371,7 +372,7 @@ impl DocxFile {
                         r2.ty.to_string().as_str(),
                         crate::schema::SCHEMA_HEADER
                             | crate::schema::SCHEMA_FOOTER
-                            | crate::schema::SCHEMA_THEME
+                            //| crate::schema::SCHEMA_THEME
                             | crate::schema::SCHEMA_FONT_TABLE
                             | crate::schema::SCHEMA_STYLES
                             | crate::schema::SCHEMA_FOOTNOTES
