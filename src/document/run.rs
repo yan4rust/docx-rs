@@ -5,7 +5,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    document::{field_char::FieldChar, instrtext::InstrText, r#break::Break, text::Text},
+    document::{field_char::FieldChar, tab::Tab, drawing::Drawing, instrtext::InstrText, r#break::Break, text::Text},
     formatting::CharacterProperty,
     DocxResult,
 };
@@ -41,6 +41,8 @@ pub struct Run<'a> {
     #[xml(
         child = "w:t",
         child = "w:br",
+        child = "w:tab",
+        child = "w:drawing",
         child = "w:fldChar",
         child = "w:instrText",
         child = "w:separator",
@@ -82,6 +84,8 @@ impl<'a> Run<'a> {
             RunContent::FieldChar(_) => None,
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
+            RunContent::Tab(_) => None,
+            RunContent::Drawing(_) => None,
         })
     }
 
@@ -93,6 +97,8 @@ impl<'a> Run<'a> {
             RunContent::FieldChar(_) => None,
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
+            RunContent::Tab(_) => None,
+            RunContent::Drawing(_) => None,
         })
     }
 
@@ -143,6 +149,10 @@ pub enum RunContent<'a> {
     Separator(Separator),
     #[xml(tag = "w:continuationSeparator")]
     ContinuationSeparator(ContinuationSeparator),
+    #[xml(tag = "w:tab")]
+    Tab(Tab),
+    #[xml(tag = "w:drawing")]
+    Drawing(Drawing),
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
