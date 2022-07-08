@@ -12,13 +12,13 @@ pub struct MergeGroups<'a> {
     pub contents: Vec<Part<'a>>
 }
 
-pub fn mail_merge<P>(template: &Docx, map: HashMap<String, String>, path: P) -> DocxResult<()>
+pub fn mail_merge<P>(template: &Docx, _map: HashMap<String, String>, path: P) -> DocxResult<()>
 where
     P: AsRef<Path>,
 {
     let mut docx = template.clone();
-    let dmap: HashMap<String, Vec<Part>> = HashMap::new();
-    let mut is_merge_field = false;
+    let _dmap: HashMap<String, Vec<Part>> = HashMap::new();
+    let is_merge_field = false;
     for c in docx.document.body.content.iter() {
         match c {
             crate::document::BodyContent::Paragraph(p) => {
@@ -42,7 +42,7 @@ where
                         }
                     });
 
-                    if let Some(pc) = iter.next() {
+                    if let Some(_pc) = iter.next() {
 
                     }
                 } else {
@@ -54,6 +54,6 @@ where
             crate::document::BodyContent::Sdt(_) => {}
         }
     }
-    let f = docx.write_file(path)?;
+    let _f = docx.write_file(path)?;
     Ok(())
 }

@@ -107,7 +107,7 @@ impl<'a> Paragraph<'a> {
         for content in self.content.iter_mut() {
             match content {
                 ParagraphContent::Run(r) => {
-                    let _d = r.replace_text(dic)?;
+                    r.replace_text(dic)?;
                 }
                 _ => {}
             }

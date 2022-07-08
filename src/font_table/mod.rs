@@ -13,7 +13,7 @@ use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
-use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS, SCHEMA_XML, SCHEMA_RELATIONSHIPS_DOCUMENT};
+use crate::schema::{SCHEMA_XML, SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT};
 
 /// Font Table
 ///

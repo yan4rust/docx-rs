@@ -405,7 +405,7 @@ impl DocxFile {
         let styles = self
             .styles
             .as_ref()
-            .map(|content| Styles::from_str(&content))
+            .map(|content| Styles::from_str(content))
             .transpose()?
             .unwrap_or_default();
 

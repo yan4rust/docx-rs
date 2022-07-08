@@ -1,7 +1,7 @@
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
-    __setter, __xml_test_suites,
+    __setter,
 };
 
 use super::margin::{LeftMargin, RightMargin, TopMargin, BottomMargin};

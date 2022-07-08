@@ -1,7 +1,7 @@
-use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use strong_xml::{XmlRead, XmlWrite};
 
-use crate::__xml_test_suites;
-use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
+
+
 
 use super::latent_style::LatentStyle;
 

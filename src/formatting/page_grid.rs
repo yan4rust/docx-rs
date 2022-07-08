@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::__xml_test_suites;
+
 
 /// Numbering Id
 ///

@@ -1,12 +1,8 @@
-use derive_more::From;
-use std::borrow::Cow;
+
+
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{
-    __setter, __xml_test_suites,
-    document::{r#break::Break, tab::Tab, text::Text},
-    formatting::CharacterProperty,
-};
+
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

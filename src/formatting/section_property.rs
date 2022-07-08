@@ -2,8 +2,7 @@ use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
-    __setter, __xml_test_suites,
-    formatting::{Borders, Indent, PageCols, PageGrid, PageSize, PageMargin, Justification, NumberingProperty, Spacing, WidowControl}, document::HeaderFooterReference,
+    formatting::{PageCols, PageGrid, PageSize, PageMargin}, document::HeaderFooterReference,
 };
 
 /// Section Property

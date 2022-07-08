@@ -70,9 +70,10 @@ fn write_attr<W: Write, T: XmlWrite>(
     element: &Option<T>,
     writer: &mut XmlWriter<W>,
 ) -> Result<(), strong_xml::XmlError> {
-    Ok(if let Some(e) = element {
+    if let Some(e) = element {
         e.to_writer(writer)?;
-    })
+    };
+    Ok(())
 }
 
 __xml_test_suites!(

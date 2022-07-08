@@ -58,7 +58,7 @@ impl<'a> Body<'a> {
         for content in self.content.iter_mut() {
             match content {
                 BodyContent::Paragraph(p) => {
-                    let _d = p.replace_text(dic)?;
+                    p.replace_text(dic)?;
                 }
                 BodyContent::Table(_) => {}
                 BodyContent::SectionProperty(_) => {}
