@@ -1,0 +1,92 @@
+//! WebSettings part
+//!
+//! The corresponding ZIP item is `/word/webSettings.xml`.
+//!
+
+use std::io::Write;
+use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+
+use crate::__xml_test_suites;
+use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
+
+/// The root element of the main document part.
+#[derive(Debug, Default, XmlRead, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:webSettings")]
+pub struct WebSettings {
+    #[xml(child = "w:optimizeForBrowser")]
+    pub optimize_for_browser: Option<OptimizeForBrowser>,
+    #[xml(child = "w:relyOnVML")]
+    pub rely_on_vml: Option<RelyOnVml>,
+    #[xml(child = "w:allowPNG")]
+    pub allow_png: Option<AllowPNG>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:optimizeForBrowser")]
+pub struct OptimizeForBrowser {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:relyOnVML")]
+pub struct RelyOnVml {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:allowPNG")]
+pub struct AllowPNG {}
+
+impl XmlWrite for WebSettings {
+    fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {
+        let WebSettings {
+            optimize_for_browser,
+            rely_on_vml,
+            allow_png,
+        } = self;
+
+        log::debug!("[WebSettings] Started writing.");
+        let _ = write!(writer.inner, "{}", crate::schema::SCHEMA_XML);
+
+        writer.write_element_start("w:webSettings")?;
+
+        writer.write_attribute("xmlns:w", SCHEMA_MAIN)?;
+
+        writer.write_attribute("xmlns:w14", SCHEMA_WORDML_14)?;
+
+        writer.write_element_end_open()?;
+
+        write_attr(optimize_for_browser, writer)?;
+
+        write_attr(rely_on_vml, writer)?;
+
+        write_attr(allow_png, writer)?;
+
+        writer.write_element_end_close("w:webSettings")?;
+
+        log::debug!("[webSettings] Finished writing.");
+
+        Ok(())
+    }
+}
+
+fn write_attr<W: Write, T: XmlWrite>(
+    element: &Option<T>,
+    writer: &mut XmlWriter<W>,
+) -> Result<(), strong_xml::XmlError> {
+    Ok(if let Some(e) = element {
+        e.to_writer(writer)?;
+    })
+}
+
+__xml_test_suites!(
+    WebSettings,
+    WebSettings::default(),
+    format!(
+        r#"{}<w:webSettings xmlns:w="{}" xmlns:w14="{}"></w:webSettings>"#,
+        crate::schema::SCHEMA_XML,
+        SCHEMA_MAIN,
+        SCHEMA_WORDML_14
+    )
+    .as_str(),
+);

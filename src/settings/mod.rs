@@ -60,7 +60,7 @@ impl<'a> XmlWrite for Settings<'a> {
 
         writer.write_element_end_close("w:settings")?;
 
-        log::debug!("[Document] Finished writing.");
+        log::debug!("[Settings] Finished writing.");
 
         Ok(())
     }

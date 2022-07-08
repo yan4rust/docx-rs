@@ -18,6 +18,7 @@ pub const SCHEMA_ENDNOTES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
 pub const SCHEMA_SETTINGS: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+pub const SCHEMA_WEB_SETTINGS: &str ="http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings";
 pub const SCHEMA_DOC_PROPS_V_TYPES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
 pub const SCHEMA_CONTENT_TYPES: &str =

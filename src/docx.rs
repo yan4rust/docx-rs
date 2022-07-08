@@ -6,9 +6,13 @@ use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::comments::Comments;
-use crate::document::{Footer, Header, FootNotes, EndNotes};
-use crate::schema::{SCHEMA_HEADER, SCHEMA_FOOTNOTES, SCHEMA_ENDNOTES, SCHEMA_SETTINGS, SCHEMA_COMMENTS};
+use crate::document::{EndNotes, FootNotes, Footer, Header};
+use crate::schema::{
+    SCHEMA_COMMENTS, SCHEMA_ENDNOTES, SCHEMA_FOOTNOTES, SCHEMA_HEADER, SCHEMA_SETTINGS,
+    SCHEMA_WEB_SETTINGS,
+};
 use crate::settings::Settings;
+use crate::web_settings::WebSettings;
 use crate::{
     app::App,
     content_type::ContentTypes,
@@ -47,6 +51,7 @@ pub struct Docx<'a> {
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
     pub settings: Option<Settings<'a>>,
+    pub web_settings: Option<WebSettings>,
     pub comments: Option<Comments<'a>>,
 }
 
@@ -97,6 +102,12 @@ impl<'a> Docx<'a> {
             self.document_rels
                 .get_or_insert(Relationships::default())
                 .add_rel(SCHEMA_SETTINGS, "settings.xml");
+        }
+
+        if self.web_settings.is_some() {
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_WEB_SETTINGS, "webSettings.xml");
         }
 
         if self.comments.is_some() {
@@ -150,6 +161,7 @@ impl<'a> Docx<'a> {
             Some(self.footnotes)      => "word/footnotes.xml"
             Some(self.endnotes)       => "word/endnotes.xml"
             Some(self.settings)       => "word/settings.xml"
+            Some(self.web_settings)       => "word/webSettings.xml"
             Some(self.comments)       => "word/comments.xml"
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
@@ -343,6 +355,7 @@ impl DocxFile {
                             | crate::schema::SCHEMA_FOOTNOTES
                             | crate::schema::SCHEMA_ENDNOTES
                             | crate::schema::SCHEMA_SETTINGS
+                            | crate::schema::SCHEMA_WEB_SETTINGS
                             | crate::schema::SCHEMA_COMMENTS
                     )
                 })
@@ -371,6 +384,12 @@ impl DocxFile {
 
         let settings = if let Some(content) = &self.settings {
             Some(Settings::from_str(content)?)
+        } else {
+            None
+        };
+
+        let web_settings = if let Some(content) = &self.web_settings {
+            Some(WebSettings::from_str(content)?)
         } else {
             None
         };
@@ -404,6 +423,7 @@ impl DocxFile {
             footnotes,
             endnotes,
             settings,
+            web_settings,
             comments,
         })
     }

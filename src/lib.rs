@@ -93,6 +93,7 @@ pub mod styles;
 pub mod settings;
 pub mod mail_merge;
 pub mod comments;
+pub mod web_settings;
 
 pub use crate::docx::{Docx, DocxFile};
 pub use crate::error::{DocxError, DocxResult};

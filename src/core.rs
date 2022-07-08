@@ -6,7 +6,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::schema::{SCHEMA_CORE, SCHEMA_XML, SCHEMA_DC, SCHEMA_CORE_2};
+use crate::schema::{SCHEMA_XML, SCHEMA_DC, SCHEMA_CORE_2};
 
 #[derive(Debug, Default, XmlRead, Clone)]
 #[xml(tag = "cp:coreProperties")]
