@@ -47,7 +47,11 @@ impl<'a> Relationships<'a> {
     pub fn add_rel(&mut self, schema: &'a str, target: &'a str) {
         let has = self.relationships.iter().find(|r| r.target == target);
         if has.is_none() {
-            let ids: Vec<_>= self.relationships.iter().map(|r| r.id.to_string()).collect();
+            let ids: Vec<_> = self
+                .relationships
+                .iter()
+                .map(|r| r.id.to_string())
+                .collect();
 
             let len = self.relationships.len();
 

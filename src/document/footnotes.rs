@@ -1,17 +1,15 @@
 //! FootNotes part
 //!
 //! The corresponding ZIP item is `/word/footnotes.xml`.
-//! 
+//!
 
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::{__xml_test_suites, __string_enum};
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
+use crate::{__string_enum, __xml_test_suites};
 
-use crate::{
-    document::BodyContent,
-};
+use crate::document::BodyContent;
 
 #[derive(Debug, Default, XmlRead, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -81,14 +79,14 @@ __string_enum! {
     }
 }
 
-
 __xml_test_suites!(
     FootNotes,
     FootNotes::default(),
     format!(
         r#"{}<w:footnotes xmlns:w="{}" xmlns:w14="{}"></w:footnotes>"#,
         crate::schema::SCHEMA_XML,
-        SCHEMA_MAIN, SCHEMA_WORDML_14
+        SCHEMA_MAIN,
+        SCHEMA_WORDML_14
     )
     .as_str(),
 );

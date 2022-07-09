@@ -8,7 +8,7 @@ use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, Z
 use crate::document::{Comments, EndNotes, FootNotes, Footer, Header, Theme};
 use crate::schema::{
     SCHEMA_COMMENTS, SCHEMA_ENDNOTES, SCHEMA_FOOTNOTES, SCHEMA_HEADER, SCHEMA_SETTINGS,
-    SCHEMA_WEB_SETTINGS, SCHEMA_THEME,
+    SCHEMA_THEME, SCHEMA_WEB_SETTINGS,
 };
 use crate::settings::Settings;
 use crate::web_settings::WebSettings;
@@ -130,8 +130,8 @@ impl<'a> Docx<'a> {
 
         for theme in &self.themes {
             self.document_rels
-            .get_or_insert(Relationships::default())
-            .add_rel(SCHEMA_THEME, theme.0);
+                .get_or_insert(Relationships::default())
+                .add_rel(SCHEMA_THEME, theme.0);
         }
 
         // ==== Write Zip Item ====

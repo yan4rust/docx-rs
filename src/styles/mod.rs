@@ -3,12 +3,12 @@
 //! The corresponding ZIP item is `/word/styles.xml`.
 
 mod default_style;
-mod style;
+mod latent_style;
+mod latent_styles;
 mod priority;
 mod semi_hidden;
+mod style;
 mod unhidden_when_used;
-mod latent_styles;
-mod latent_style;
 
 use self::latent_styles::LatentStyles;
 pub use self::{default_style::*, style::*};
@@ -46,7 +46,11 @@ pub struct Styles<'a> {
 
 impl<'a> XmlWrite for Styles<'a> {
     fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {
-        let Styles { default, latent_styles, styles } = self;
+        let Styles {
+            default,
+            latent_styles,
+            styles,
+        } = self;
 
         log::debug!("[Styles] Started writing.");
 

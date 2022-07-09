@@ -1,9 +1,9 @@
 use derive_more::From;
 use strong_xml::{XmlRead, XmlWrite};
 
+use crate::__xml_test_suites;
 use crate::document::{Paragraph, Table};
 use crate::formatting::SectionProperty;
-use crate::__xml_test_suites;
 
 use super::SDT;
 

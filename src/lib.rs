@@ -87,11 +87,11 @@ mod docx;
 mod error;
 pub mod font_table;
 pub mod formatting;
+pub mod mail_merge;
 pub mod rels;
 mod schema;
-pub mod styles;
 pub mod settings;
-pub mod mail_merge;
+pub mod styles;
 pub mod web_settings;
 
 use std::io::Write;

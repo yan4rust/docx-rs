@@ -2,8 +2,6 @@ use std::borrow::Cow;
 
 use strong_xml::{XmlRead, XmlWrite};
 
-
-
 /// Numbering Id
 ///
 /// ```rust

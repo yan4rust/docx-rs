@@ -4,9 +4,12 @@
 #![allow(unused_must_use)]
 
 use std::{borrow::Cow, io::Write};
-use strong_xml::{XmlRead, XmlWrite, XmlResult, XmlWriter};
+use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::{document::Paragraph, schema::{SCHEMA_MAIN, SCHEMA_WORDML_14}};
+use crate::{
+    document::Paragraph,
+    schema::{SCHEMA_MAIN, SCHEMA_WORDML_14},
+};
 
 /// The root element of the comments document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -33,7 +36,6 @@ pub struct Comment<'a> {
     #[xml(child = "w:p")]
     pub content: Paragraph<'a>,
 }
-
 
 impl<'a> XmlWrite for Comments<'a> {
     fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {

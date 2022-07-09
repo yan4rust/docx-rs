@@ -1,7 +1,7 @@
 //! EndNotes part
 //!
 //! The corresponding ZIP item is `/word/endnotes.xml`.
-//! 
+//!
 
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
@@ -9,9 +9,7 @@ use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
 
-use crate::{
-    document::BodyContent,
-};
+use crate::document::BodyContent;
 
 use super::NoteSeparator;
 
@@ -75,7 +73,8 @@ __xml_test_suites!(
     format!(
         r#"{}<w:endnotes xmlns:w="{}" xmlns:w14="{}"></w:endnotes>"#,
         crate::schema::SCHEMA_XML,
-        SCHEMA_MAIN, SCHEMA_WORDML_14
+        SCHEMA_MAIN,
+        SCHEMA_WORDML_14
     )
     .as_str(),
 );

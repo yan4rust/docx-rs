@@ -65,7 +65,7 @@ impl<'a> Style<'a> {
             style_id: style_id.into(),
             default: None,
             name: None,
-            q_format : None,
+            q_format: None,
             priority: None,
             semi_hidden: None,
             unhide_when_used: None,

@@ -3,9 +3,7 @@ use std::borrow::Cow;
 
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{
-    __setter, __xml_test_suites,
-};
+use crate::{__setter, __xml_test_suites};
 
 use super::BodyContent;
 
@@ -38,7 +36,6 @@ impl<'a> SDT<'a> {
     __setter!(end_property: Option<SDTEndProperty>);
     __setter!(content: Option<SDTContent<'a>>);
 }
-
 
 /// Section Property
 ///
@@ -81,16 +78,12 @@ pub struct DocPartGallery<'a> {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:docPartUnique")]
-pub struct DocPartUnique {
-
-}
+pub struct DocPartUnique {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:sdtEndPr")]
-pub struct SDTEndProperty {
-    
-}
+pub struct SDTEndProperty {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -100,8 +93,4 @@ pub struct SDTContent<'a> {
     pub content: Vec<BodyContent<'a>>,
 }
 
-__xml_test_suites!(
-    SDT,
-    SDT::default(),
-    "<w:sdt/>",
-);
+__xml_test_suites!(SDT, SDT::default(), "<w:sdt/>",);

@@ -1,7 +1,5 @@
 use strong_xml::{XmlRead, XmlWrite};
 
-
-
 /// Numbering Id
 ///
 /// ```rust

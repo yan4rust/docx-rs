@@ -1,34 +1,34 @@
-mod document;
 mod body;
 mod bookmark_end;
 mod bookmark_start;
 mod r#break;
+mod comment_range;
+mod comments;
+mod document;
+mod drawing;
+mod endnotes;
+mod field_char;
+mod footer;
+mod footnotes;
 mod grid_column;
+mod header;
+mod header_footer_reference;
 mod hyperlink;
+mod instrtext;
 mod paragraph;
 mod run;
+mod sdt;
+mod tab;
 mod table;
 mod table_cell;
 mod table_grid;
 mod table_row;
 mod text;
-mod field_char;
-mod instrtext;
-mod footer;
-mod header;
-mod header_footer_reference;
-mod sdt;
-mod footnotes;
-mod endnotes;
-mod comment_range;
-mod tab;
-mod drawing;
-mod comments;
 mod theme;
 
 pub use self::{
-    document::*, body::*, bookmark_end::*, bookmark_start::*, field_char::*, grid_column::*, hyperlink::*, paragraph::*,
-    r#break::*, run::*, table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*, header::*, footer::*,
-    header_footer_reference::*, sdt::*, footnotes::*, endnotes::*, comment_range::*, tab::*, drawing::*, comments::*,
-    theme::*,
+    body::*, bookmark_end::*, bookmark_start::*, comment_range::*, comments::*, document::*,
+    drawing::*, endnotes::*, field_char::*, footer::*, footnotes::*, grid_column::*, header::*,
+    header_footer_reference::*, hyperlink::*, paragraph::*, r#break::*, run::*, sdt::*, tab::*,
+    table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*, theme::*,
 };

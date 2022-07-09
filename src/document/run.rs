@@ -5,7 +5,10 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    document::{field_char::FieldChar, tab::Tab, drawing::Drawing, instrtext::InstrText, r#break::Break, text::Text},
+    document::{
+        drawing::Drawing, field_char::FieldChar, instrtext::InstrText, r#break::Break, tab::Tab,
+        text::Text,
+    },
     formatting::CharacterProperty,
     DocxResult,
 };
@@ -46,7 +49,7 @@ pub struct Run<'a> {
         child = "w:fldChar",
         child = "w:instrText",
         child = "w:separator",
-        child = "w:continuationSeparator",
+        child = "w:continuationSeparator"
     )]
     /// Specifies the content of a run
     pub content: Vec<RunContent<'a>>,
@@ -158,16 +161,12 @@ pub enum RunContent<'a> {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:separator")]
-pub struct Separator {
-   
-}
+pub struct Separator {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:continuationSeparator")]
-pub struct ContinuationSeparator {
-   
-}
+pub struct ContinuationSeparator {}
 
 __xml_test_suites!(
     Run,

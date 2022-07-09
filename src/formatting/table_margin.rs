@@ -1,10 +1,8 @@
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{
-    __setter,
-};
+use crate::__setter;
 
-use super::margin::{LeftMargin, RightMargin, TopMargin, BottomMargin};
+use super::margin::{BottomMargin, LeftMargin, RightMargin, TopMargin};
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

@@ -1,8 +1,5 @@
 use strong_xml::{XmlRead, XmlWrite};
 
-
-
-
 use super::latent_style::LatentStyle;
 
 /// Styles of the document

@@ -2,10 +2,6 @@
 use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
-
-
-
-
 /// Style
 ///
 /// A style that applied to a region of the document.

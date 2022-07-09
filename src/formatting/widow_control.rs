@@ -20,7 +20,7 @@ pub struct WidowControl {
 
 impl From<bool> for WidowControl {
     fn from(val: bool) -> Self {
-        let v:usize = if val {1} else {0};
+        let v: usize = if val { 1 } else { 0 };
         let value = Some(v);
         WidowControl { value }
     }

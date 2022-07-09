@@ -62,7 +62,6 @@ pub struct Blip {
     pub embed: String,
 }
 
-
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "wp:extent")]

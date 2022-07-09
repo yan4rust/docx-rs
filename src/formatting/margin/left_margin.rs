@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{__setter};
+use crate::__setter;
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

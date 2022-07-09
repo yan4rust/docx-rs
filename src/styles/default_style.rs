@@ -45,7 +45,9 @@ pub struct DefaultCharacterProperty<'a> {
 
 impl<'a, T: Into<CharacterProperty<'a>>> From<T> for DefaultCharacterProperty<'a> {
     fn from(val: T) -> Self {
-        DefaultCharacterProperty { inner: Some(val.into()) }
+        DefaultCharacterProperty {
+            inner: Some(val.into()),
+        }
     }
 }
 
@@ -61,7 +63,9 @@ pub struct DefaultParagraphProperty<'a> {
 
 impl<'a, T: Into<ParagraphProperty<'a>>> From<T> for DefaultParagraphProperty<'a> {
     fn from(val: T) -> Self {
-        DefaultParagraphProperty { inner: Some(val.into()) }
+        DefaultParagraphProperty {
+            inner: Some(val.into()),
+        }
     }
 }
 

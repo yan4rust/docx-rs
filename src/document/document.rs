@@ -1,17 +1,15 @@
 //! Main Document part
 //!
 //! The corresponding ZIP item is `/word/document.xml`.
-//! 
+//!
 
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
-use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14, SCHEMA_RELATIONSHIPS_DOCUMENT};
+use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT, SCHEMA_WORDML_14};
 
-use crate::{
-    document::{Body, BodyContent},
-};
+use crate::document::{Body, BodyContent};
 
 /// The root element of the main document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -63,7 +61,9 @@ __xml_test_suites!(
     format!(
         r#"{}<w:document xmlns:w="{}" xmlns:w14="{}" xmlns:r="{}"><w:body/></w:document>"#,
         crate::schema::SCHEMA_XML,
-        SCHEMA_MAIN, SCHEMA_WORDML_14, SCHEMA_RELATIONSHIPS_DOCUMENT
+        SCHEMA_MAIN,
+        SCHEMA_WORDML_14,
+        SCHEMA_RELATIONSHIPS_DOCUMENT
     )
     .as_str(),
 );

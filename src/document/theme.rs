@@ -134,13 +134,13 @@ pub struct Font<'a> {
 pub struct FmtScheme<'a> {
     #[xml(attr = "name")]
     pub name: Option<Cow<'a, str>>,
-    #[xml(child ="a:fillStyleLst")]
+    #[xml(child = "a:fillStyleLst")]
     pub fill_style_lst: FillStyleLst,
-    #[xml(child ="a:lnStyleLst")]
+    #[xml(child = "a:lnStyleLst")]
     pub in_style_lst: InStyleLst,
-    #[xml(child ="a:effectStyleLst")]
+    #[xml(child = "a:effectStyleLst")]
     pub effect_style_lst: EffectStyleLst,
-    #[xml(child ="a:bgFillStyleLst")]
+    #[xml(child = "a:bgFillStyleLst")]
     pub bg_fill_style_lst: BgFillStyleLst,
 }
 

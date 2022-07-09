@@ -1,7 +1,7 @@
 //! Footer part
 //!
 //! The corresponding ZIP item is `/word/footer{n}.xml`.
-//! 
+//!
 
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
@@ -9,9 +9,7 @@ use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
 
-use crate::{
-    document::BodyContent,
-};
+use crate::document::BodyContent;
 
 /// The root element of the main document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -62,7 +60,8 @@ __xml_test_suites!(
     format!(
         r#"{}<w:ftr xmlns:w="{}" xmlns:w14="{}"></w:ftr>"#,
         crate::schema::SCHEMA_XML,
-        SCHEMA_MAIN, SCHEMA_WORDML_14
+        SCHEMA_MAIN,
+        SCHEMA_WORDML_14
     )
     .as_str(),
 );

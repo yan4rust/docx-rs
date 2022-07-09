@@ -20,7 +20,8 @@ pub const SCHEMA_ENDNOTES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
 pub const SCHEMA_SETTINGS: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-pub const SCHEMA_WEB_SETTINGS: &str ="http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings";
+pub const SCHEMA_WEB_SETTINGS: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings";
 pub const SCHEMA_DOC_PROPS_V_TYPES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
 pub const SCHEMA_CONTENT_TYPES: &str =
@@ -38,8 +39,13 @@ pub const SCHEMA_HEADER: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";
 pub const SCHEMA_FOOTER: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer";
-pub const SCHEMA_THEME: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
-pub const SCHEMA_COMMENTS: &str ="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
-pub const SCHEMA_COMMENTS_EXT: &str ="http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible";
-pub const SCHEMA_COMMENTS_IDS: &str ="http://schemas.microsoft.com/office/2016/09/relationships/commentsIds";
-pub const SCHEMA_COMMENTS_EXTENDED: &str ="http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
+pub const SCHEMA_THEME: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
+pub const SCHEMA_COMMENTS: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
+pub const SCHEMA_COMMENTS_EXT: &str =
+    "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible";
+pub const SCHEMA_COMMENTS_IDS: &str =
+    "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds";
+pub const SCHEMA_COMMENTS_EXTENDED: &str =
+    "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
