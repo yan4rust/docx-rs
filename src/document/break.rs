@@ -38,6 +38,11 @@ pub enum BreakType {
     TextWrapping,
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:lastRenderedPageBreak")]
+pub struct LastRenderedPageBreak {}
+
 __string_enum! {
     BreakType {
         Column = "column",

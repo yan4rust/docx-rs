@@ -6,6 +6,7 @@ use strong_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::document::{Comments, EndNotes, FootNotes, Footer, Header, Theme};
+use crate::media::MediaType;
 use crate::schema::{
     SCHEMA_COMMENTS, SCHEMA_ENDNOTES, SCHEMA_FOOTNOTES, SCHEMA_HEADER, SCHEMA_SETTINGS,
     SCHEMA_THEME, SCHEMA_WEB_SETTINGS,
@@ -48,6 +49,7 @@ pub struct Docx<'a> {
     pub headers: HashMap<String, Header<'a>>,
     pub footers: HashMap<String, Footer<'a>>,
     pub themes: HashMap<String, Theme<'a>>,
+    pub medias: HashMap<String, (MediaType, &'a Vec<u8>)>,
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
     pub settings: Option<Settings<'a>>,
@@ -134,6 +136,13 @@ impl<'a> Docx<'a> {
                 .add_rel(SCHEMA_THEME, theme.0);
         }
 
+        for media in &self.medias {
+            let rel = crate::media::get_media_type_relation_type(&media.1.0);
+            self.document_rels
+                .get_or_insert(Relationships::default())
+                .add_rel(rel, media.0);
+        }
+
         // ==== Write Zip Item ====
 
         macro_rules! write_xml {
@@ -167,7 +176,7 @@ impl<'a> Docx<'a> {
             Some(self.footnotes)      => "word/footnotes.xml"
             Some(self.endnotes)       => "word/endnotes.xml"
             Some(self.settings)       => "word/settings.xml"
-            Some(self.web_settings)       => "word/webSettings.xml"
+            Some(self.web_settings)   => "word/webSettings.xml"
             Some(self.comments)       => "word/comments.xml"
             Some(self.document_rels)  => "word/_rels/document.xml.rels"
         );
@@ -194,6 +203,12 @@ impl<'a> Docx<'a> {
             write_xml!(
                 content => file_path
             );
+        }
+
+        for media in self.medias.iter() {
+            let file_path = format!("word/{}", media.0);
+            writer.inner.start_file(file_path, opt)?;
+            writer.inner.write_all(&media.1.1)?;
         }
 
         Ok(writer.inner.finish()?)
@@ -223,6 +238,7 @@ pub struct DocxFile {
     headers: Vec<(String, String)>,
     footers: Vec<(String, String)>,
     themes: Vec<(String, String)>,
+    medias: Vec<(String, Vec<u8>)>,
     footnotes: Option<String>,
     endnotes: Option<String>,
     comments: Option<String>,
@@ -274,6 +290,24 @@ impl DocxFile {
             }};
         }
 
+        macro_rules! option_read_multiple_files {
+            ($xml:tt, $name:expr) => {{
+                let names: Vec<_> = zip.file_names().map(|x| x.to_string()).collect();
+                let name_and_value: Vec<_> = names
+                    .iter()
+                    .filter(|n| n.contains($name))
+                    .filter_map(|f| {
+                        zip.by_name(f).ok().and_then(|mut file| {
+                            let mut buffer = Vec::new();
+                            file.read_to_end(&mut buffer).ok()?;
+                            Some((f.to_string(), buffer))
+                        })
+                    })
+                    .collect();
+                name_and_value
+            }};
+        }
+
         let app = option_read!(App, "docProps/app.xml");
         let content_types = read!(ContentTypes, "[Content_Types].xml");
         let core = option_read!(Core, "docProps/core.xml");
@@ -291,6 +325,7 @@ impl DocxFile {
         let headers = option_read_multiple!(Headers, "word/header");
         let footers = option_read_multiple!(Footers, "word/footer");
         let themes = option_read_multiple!(Themes, "word/theme/theme");
+        let medias = option_read_multiple_files!(Medias, "word/media");
 
         Ok(DocxFile {
             app,
@@ -306,6 +341,7 @@ impl DocxFile {
             headers,
             footers,
             themes,
+            medias,
             footnotes,
             endnotes,
             comments,
@@ -340,6 +376,16 @@ impl DocxFile {
             let ft = Footer::from_str(&f.1)?;
             let name = f.0.replace("word/", "");
             footers.insert(name, ft);
+        }
+
+        let mut medias = HashMap::new();
+        for m in self.medias.iter() {
+            let mt = crate::media::get_media_type(&m.0);
+            if let Some(mt) = mt {
+                let name = m.0.replace("word/", "");
+                let m = (mt, &m.1);
+                medias.insert(name, m);
+            }
         }
 
         let mut themes = HashMap::new();
@@ -380,6 +426,7 @@ impl DocxFile {
                             | crate::schema::SCHEMA_SETTINGS
                             | crate::schema::SCHEMA_WEB_SETTINGS
                             | crate::schema::SCHEMA_COMMENTS
+                            | crate::schema::SCHEMA_IMAGE
                     )
                 })
                 .map(|d| d.to_owned())
@@ -444,6 +491,7 @@ impl DocxFile {
             headers,
             footers,
             themes,
+            medias,
             footnotes,
             endnotes,
             settings,

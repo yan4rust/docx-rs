@@ -62,6 +62,9 @@ impl<'a> Relationships<'a> {
                 let idstr = format!("rId{}", id);
                 available = !ids.contains(&idstr);
             }
+
+            //hack
+            //let target = target.replace("jpeg","png");
             self.relationships.push(Relationship {
                 id: format!("rId{}", id).into(),
                 target: target.into(),

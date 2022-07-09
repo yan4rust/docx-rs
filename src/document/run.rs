@@ -6,7 +6,7 @@ use strong_xml::{XmlRead, XmlWrite};
 use crate::{
     __setter, __xml_test_suites,
     document::{
-        drawing::Drawing, field_char::FieldChar, instrtext::InstrText, r#break::Break, tab::Tab,
+        drawing::Drawing, field_char::FieldChar, instrtext::InstrText, r#break::Break, r#break::LastRenderedPageBreak, tab::Tab,
         text::Text,
     },
     formatting::CharacterProperty,
@@ -84,6 +84,7 @@ impl<'a> Run<'a> {
             RunContent::Text(Text { text, .. }) => Some(text),
             RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
+            RunContent::LastRenderedPageBreak(_) => None,
             RunContent::FieldChar(_) => None,
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
@@ -97,6 +98,7 @@ impl<'a> Run<'a> {
             RunContent::Text(Text { text, .. }) => Some(text),
             RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
+            RunContent::LastRenderedPageBreak(_) => None,
             RunContent::FieldChar(_) => None,
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
@@ -144,6 +146,8 @@ pub enum RunContent<'a> {
     Text(Text<'a>),
     #[xml(tag = "w:br")]
     Break(Break),
+    #[xml(tag = "w:w:lastRenderedPageBreak")]
+    LastRenderedPageBreak(LastRenderedPageBreak),
     #[xml(tag = "w:fldChar")]
     FieldChar(FieldChar),
     #[xml(tag = "w:instrText")]
@@ -155,7 +159,7 @@ pub enum RunContent<'a> {
     #[xml(tag = "w:tab")]
     Tab(Tab),
     #[xml(tag = "w:drawing")]
-    Drawing(Drawing),
+    Drawing(Drawing<'a>),
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

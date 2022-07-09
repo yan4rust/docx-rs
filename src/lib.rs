@@ -93,6 +93,7 @@ mod schema;
 pub mod settings;
 pub mod styles;
 pub mod web_settings;
+pub mod media;
 
 use std::io::Write;
 
