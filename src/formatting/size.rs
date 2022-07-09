@@ -5,7 +5,7 @@ use crate::__xml_test_suites;
 /// Size
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let sz = Size::from(42usize);
 /// ```

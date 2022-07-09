@@ -5,7 +5,7 @@ use crate::__xml_test_suites;
 /// Numbering Id
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let id = NumberingId::from(42usize);
 /// ```

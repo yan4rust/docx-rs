@@ -5,7 +5,7 @@ use strong_xml::{XmlRead, XmlWrite};
 /// Numbering Id
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let id = NumberingId::from(42usize);
 /// ```

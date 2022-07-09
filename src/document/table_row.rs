@@ -6,8 +6,8 @@ use crate::{__setter, __xml_test_suites, document::TableCell, formatting::TableR
 /// Table Row
 ///
 /// ```rust
-/// use docx::document::*;
-/// use docx::formatting::*;
+/// use docx_rust::document::*;
+/// use docx_rust::formatting::*;
 ///
 /// let row = TableRow::default()
 ///     .property(TableRowProperty::default())

@@ -10,8 +10,8 @@ use crate::{
 /// Table
 ///
 /// ```rust
-/// use docx::document::*;
-/// use docx::formatting::*;
+/// use docx_rust::document::*;
+/// use docx_rust::formatting::*;
 ///
 /// let tbl = Table::default()
 ///     .property(TableProperty::default())

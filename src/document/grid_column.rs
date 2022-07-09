@@ -5,7 +5,7 @@ use crate::__xml_test_suites;
 /// Grid Column
 ///
 /// ```rust
-/// use docx::document::*;
+/// use docx_rust::document::*;
 ///
 /// let col = GridColumn::from(42);
 /// ```

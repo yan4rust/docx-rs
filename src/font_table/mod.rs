@@ -19,7 +19,7 @@ use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT, SCHEMA_XML};
 /// Font Table
 ///
 /// ```rust
-/// use docx::font_table::*;
+/// use docx_rust::font_table::*;
 ///
 /// let fonts = FontTable::default()
 ///     .push_font("Arial")

@@ -18,8 +18,8 @@ use crate::{
 /// Run is a non-block region of text with properties.
 ///
 /// ```rust
-/// use docx::document::*;
-/// use docx::formatting::*;
+/// use docx_rust::document::*;
+/// use docx_rust::formatting::*;
 ///
 /// let run = Run::default()
 ///     .property(CharacterProperty::default())

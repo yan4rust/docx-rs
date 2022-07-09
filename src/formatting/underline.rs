@@ -6,7 +6,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// Underline
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let udl = Underline::from("00ff00");
 /// let udl = Underline::from(String::from("ff0000"));

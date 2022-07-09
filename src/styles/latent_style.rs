@@ -7,8 +7,8 @@ use strong_xml::{XmlRead, XmlWrite};
 /// A style that applied to a region of the document.
 ///
 /// ```rust
-/// use docx::formatting::*;
-/// use docx::styles::*;
+/// use docx_rust::formatting::*;
+/// use docx_rust::styles::*;
 ///
 /// let style = Style::new(StyleType::Paragraph, "style_id")
 ///     .name("Style Name")

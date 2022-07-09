@@ -5,7 +5,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// Table Indent
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let ind = TableIndent::from(42);
 /// let ind = TableIndent::from(TableIndentUnit::Pct);

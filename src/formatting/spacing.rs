@@ -11,7 +11,7 @@ use super::line_rule::LineRule;
 /// line is 240-based.
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let sz = Size::from(42usize);
 /// ```

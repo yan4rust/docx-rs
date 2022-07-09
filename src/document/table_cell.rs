@@ -7,8 +7,8 @@ use crate::{__setter, __xml_test_suites, document::Paragraph, formatting::TableC
 /// Table Cell
 ///
 /// ```rust
-/// use docx::document::*;
-/// use docx::formatting::*;
+/// use docx_rust::document::*;
+/// use docx_rust::formatting::*;
 ///
 /// let cell = TableCell::from(Paragraph::default());
 ///

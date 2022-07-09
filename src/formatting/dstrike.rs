@@ -5,7 +5,7 @@ use crate::__xml_test_suites;
 /// Double Strike
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let dstrike = Dstrike::from(false);
 /// let dstrike = Dstrike::from(true);

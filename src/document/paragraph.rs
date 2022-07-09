@@ -17,8 +17,8 @@ use crate::{
 /// Paragraph is the main block-level container for content.
 ///
 /// ```rust
-/// use docx::document::*;
-/// use docx::formatting::*;
+/// use docx_rust::document::*;
+/// use docx_rust::formatting::*;
 ///
 /// let par = Paragraph::default()
 ///     .property(ParagraphProperty::default())

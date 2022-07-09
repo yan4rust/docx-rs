@@ -9,7 +9,7 @@ use crate::{
 /// Character Property
 ///
 /// ```rust
-/// use docx::formatting::{CharacterProperty, UnderlineStyle};
+/// use docx_rust::formatting::{CharacterProperty, UnderlineStyle};
 ///
 /// let prop = CharacterProperty::default()
 ///     .style_id("foo")

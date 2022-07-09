@@ -5,7 +5,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// Table Justification
 ///
 /// ```rust
-/// use docx::formatting::*;
+/// use docx_rust::formatting::*;
 ///
 /// let jc = TableJustification::from(TableJustificationVal::Start);
 /// ```

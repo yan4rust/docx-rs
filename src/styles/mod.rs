@@ -24,7 +24,7 @@ use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 /// Styles are predefined sets of properties which can be applied to text.
 ///
 /// ```rust
-/// use docx::styles::*;
+/// use docx_rust::styles::*;
 ///
 /// let style = Styles::new()
 ///     .default(DefaultStyle::default())

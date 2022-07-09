@@ -5,7 +5,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// Break
 ///
 /// ```rust
-/// use docx::document::*;
+/// use docx_rust::document::*;
 ///
 /// let br = Break::from(BreakType::Page);
 /// ```
