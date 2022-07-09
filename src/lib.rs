@@ -88,12 +88,12 @@ mod error;
 pub mod font_table;
 pub mod formatting;
 pub mod mail_merge;
+pub mod media;
 pub mod rels;
 mod schema;
 pub mod settings;
 pub mod styles;
 pub mod web_settings;
-pub mod media;
 
 use std::io::Write;
 

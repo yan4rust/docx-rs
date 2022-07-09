@@ -96,7 +96,7 @@ pub struct WrapSquare {}
 pub struct WrapTight {
     #[xml(attr = "wrapText")]
     pub wrap_text: WrapTextType,
-    #[xml(child ="wp:wrapPolygon")]
+    #[xml(child = "wp:wrapPolygon")]
     pub wrap_polygon: WrapPolygon,
 }
 

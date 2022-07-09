@@ -137,7 +137,7 @@ impl<'a> Docx<'a> {
         }
 
         for media in &self.medias {
-            let rel = crate::media::get_media_type_relation_type(&media.1.0);
+            let rel = crate::media::get_media_type_relation_type(&media.1 .0);
             self.document_rels
                 .get_or_insert(Relationships::default())
                 .add_rel(rel, media.0);
@@ -208,7 +208,7 @@ impl<'a> Docx<'a> {
         for media in self.medias.iter() {
             let file_path = format!("word/{}", media.0);
             writer.inner.start_file(file_path, opt)?;
-            writer.inner.write_all(&media.1.1)?;
+            writer.inner.write_all(media.1 .1)?;
         }
 
         Ok(writer.inner.finish()?)
@@ -388,7 +388,7 @@ impl DocxFile {
             }
         }
 
-        let mut themes = HashMap::new();
+        let themes = HashMap::new();
         // turn off for now
         // for t in self.themes.iter() {
         //     let th = Theme::from_str(&t.1)?;
