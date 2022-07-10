@@ -13,6 +13,8 @@ use crate::{
     DocxResult,
 };
 
+use super::CarriageReturn;
+
 /// Run
 ///
 /// Run is a non-block region of text with properties.
@@ -45,6 +47,7 @@ pub struct Run<'a> {
         child = "w:t",
         child = "w:br",
         child = "w:tab",
+        child = "w:cr",
         child = "w:drawing",
         child = "w:fldChar",
         child = "w:instrText",
@@ -89,6 +92,7 @@ impl<'a> Run<'a> {
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
             RunContent::Tab(_) => None,
+            RunContent::CarriageReturn(_) => None,
             RunContent::Drawing(_) => None,
         })
     }
@@ -103,6 +107,7 @@ impl<'a> Run<'a> {
             RunContent::Separator(_) => None,
             RunContent::ContinuationSeparator(_) => None,
             RunContent::Tab(_) => None,
+            RunContent::CarriageReturn(_) => None,
             RunContent::Drawing(_) => None,
         })
     }
@@ -158,6 +163,8 @@ pub enum RunContent<'a> {
     ContinuationSeparator(ContinuationSeparator),
     #[xml(tag = "w:tab")]
     Tab(Tab),
+    #[xml(tag = "w:cr")]
+    CarriageReturn(CarriageReturn),
     #[xml(tag = "w:drawing")]
     Drawing(Drawing<'a>),
 }
