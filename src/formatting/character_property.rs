@@ -6,6 +6,8 @@ use crate::{
     formatting::{Bold, Color, Dstrike, Fonts, Italics, Lang, Outline, Size, Strike, Underline},
 };
 
+use super::{BoldComplex, Caps, ItalicsComplex, SmallCaps};
+
 /// Character Property
 ///
 /// ```rust
@@ -32,24 +34,24 @@ pub struct CharacterProperty<'a> {
     /// Specifies the style ID of the character style.
     #[xml(child = "w:rStyle")]
     pub style_id: Option<CharacterStyleId<'a>>,
-    /// Specifies the color to be used to display text.
-    #[xml(child = "w:color")]
-    pub color: Option<Color<'a>>,
     /// Specifies the font.
     #[xml(child = "w:rFonts")]
     pub fonts: Option<Fonts<'a>>,
-    /// Specifies the font size in half points.
-    #[xml(child = "w:sz")]
-    pub size: Option<Size>,
-    /// Specifies the language to be used.
-    #[xml(child = "w:lang")]
-    pub lang: Option<Lang<'a>>,
     /// Specifies that the text of the text run is to be bold.
     #[xml(child = "w:b")]
     pub bold: Option<Bold>,
+    #[xml(child = "w:bCs")]
+    pub bold_complex: Option<BoldComplex>,
     /// Specifies that the text of the text run is to be italics.
     #[xml(child = "w:i")]
     pub italics: Option<Italics>,
+    #[xml(child = "w:iCs")]
+    pub italics_complex: Option<ItalicsComplex>,
+    /// Display All Characters As Capital Letters
+    #[xml(child = "w:caps")]
+    pub caps: Option<Caps>,
+    #[xml(child = "w:smallCaps")]
+    pub small_caps: Option<SmallCaps>,
     /// Specifies that the contents are to be displayed with a horizontal line through the center of the line.
     #[xml(child = "w:strike")]
     pub strike: Option<Strike>,
@@ -59,6 +61,17 @@ pub struct CharacterProperty<'a> {
     /// Specifies that the content should be displayed as if it had an outline.
     #[xml(child = "w:outline")]
     pub outline: Option<Outline>,
+    /// Specifies the color to be used to display text.
+    #[xml(child = "w:color")]
+    pub color: Option<Color<'a>>,
+
+    /// Specifies the font size in half points.
+    #[xml(child = "w:sz")]
+    pub size: Option<Size>,
+    /// Specifies the language to be used.
+    #[xml(child = "w:lang")]
+    pub lang: Option<Lang<'a>>,
+
     /// Specifies that the content should be displayed with an underline
     #[xml(child = "w:u")]
     pub underline: Option<Underline<'a>>,

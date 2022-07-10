@@ -15,14 +15,12 @@ use crate::__xml_test_suites;
 #[xml(tag = "w:widowControl")]
 pub struct WidowControl {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<bool>,
 }
 
-impl From<bool> for WidowControl {
-    fn from(val: bool) -> Self {
-        let v: usize = if val { 1 } else { 0 };
-        let value = Some(v);
-        WidowControl { value }
+impl<T: Into<Option<bool>>> From<T> for WidowControl {
+    fn from(val: T) -> Self {
+        WidowControl { value: val.into() }
     }
 }
 
@@ -31,7 +29,7 @@ __xml_test_suites!(
     WidowControl::default(),
     r#"<w:widowControl/>"#,
     WidowControl::from(false),
-    r#"<w:widowControl w:val="0"/>"#,
+    r#"<w:widowControl w:val="false"/>"#,
     WidowControl::from(true),
-    r#"<w:widowControl w:val="1"/>"#,
+    r#"<w:widowControl w:val="true"/>"#,
 );

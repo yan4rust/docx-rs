@@ -35,13 +35,13 @@ pub struct Anchor<'a> {
     #[xml(attr = "relativeHeight")]
     pub relative_height: Option<isize>,
     #[xml(attr = "behindDoc")]
-    pub behind_doc: Option<u8>,
+    pub behind_doc: Option<bool>,
     #[xml(attr = "locked")]
-    pub locked: Option<u8>,
+    pub locked: Option<bool>,
     #[xml(attr = "layoutInCell")]
-    pub layout_in_cell: Option<u8>,
+    pub layout_in_cell: Option<bool>,
     #[xml(attr = "allowOverlap")]
-    pub allow_overlap: Option<u8>,
+    pub allow_overlap: Option<bool>,
 
     #[xml(child = "wp:simplePos")]
     pub simple_pos: Option<SimplePos>,
@@ -105,7 +105,7 @@ pub struct WrapTight {
 #[xml(tag = "wp:wrapPolygon")]
 pub struct WrapPolygon {
     #[xml(attr = "edited")]
-    pub edited: Option<u8>,
+    pub edited: Option<bool>,
     #[xml(child = "wp:start")]
     pub start: WrapPolygonStart,
     #[xml(child = "wp:lineTo")]
@@ -213,13 +213,13 @@ pub struct Inline<'a> {
     #[xml(attr = "relativeHeight")]
     pub relative_height: Option<isize>,
     #[xml(attr = "behindDoc")]
-    pub behind_doc: Option<u8>,
+    pub behind_doc: Option<bool>,
     #[xml(attr = "locked")]
-    pub locked: Option<u8>,
+    pub locked: Option<bool>,
     #[xml(attr = "layoutInCell")]
-    pub layout_in_cell: Option<u8>,
+    pub layout_in_cell: Option<bool>,
     #[xml(attr = "allowOverlap")]
-    pub allow_overlap: Option<u8>,
+    pub allow_overlap: Option<bool>,
 
     #[xml(child = "wp:simplePos")]
     pub simple_pos: Option<SimplePos>,

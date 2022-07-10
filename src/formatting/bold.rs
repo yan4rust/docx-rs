@@ -18,6 +18,14 @@ pub struct Bold {
     pub value: Option<bool>,
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:bCs")]
+pub struct BoldComplex {
+    #[xml(attr = "w:val")]
+    pub value: Option<bool>,
+}
+
 impl<T: Into<Option<bool>>> From<T> for Bold {
     fn from(val: T) -> Self {
         Bold { value: val.into() }

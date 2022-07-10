@@ -3,11 +3,12 @@ use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
+    __string_enum,
     document::HeaderFooterReference,
     formatting::{PageCols, PageGrid, PageMargin, PageSize},
 };
 
-/// Section Property
+/// Previous Section Properties
 ///
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -24,6 +25,8 @@ pub struct SectionProperty<'a> {
     #[xml(child = "w:headerReference", child = "w:footerReference")]
     /// Specifies the content of a run
     pub header_footer_references: Vec<HeaderFooterReference<'a>>,
+    #[xml(child = "w:type")]
+    pub ty: Option<SectionTypeP>,
     #[xml(child = "w:pgSz")]
     pub page_size: Option<PageSize>,
     #[xml(child = "w:pgMar")]
@@ -34,6 +37,34 @@ pub struct SectionProperty<'a> {
     pub title_page: Option<TitlePage>,
     #[xml(child = "w:docGrid")]
     pub grid: Option<PageGrid<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:type")]
+pub struct SectionTypeP {
+    #[xml(attr = "w:val")]
+    pub ty: Option<SectionType>,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum SectionType {
+    NextPage,
+    NextColumn,
+    Continuous,
+    EvenPage,
+    OddPage,
+}
+
+__string_enum! {
+    SectionType {
+        NextPage = "nextPage",
+        NextColumn = "nextColumn",
+        Continuous = "continuous",
+        EvenPage = "evenPage",
+        OddPage = "oddPage",
+    }
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

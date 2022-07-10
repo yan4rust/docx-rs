@@ -41,6 +41,8 @@ pub struct ParagraphProperty<'a> {
     /// Specifies the paragraph indent
     #[xml(child = "w:ind")]
     pub indent: Option<Indent>,
+    #[xml(child = "w:sectPr")]
+    pub section_property: Option<SectionProperty<'a>>,
 }
 
 impl<'a> ParagraphProperty<'a> {
@@ -68,6 +70,8 @@ impl<'a, T: Into<Cow<'a, str>>> From<T> for ParagraphStyleId<'a> {
 
 #[cfg(test)]
 use crate::formatting::JustificationVal;
+
+use super::SectionProperty;
 
 __xml_test_suites!(
     ParagraphProperty,
