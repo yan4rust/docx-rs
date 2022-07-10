@@ -19,14 +19,21 @@ use super::line_rule::LineRule;
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:spacing")]
 pub struct Spacing {
+    /// Spacing Above Paragraph In Line Units
     #[xml(attr = "w:beforeLines")]
     pub before_lines: Option<usize>,
+    /// Spacing Above Paragraph
     #[xml(attr = "w:before")]
     pub before: Option<usize>,
+    /// Automatically Determine Spacing Above Paragraph
+    #[xml(attr = "w:beforeAutospacing")]
+    pub before_auto_spacing: Option<u8>,
     #[xml(attr = "w:afterLines")]
     pub after_lines: Option<usize>,
     #[xml(attr = "w:after")]
     pub after: Option<usize>,
+    #[xml(attr = "w:afterAutospacing")]
+    pub after_auto_spacing: Option<u8>,
     #[xml(attr = "w:line")]
     pub line: Option<usize>,
     #[xml(attr = "w:lineRule")]
