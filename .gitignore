@@ -7,3 +7,7 @@ Cargo.lock
 .vscode/
 .idea/
 *.iml
+
+# Test
+tests/bbb
+tests/aaa/aa/
