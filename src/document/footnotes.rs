@@ -44,7 +44,7 @@ pub struct FootnoteReference<'a> {
     /// Specifies the HeaderReference type of this HeaderReference.
     #[xml(attr = "w:customMarkFollows")]
     pub supress_reference_mark: Option<bool>,
-    #[xml(attr = "r:id")]
+    #[xml(attr = "w:id")]
     pub id: Option<Cow<'a, str>>,
 }
 

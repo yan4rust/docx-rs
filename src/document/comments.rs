@@ -46,7 +46,7 @@ pub struct AnnotationRef;
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:commentReference")]
 pub struct CommentReference<'a> {
-    #[xml(attr = "r:id")]
+    #[xml(attr = "w:id")]
     pub id: Option<Cow<'a, str>>,
 }
 

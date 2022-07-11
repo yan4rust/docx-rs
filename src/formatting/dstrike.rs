@@ -18,6 +18,14 @@ pub struct Dstrike {
     pub value: Option<bool>,
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:position")]
+pub struct Position {
+    #[xml(attr = "w:val")]
+    pub value: Option<isize>,
+}
+
 impl<T: Into<Option<bool>>> From<T> for Dstrike {
     fn from(val: T) -> Self {
         Dstrike { value: val.into() }

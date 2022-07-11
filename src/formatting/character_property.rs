@@ -6,7 +6,7 @@ use crate::{
     formatting::{Bold, Color, Dstrike, Fonts, Italics, Lang, Outline, Size, Strike, Underline},
 };
 
-use super::{BoldComplex, Caps, ItalicsComplex, SmallCaps};
+use super::{BoldComplex, Caps, Highlight, ItalicsComplex, Position, SmallCaps, VertAlign};
 
 /// Character Property
 ///
@@ -64,17 +64,22 @@ pub struct CharacterProperty<'a> {
     /// Specifies the color to be used to display text.
     #[xml(child = "w:color")]
     pub color: Option<Color<'a>>,
-
+    /// Vertically Raised or Lowered Text
+    #[xml(child = "w:position")]
+    pub position: Option<Position>,
     /// Specifies the font size in half points.
     #[xml(child = "w:sz")]
     pub size: Option<Size>,
-    /// Specifies the language to be used.
-    #[xml(child = "w:lang")]
-    pub lang: Option<Lang<'a>>,
-
+    #[xml(child = "w:highlight")]
+    pub highlight: Option<Highlight>,
     /// Specifies that the content should be displayed with an underline
     #[xml(child = "w:u")]
     pub underline: Option<Underline<'a>>,
+    #[xml(child = "w:vertAlign")]
+    pub vertical_align: Option<VertAlign>,
+    /// Specifies the language to be used.
+    #[xml(child = "w:lang")]
+    pub lang: Option<Lang<'a>>,
 }
 
 impl<'a> CharacterProperty<'a> {

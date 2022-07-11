@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::__xml_test_suites;
+use crate::{__string_enum, __xml_test_suites};
 
 /// Text Color
 ///
@@ -52,6 +52,82 @@ impl From<(u8, u8, u8)> for Color<'_> {
         Color {
             value: Cow::Owned(format!("{:02x}{:02x}{:02x}", val.0, val.1, val.2)),
         }
+    }
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:highlight")]
+pub struct Highlight {
+    #[xml(attr = "w:val")]
+    pub value: Option<HighlightType>,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum HighlightType {
+    Black,       //Black Highlighting Color
+    Blue,        //Blue Highlighting Color
+    Cyan,        //Cyan Highlighting Color
+    Green,       //Green Highlighting Color
+    Magenta,     //Magenta Highlighting Color
+    Red,         //Red Highlighting Color
+    Yellow,      //Yellow Highlighting Color
+    White,       //White Highlighting Color
+    DarkBlue,    //Dark Blue Highlighting Color
+    DarkCyan,    //Dark Cyan Highlighting Color
+    DarkGreen,   //Dark Green Highlighting Color
+    DarkMagenta, //Dark Magenta Highlighting Color
+    DarkRed,     //Dark Red Highlighting Color
+    DarkYellow,  //Dark Yellow Highlighting Color
+    DarkGray,    //Dark Gray Highlighting Color
+    LightGray,   //Light Gray Highlighting Color
+    None,        //No Text Highlighting
+}
+
+__string_enum! {
+    HighlightType {
+        Black = "black",
+        Blue = "blue",
+        Cyan = "cyan",
+        Green = "green",
+        Magenta = "magenta",
+        Red = "red",
+        Yellow = "yellow",
+        White = "white",
+        DarkBlue = "darkBlue",
+        DarkCyan = "darkCyan",
+        DarkGreen = "darkGreen",
+        DarkMagenta = "darkMagenta",
+        DarkRed = "darkRed",
+        DarkYellow = "darkYellow",
+        DarkGray = "darkGray",
+        LightGray = "lightGray",
+        None = "none",
+    }
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:vertAlign")]
+pub struct VertAlign {
+    #[xml(attr = "w:val")]
+    pub value: Option<VertAlignType>,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum VertAlignType {
+    Baseline,    //Regular Vertical Positioning
+    Superscript, //	Superscript
+    Subscript,   //	Subscript
+}
+
+__string_enum! {
+    VertAlignType {
+        Baseline = "baseline",
+        Subscript = "subscript",
+        Superscript = "superscript",
     }
 }
 

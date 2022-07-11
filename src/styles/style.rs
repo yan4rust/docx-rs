@@ -36,9 +36,12 @@ pub struct Style<'a> {
     /// This identifier is used throughout the document to apply style in content.
     #[xml(attr = "w:styleId")]
     pub style_id: Cow<'a, str>,
+
     /// Specifies the primary name
     #[xml(child = "w:name")]
     pub name: Option<StyleName<'a>>,
+    #[xml(child = "w:basedOn")]
+    pub base: Option<BasedOn<'a>>,
     #[xml(child = "w:qFormat")]
     pub q_format: Option<QFormat>,
     /// Specifies the priority.
@@ -65,6 +68,7 @@ impl<'a> Style<'a> {
             style_id: style_id.into(),
             default: None,
             name: None,
+            base: None,
             q_format: None,
             priority: None,
             semi_hidden: None,
@@ -93,6 +97,14 @@ impl<'a, S: Into<Cow<'a, str>>> From<S> for StyleName<'a> {
     fn from(val: S) -> Self {
         StyleName { value: val.into() }
     }
+}
+
+#[derive(Debug, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:basedOn")]
+pub struct BasedOn<'a> {
+    #[xml(attr = "w:val")]
+    pub value: Cow<'a, str>,
 }
 
 #[derive(Debug, XmlRead, XmlWrite, Clone)]
