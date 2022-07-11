@@ -85,13 +85,10 @@ pub struct Run<'a> {
     )]
     /// Specifies the content of a run
     pub content: Vec<RunContent<'a>>,
-    #[xml(attr = "w:is_delete")]
-    pub shall_destroy: Option<bool>,
 }
 
 impl<'a> Run<'a> {
     __setter!(property: Option<CharacterProperty<'a>>);
-    __setter!(shall_destroy: Option<bool>);
 
     #[inline(always)]
     pub fn push<T: Into<RunContent<'a>>>(mut self, content: T) -> Self {

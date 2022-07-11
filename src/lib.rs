@@ -87,7 +87,6 @@ mod docx;
 mod error;
 pub mod font_table;
 pub mod formatting;
-pub mod mail_merge;
 pub mod media;
 pub mod rels;
 mod schema;
