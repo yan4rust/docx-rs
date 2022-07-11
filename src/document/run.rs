@@ -13,7 +13,13 @@ use crate::{
     DocxResult,
 };
 
-use super::CarriageReturn;
+use super::{
+    date::{DayLong, DayShort, MonthLong, MonthShort, YearLong, YearShort},
+    instrtext::DelInstrText,
+    sym::Sym,
+    AnnotationRef, CarriageReturn, CommentReference, DelText, EndnoteRef, EndnoteReference,
+    FootnoteRef, FootnoteReference,
+};
 
 /// Run
 ///
@@ -44,15 +50,38 @@ pub struct Run<'a> {
     #[xml(child = "w:rPr")]
     pub property: Option<CharacterProperty<'a>>,
     #[xml(
-        child = "w:t",
-        child = "w:br",
-        child = "w:tab",
-        child = "w:cr",
-        child = "w:drawing",
-        child = "w:fldChar",
-        child = "w:instrText",
-        child = "w:separator",
-        child = "w:continuationSeparator"
+        child = "w:br", //Break
+        child = "w:t", //Text
+        child = "w:delText", //Deleted Text
+        child = "w:instrText", //Field Code
+        child = "w:delInstrText", //Deleted Field Code
+        child = "w:noBreakHyphen", //Non Breaking Hyphen Character
+        child = "w:softHyphen", //Optional Hyphen Character
+        child = "w:dayShort", //Date Block - Short Day Format
+        child = "w:monthShort", //Date Block - Short Month Format
+        child = "w:yearShort", //Date Block - Short Year Format
+        child = "w:dayLong", //Date Block - Long Day Format
+        child = "w:monthLong", //Date Block - Long Month Format
+        child = "w:yearLong", //Date Block - Long Year Format
+        child = "w:annotationRef", //Comment Information Block
+        child = "w:footnoteRef", //Footnote Reference Mark
+        child = "w:endnoteRef", //Endnote Reference Mark
+        child = "w:separator", //Footnote/Endnote Separator Mark
+        child = "w:continuationSeparator", //Continuation Separator Mark
+        child = "w:sym", //Symbol Character
+        child = "w:pgNum", //Page Number Block
+        child = "w:cr", //Carriage Return
+        child = "w:tab", //Tab Character
+        //child = "w:object", //Inline Embedded Object
+        //child = "w:pict", //VML Object
+        child = "w:fldChar", //Complex Field Character
+        //child = "w:ruby", //Phonetic Guide
+        child = "w:footnoteReference", //Footnote Reference
+        child = "w:endnoteReference", //Endnote Reference
+        child = "w:commentReference", //Comment Content Reference Mark
+        child = "w:drawing", //DrawingML Object
+        //child = "w:ptab", //Absolute Position Tab Character
+        child = "w:lastRenderedPageBreak", //Position of Last Calculated Page Break
     )]
     /// Specifies the content of a run
     pub content: Vec<RunContent<'a>>,
@@ -94,6 +123,7 @@ impl<'a> Run<'a> {
             RunContent::Tab(_) => None,
             RunContent::CarriageReturn(_) => None,
             RunContent::Drawing(_) => None,
+            _ => None,
         })
     }
 
@@ -109,6 +139,7 @@ impl<'a> Run<'a> {
             RunContent::Tab(_) => None,
             RunContent::CarriageReturn(_) => None,
             RunContent::Drawing(_) => None,
+            _ => None,
         })
     }
 
@@ -147,27 +178,81 @@ impl<'a> Run<'a> {
 #[derive(Debug, From, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum RunContent<'a> {
-    #[xml(tag = "w:t")]
-    Text(Text<'a>),
     #[xml(tag = "w:br")]
     Break(Break),
-    #[xml(tag = "w:w:lastRenderedPageBreak")]
-    LastRenderedPageBreak(LastRenderedPageBreak),
-    #[xml(tag = "w:fldChar")]
-    FieldChar(FieldChar),
+    #[xml(tag = "w:t")]
+    Text(Text<'a>),
+    #[xml(tag = "w:delText")]
+    DelText(DelText<'a>),
     #[xml(tag = "w:instrText")]
     InstrText(InstrText<'a>),
+    #[xml(tag = "w:delInstrText")]
+    DelInstrText(DelInstrText<'a>),
+    #[xml(tag = "w:noBreakHyphen")]
+    NoBreakHyphen(NoBreakHyphen),
+    #[xml(tag = "w:softHyphen")]
+    SoftHyphen(SoftHyphen),
+    #[xml(tag = "w:dayShort")]
+    DayShort(DayShort),
+    #[xml(tag = "w:monthShort")]
+    MonthShort(MonthShort),
+    #[xml(tag = "w:yearShort")]
+    YearShort(YearShort),
+    #[xml(tag = "w:dayLong")]
+    DayLong(DayLong),
+    #[xml(tag = "w:monthLong")]
+    MonthLong(MonthLong),
+    #[xml(tag = "w:yearLong")]
+    YearLong(YearLong),
+    #[xml(tag = "w:annotationRef")]
+    AnnotationRef(AnnotationRef),
+    #[xml(tag = "w:footnoteRef")]
+    FootnoteRef(FootnoteRef),
+    #[xml(tag = "w:endnoteRef")]
+    EndnoteRef(EndnoteRef),
     #[xml(tag = "w:separator")]
     Separator(Separator),
     #[xml(tag = "w:continuationSeparator")]
     ContinuationSeparator(ContinuationSeparator),
-    #[xml(tag = "w:tab")]
-    Tab(Tab),
+    #[xml(tag = "w:sym")]
+    Sym(Sym<'a>),
+    #[xml(tag = "w:pgNum")]
+    PgNum(PgNum),
     #[xml(tag = "w:cr")]
     CarriageReturn(CarriageReturn),
+    #[xml(tag = "w:tab")]
+    Tab(Tab),
+    //#[xml(tag = "w:object")]
+    //Object(Object<'a>),
+    //#[xml(tag = "w:pict")]
+    //Pict(Pict<'a>),
+    #[xml(tag = "w:fldChar")]
+    FieldChar(FieldChar),
+    //#[xml(tag = "w:ruby")]
+    //Ruby(Ruby<'a>),
+    #[xml(tag = "w:footnoteReference")]
+    FootnoteReference(FootnoteReference<'a>),
+    #[xml(tag = "w:endnoteReference")]
+    EndnoteReference(EndnoteReference<'a>),
+    #[xml(tag = "w:commentReference")]
+    CommentReference(CommentReference<'a>),
     #[xml(tag = "w:drawing")]
     Drawing(Drawing<'a>),
+    //#[xml(tag = "w:ptab")]
+    //PTab(Ptab<'a>),
+    #[xml(tag = "w:lastRenderedPageBreak")]
+    LastRenderedPageBreak(LastRenderedPageBreak),
 }
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:noBreakHyphen")]
+pub struct NoBreakHyphen;
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:softHyphen")]
+pub struct SoftHyphen {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -178,6 +263,11 @@ pub struct Separator {}
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:continuationSeparator")]
 pub struct ContinuationSeparator {}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:pgNum")]
+pub struct PgNum {}
 
 __xml_test_suites!(
     Run,

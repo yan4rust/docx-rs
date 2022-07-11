@@ -37,6 +37,19 @@ pub struct Comment<'a> {
     pub content: Paragraph<'a>,
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:annotationRef")]
+pub struct AnnotationRef;
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:commentReference")]
+pub struct CommentReference<'a> {
+    #[xml(attr = "r:id")]
+    pub id: Option<Cow<'a, str>>,
+}
+
 impl<'a> XmlWrite for Comments<'a> {
     fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {
         let Comments { comments } = self;

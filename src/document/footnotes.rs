@@ -3,6 +3,7 @@
 //! The corresponding ZIP item is `/word/footnotes.xml`.
 //!
 
+use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
@@ -29,6 +30,22 @@ pub struct FootNote<'a> {
     pub id: Option<isize>,
     #[xml(child = "w:sdt", child = "w:p", child = "w:tbl", child = "w:sectPr")]
     pub content: Vec<BodyContent<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:footnoteRef")]
+pub struct FootnoteRef;
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:footnoteReference")]
+pub struct FootnoteReference<'a> {
+    /// Specifies the HeaderReference type of this HeaderReference.
+    #[xml(attr = "w:customMarkFollows")]
+    pub supress_reference_mark: Option<bool>,
+    #[xml(attr = "r:id")]
+    pub id: Option<Cow<'a, str>>,
 }
 
 impl<'a> FootNote<'a> {

@@ -3,6 +3,7 @@
 //! The corresponding ZIP item is `/word/endnotes.xml`.
 //!
 
+use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
@@ -31,6 +32,22 @@ pub struct EndNote<'a> {
     pub id: Option<isize>,
     #[xml(child = "w:sdt", child = "w:p", child = "w:tbl", child = "w:sectPr")]
     pub content: Vec<BodyContent<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:endnoteRef")]
+pub struct EndnoteRef;
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:endnoteReference")]
+pub struct EndnoteReference<'a> {
+    /// Specifies the HeaderReference type of this HeaderReference.
+    #[xml(attr = "w:customMarkFollows")]
+    pub supress_reference_mark: Option<bool>,
+    #[xml(attr = "r:id")]
+    pub id: Option<Cow<'a, str>>,
 }
 
 impl<'a> EndNote<'a> {

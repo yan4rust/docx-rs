@@ -62,6 +62,54 @@ impl<'a> From<(&'a str, TextSpace)> for InstrText<'a> {
     }
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:delInstrText")]
+pub struct DelInstrText<'a> {
+    /// Specifies how to handle whitespace
+    #[xml(attr = "xml:space")]
+    pub space: Option<TextSpace>,
+    /// Specifies a literal text
+    #[xml(text)]
+    pub text: Cow<'a, str>,
+}
+
+impl From<String> for DelInstrText<'_> {
+    fn from(val: String) -> Self {
+        DelInstrText {
+            text: val.into(),
+            space: None,
+        }
+    }
+}
+
+impl<'a> From<&'a str> for DelInstrText<'a> {
+    fn from(val: &'a str) -> Self {
+        DelInstrText {
+            text: val.into(),
+            space: None,
+        }
+    }
+}
+
+impl From<(String, TextSpace)> for DelInstrText<'_> {
+    fn from(val: (String, TextSpace)) -> Self {
+        DelInstrText {
+            text: val.0.into(),
+            space: Some(val.1),
+        }
+    }
+}
+
+impl<'a> From<(&'a str, TextSpace)> for DelInstrText<'a> {
+    fn from(val: (&'a str, TextSpace)) -> Self {
+        DelInstrText {
+            text: val.0.into(),
+            space: Some(val.1),
+        }
+    }
+}
+
 /// Text Space Rules
 ///
 /// Specifies how whitespace should be handled in a literal text.
