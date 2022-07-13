@@ -21,23 +21,66 @@ pub struct Theme<'a> {
     #[xml(child = "a:themeElements")]
     pub elements: ThemeElements<'a>,
     #[xml(child = "a:objectDefaults")]
-    pub defaults: ObjectDefaults,
+    pub defaults: Option<ObjectDefaults>,
     #[xml(child = "a:extraClrSchemeLst")]
-    pub extra_clr_scheme_lst: ExtraClrSchemeLst,
+    pub extra_clr_scheme_lst: Option<ExtraClrSchemeLst>,
+    //#[xml(child = "a:custClrLst")]
+    //pub cust_clr_lst: Option<CustClrLst>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: ExtLst,
+    pub ext_lst: Option<ExtLst>,
 }
+
+// #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[xml(tag = "a:custClrLst")]
+// pub struct CustClrLst<'a> {
+//     #[xml(child = "a:custClr")]
+//     pub contents: Vec<CustClr>,
+// }
+
+// #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[xml(tag = "a:custClr")]
+// pub struct CustClr<'a> {
+//     #[xml(attr = "name")]
+//     pub name: Option<Cow<'a, str>>,
+// }
+
+// #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// pub enum CustClrChoice {
+//     ///  RGB Color Model - Percentage Variant
+//     #[xml(tag = "a:scrgbClr")]
+//     ScrgbClr(ScrgbClr<'a>),
+//     ///  RGB Color Model - Hex Variant
+//     #[xml(tag = "a:srgbClr")]
+//     SrgbClr(SrgbClr<'a>),
+//     ///  Hue, Saturation, Luminance Color Model
+//     #[xml(tag = "a:hslClr")]
+//     HslClr(SslClr<'a>),
+//     ///  System Color
+//     #[xml(tag = "a:sysClr")]
+//     SysClr(SysClr<'a>),
+//     ///  Scheme Color
+//     #[xml(tag = "a:schemeClr")]
+//     SchemeClr(SchemeClr<'a>),
+//     ///  Preset Color
+//     #[xml(tag = "a:prstClr")]
+//     PrstClr(PrstClr<'a>),
+// }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:themeElements")]
 pub struct ThemeElements<'a> {
     #[xml(child = "a:clrScheme")]
-    pub clr_scheme: Option<ClrScheme<'a>>,
+    pub clr_scheme: ClrScheme<'a>,
     #[xml(child = "a:fontScheme")]
-    pub font_scheme: Option<FontScheme<'a>>,
+    pub font_scheme: FontScheme<'a>,
     #[xml(child = "a:fmtScheme")]
-    pub fmt_scheme: Option<FmtScheme<'a>>,
+    pub fmt_scheme: FmtScheme<'a>,
+    #[xml(child = "a:extLst")]
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -45,7 +88,7 @@ pub struct ThemeElements<'a> {
 #[xml(tag = "a:clrScheme")]
 pub struct ClrScheme<'a> {
     #[xml(attr = "name")]
-    pub name: Option<Cow<'a, str>>,
+    pub name: Cow<'a, str>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -58,6 +101,8 @@ pub struct FontScheme<'a> {
     pub major_font: MajorFont<'a>,
     #[xml(child = "a:minorFont")]
     pub minor_font: MinorFont<'a>,
+    #[xml(child = "a:extLst")]
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -65,13 +110,15 @@ pub struct FontScheme<'a> {
 #[xml(tag = "a:majorFont")]
 pub struct MajorFont<'a> {
     #[xml(child = "a:latin")]
-    pub latin: Option<Latin<'a>>,
+    pub latin: Latin<'a>,
     #[xml(child = "a:ea")]
-    pub ea: Option<EA<'a>>,
+    pub ea: EA<'a>,
     #[xml(child = "a:cs")]
-    pub cs: Option<CS<'a>>,
+    pub cs: CS<'a>,
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
+    #[xml(child = "a:extLst")]
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -79,13 +126,15 @@ pub struct MajorFont<'a> {
 #[xml(tag = "a:minorFont")]
 pub struct MinorFont<'a> {
     #[xml(child = "a:latin")]
-    pub latin: Option<Latin<'a>>,
+    pub latin: Latin<'a>,
     #[xml(child = "a:ea")]
-    pub ea: Option<EA<'a>>,
+    pub ea: EA<'a>,
     #[xml(child = "a:cs")]
-    pub cs: Option<CS<'a>>,
+    pub cs: CS<'a>,
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
+    #[xml(child = "a:extLst")]
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -96,6 +145,10 @@ pub struct EA<'a> {
     pub typeface: Option<Cow<'a, str>>,
     #[xml(attr = "panose")]
     pub panose: Option<Cow<'a, str>>,
+    #[xml(attr = "pitchFamily")]
+    pub pitch_family: Option<i8>,
+    #[xml(attr = "charset")]
+    pub charset: Option<i8>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -106,6 +159,10 @@ pub struct CS<'a> {
     pub typeface: Option<Cow<'a, str>>,
     #[xml(attr = "panose")]
     pub panose: Option<Cow<'a, str>>,
+    #[xml(attr = "pitchFamily")]
+    pub pitch_family: Option<i8>,
+    #[xml(attr = "charset")]
+    pub charset: Option<i8>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -116,6 +173,10 @@ pub struct Latin<'a> {
     pub typeface: Option<Cow<'a, str>>,
     #[xml(attr = "panose")]
     pub panose: Option<Cow<'a, str>>,
+    #[xml(attr = "pitchFamily")]
+    pub pitch_family: Option<i8>,
+    #[xml(attr = "charset")]
+    pub charset: Option<i8>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -123,9 +184,9 @@ pub struct Latin<'a> {
 #[xml(tag = "a:font")]
 pub struct Font<'a> {
     #[xml(attr = "script")]
-    pub script: Option<Cow<'a, str>>,
+    pub script: Cow<'a, str>,
     #[xml(attr = "typeface")]
-    pub typeface: Option<Cow<'a, str>>,
+    pub typeface: Cow<'a, str>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -203,9 +264,9 @@ impl<'a> XmlWrite for Theme<'a> {
         writer.write_element_end_open()?;
 
         elements.to_writer(writer)?;
-        defaults.to_writer(writer)?;
-        extra_clr_scheme_lst.to_writer(writer)?;
-        ext_lst.to_writer(writer)?;
+        write_attr(defaults, writer)?;
+        write_attr(extra_clr_scheme_lst, writer)?;
+        write_attr(ext_lst, writer)?;
 
         writer.write_element_end_close("a:theme")?;
 
@@ -219,7 +280,7 @@ __xml_test_suites!(
     Theme,
     Theme::default(),
     format!(
-        r#"{}<a:theme xmlns:a="{}"><a:themeElements/><a:objectDefaults/><a:extraClrSchemeLst/><a:extLst/></a:theme>"#,
+        r#"{}<a:theme xmlns:a="{}"><a:themeElements/></a:theme>"#,
         crate::schema::SCHEMA_XML,
         SCHEMA_DRAWINGML,
     )
