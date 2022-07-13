@@ -19,15 +19,15 @@ use super::latent_style::LatentStyle;
 pub struct LatentStyles<'a> {
     /// Specifies a set of properties.
     #[xml(attr = "w:defLockedState")]
-    pub locked_state: Option<usize>,
+    pub locked_state: Option<bool>,
     #[xml(attr = "w:defUIPriority")]
     pub priority: Option<usize>,
     #[xml(attr = "w:defSemiHidden")]
-    pub semi_hidden: Option<usize>,
+    pub semi_hidden: Option<bool>,
     #[xml(attr = "w:defUnhideWhenUsed")]
-    pub unhide_when_used: Option<usize>,
+    pub unhide_when_used: Option<bool>,
     #[xml(attr = "w:defQFormat")]
-    pub format: Option<usize>,
+    pub format: Option<bool>,
     #[xml(attr = "w:count")]
     pub count: Option<usize>,
     #[xml(child = "w:lsdException")]

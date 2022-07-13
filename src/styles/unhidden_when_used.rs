@@ -13,5 +13,5 @@ use strong_xml::{XmlRead, XmlWrite};
 #[xml(tag = "w:unhideWhenUsed")]
 pub struct UnhideWhenUsed {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<bool>,
 }

@@ -112,7 +112,7 @@ pub struct BasedOn<'a> {
 #[xml(tag = "w:qFormat")]
 pub struct QFormat {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<bool>,
 }
 
 #[derive(Debug, Clone)]

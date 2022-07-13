@@ -13,5 +13,5 @@ use strong_xml::{XmlRead, XmlWrite};
 #[xml(tag = "w:semiHidden")]
 pub struct SemiHidden {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<bool>,
 }

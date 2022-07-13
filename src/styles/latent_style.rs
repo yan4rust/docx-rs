@@ -22,12 +22,14 @@ pub struct LatentStyle<'a> {
     /// Specifies the type of style.
     #[xml(attr = "w:name")]
     pub name: Option<Cow<'a, str>>,
-    #[xml(attr = "w:semiHidden")]
-    pub semi_hidden: Option<usize>,
+    #[xml(attr = "w:locked")]
+    pub locked: Option<bool>,
     #[xml(attr = "w:uiPriority")]
     pub priority: Option<usize>,
+    #[xml(attr = "w:semiHidden")]
+    pub semi_hidden: Option<bool>,
     #[xml(attr = "w:unhideWhenUsed")]
-    pub unhiden_when_used: Option<usize>,
+    pub unhiden_when_used: Option<bool>,
     #[xml(attr = "w:qFormat")]
-    pub q_format: Option<usize>,
+    pub q_format: Option<bool>,
 }
