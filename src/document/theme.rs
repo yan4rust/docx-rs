@@ -280,7 +280,7 @@ __xml_test_suites!(
     Theme,
     Theme::default(),
     format!(
-        r#"{}<a:theme xmlns:a="{}"><a:themeElements/></a:theme>"#,
+        r#"{}<a:theme xmlns:a="{}"><a:themeElements><a:clrScheme name=""/><a:fontScheme><a:majorFont><a:latin/><a:ea/><a:cs/></a:majorFont><a:minorFont><a:latin/><a:ea/><a:cs/></a:minorFont></a:fontScheme><a:fmtScheme><a:fillStyleLst/><a:lnStyleLst/><a:effectStyleLst/><a:bgFillStyleLst/></a:fmtScheme></a:themeElements></a:theme>"#,
         crate::schema::SCHEMA_XML,
         SCHEMA_DRAWINGML,
     )
