@@ -30,7 +30,7 @@ pub struct Style<'a> {
     #[xml(attr = "w:type")]
     pub ty: StyleType,
     #[xml(attr = "w:default")]
-    pub default: Option<usize>,
+    pub default: Option<bool>,
     /// Specifies the unique identifier
     ///
     /// This identifier is used throughout the document to apply style in content.
