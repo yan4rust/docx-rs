@@ -471,6 +471,22 @@ impl DocxFile {
         };
 
         let rels = Relationships::from_str(&self.rels)?;
+        let rels = {
+            let rrr: Vec<_> = rels
+                .relationships
+                .iter()
+                .filter(|r2| {
+                    matches!(
+                        r2.ty.to_string().as_str(),
+                        crate::schema::SCHEMA_CORE
+                            | crate::schema::SCHEMA_REL_EXTENDED
+                            | crate::schema::SCHEMA_OFFICE_DOCUMENT
+                    )
+                })
+                .map(|d| d.to_owned())
+                .collect();
+            Relationships { relationships: rrr }
+        };
 
         let styles = self
             .styles

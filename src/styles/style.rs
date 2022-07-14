@@ -28,22 +28,22 @@ use crate::styles::priority::Priority;
 pub struct Style<'a> {
     /// Specifies the type of style.
     #[xml(attr = "w:type")]
-    pub ty: StyleType,
-    #[xml(attr = "w:default")]
-    pub default: Option<bool>,
+    pub ty: Option<StyleType>,
     /// Specifies the unique identifier
     ///
     /// This identifier is used throughout the document to apply style in content.
     #[xml(attr = "w:styleId")]
     pub style_id: Cow<'a, str>,
+    #[xml(attr = "w:default")]
+    pub default: Option<bool>,
+    #[xml(attr = "w:customStyle")]
+    pub custom_style: Option<bool>,
 
     /// Specifies the primary name
     #[xml(child = "w:name")]
     pub name: Option<StyleName<'a>>,
     #[xml(child = "w:basedOn")]
     pub base: Option<BasedOn<'a>>,
-    #[xml(child = "w:qFormat")]
-    pub q_format: Option<QFormat>,
     /// Specifies the priority.
     #[xml(child = "w:uiPriority")]
     pub priority: Option<Priority>,
@@ -51,6 +51,8 @@ pub struct Style<'a> {
     pub semi_hidden: Option<super::semi_hidden::SemiHidden>,
     #[xml(child = "w:unhideWhenUsed")]
     pub unhide_when_used: Option<super::unhidden_when_used::UnhideWhenUsed>,
+    #[xml(child = "w:qFormat")]
+    pub q_format: Option<QFormat>,
     /// Specifies a set of paragraph properties
     #[xml(default, child = "w:pPr")]
     pub paragraph: Option<ParagraphProperty<'a>>,
@@ -64,9 +66,10 @@ pub struct Style<'a> {
 impl<'a> Style<'a> {
     pub fn new<T: Into<Cow<'a, str>>>(ty: StyleType, style_id: T) -> Self {
         Style {
-            ty,
+            ty: Some(ty),
             style_id: style_id.into(),
             default: None,
+            custom_style: None,
             name: None,
             base: None,
             q_format: None,
@@ -79,7 +82,7 @@ impl<'a> Style<'a> {
         }
     }
 
-    __setter!(ty: StyleType);
+    __setter!(ty: Option<StyleType>);
     __setter!(name: Option<StyleName<'a>>);
     __setter!(paragraph: Option<ParagraphProperty<'a>>);
     __setter!(character: Option<CharacterProperty<'a>>);

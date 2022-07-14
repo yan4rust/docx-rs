@@ -44,19 +44,16 @@ impl<'a> Fonts<'a> {
 #[derive(Debug, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum FontHint {
-    /// Text restarts on the next column.
-    Ascii,
-    /// Text restarts on the next page.
-    EastAsia,
-    /// Text restarts on the next line.
-    HAnsi,
+    Default,       //	High ANSI Font
+    EastAsia,      //	East Asian Font
+    ComplexScript, //	Complex Script Font
 }
 
 __string_enum! {
     FontHint {
-        Ascii= "ascii",
+        Default= "default",
         EastAsia = "eastAsia",
-        HAnsi = "hAnsi",
+        ComplexScript = "cs",
     }
 }
 
