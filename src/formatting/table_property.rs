@@ -2,8 +2,8 @@ use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
-    __setter, __xml_test_suites,
-    formatting::{TableBorders, TableIndent, TableJustification, TableWidth}, __string_enum,
+    __setter, __string_enum, __xml_test_suites,
+    formatting::{TableBorders, TableIndent, TableJustification, TableWidth},
 };
 
 use super::table_margin::TableMargins;
@@ -84,18 +84,18 @@ pub struct ConditionalTableProperty<'a> {
 pub enum ConditionType {
     #[default]
     WholeTable, //Whole table formatting.
-    FirstRow, //First Row Conditional Formatting.
-    LastRow, //Last table row formatting.
-    FirstCol, //First Column Conditional Formatting.
-    LastCol, //Last table column formatting.
+    FirstRow,  //First Row Conditional Formatting.
+    LastRow,   //Last table row formatting.
+    FirstCol,  //First Column Conditional Formatting.
+    LastCol,   //Last table column formatting.
     Band1Vert, //Banded Column Conditional Formatting.
     Band2Vert, //Even Column Stripe Conditional Formatting.
     Band1Horz, //Banded Row Conditional Formatting.
     Band2Horz, //Even Row Stripe Conditional Formatting.
-    NeCell, //Top right table cell formatting.
-    NwCell, //Top left table cell formatting.
-    SeCell, //Bottom right table cell formatting.
-    SwCell, //Bottom left table cell formatting.
+    NeCell,    //Top right table cell formatting.
+    NwCell,    //Top left table cell formatting.
+    SeCell,    //Bottom right table cell formatting.
+    SwCell,    //Bottom left table cell formatting.
 }
 
 __string_enum! {

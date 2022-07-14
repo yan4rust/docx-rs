@@ -1,6 +1,6 @@
-use std::borrow::Cow;
-
 use strong_xml::{XmlRead, XmlWrite};
+
+use crate::__string_enum;
 
 /// Numbering Id
 ///
@@ -12,11 +12,31 @@ use strong_xml::{XmlRead, XmlWrite};
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:docGrid")]
-pub struct PageGrid<'a> {
+pub struct PageGrid {
     #[xml(attr = "w:type")]
-    pub ty: Option<Cow<'a, str>>,
+    pub ty: Option<GridType>,
     #[xml(attr = "w:linePitch")]
     pub line_pitch: Option<usize>,
+    #[xml(attr = "w:charSpace")]
+    pub char_space: Option<usize>,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum GridType {
+    Default,       //	No Document Grid
+    Lines,         //	Line Grid Only
+    LinesAndChars, //	Line and Character Grid
+    SnapToChars,   //	Character Grid Only
+}
+
+__string_enum! {
+    GridType {
+        Default = "default",
+        Lines = "lines",
+        LinesAndChars = "linesAndChars",
+        SnapToChars = "snapToChars",
+    }
 }
 
 // impl<T: Into<usize>> From<T> for NumberingId {
