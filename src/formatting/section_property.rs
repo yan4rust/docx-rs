@@ -40,8 +40,8 @@ pub struct SectionProperty<'a> {
     #[xml(child = "w:pgMar")]
     pub page_margin: Option<PageMargin>,
     ///  Paper Source Information
-    //#[xml(child = "w:paperSrc")]
-    //pub paper_source: Option<PaperSource>,
+    #[xml(child = "w:paperSrc")]
+    pub paper_source: Option<PaperSource>,
     ///  Page Borders
     //#[xml(child = "w:pgBorders")]
     //pub page_borders: Option<PgBorders>,
@@ -58,8 +58,8 @@ pub struct SectionProperty<'a> {
     #[xml(child = "w:formProt")]
     pub form_prot: Option<FormProt>,
     /////  Vertical Text Alignment on Page
-    //#[xml(child = "w:vAlign")]
-    //pub v_align: Option<VAlign>,
+    #[xml(child = "w:vAlign")]
+    pub v_align: Option<VAlign>,
     ///  Suppress Endnotes In Document
     #[xml(child = "w:noEndnote")]
     pub no_endnote: Option<NoEndnote>,
@@ -67,8 +67,8 @@ pub struct SectionProperty<'a> {
     #[xml(child = "w:titlePg")]
     pub title_page: Option<TitlePage>,
     ///  Text Flow Direction
-    //#[xml(child = "w:textDirection")]
-    //pub text_direction: Option<TextDirection>,
+    #[xml(child = "w:textDirection")]
+    pub text_direction: Option<TextDirection>,
     ///  Right to Left Section Layout
     #[xml(child = "w:bidi")]
     pub bidi: Option<Bidi>,
@@ -115,8 +115,8 @@ pub struct PreviousSectionProperty<'a> {
     #[xml(child = "w:pgMar")]
     pub page_margin: Option<PageMargin>,
     ///  Paper Source Information
-    //#[xml(child = "w:paperSrc")]
-    //pub paper_source: Option<PaperSource>,
+    #[xml(child = "w:paperSrc")]
+    pub paper_source: Option<PaperSource>,
     ///  Page Borders
     //#[xml(child = "w:pgBorders")]
     //pub page_borders: Option<PgBorders>,
@@ -133,8 +133,8 @@ pub struct PreviousSectionProperty<'a> {
     #[xml(child = "w:formProt")]
     pub form_prot: Option<FormProt>,
     /////  Vertical Text Alignment on Page
-    //#[xml(child = "w:vAlign")]
-    //pub v_align: Option<VAlign>,
+    #[xml(child = "w:vAlign")]
+    pub v_align: Option<VAlign>,
     ///  Suppress Endnotes In Document
     #[xml(child = "w:noEndnote")]
     pub no_endnote: Option<NoEndnote>,
@@ -142,8 +142,8 @@ pub struct PreviousSectionProperty<'a> {
     #[xml(child = "w:titlePg")]
     pub title_page: Option<TitlePage>,
     ///  Text Flow Direction
-    //#[xml(child = "w:textDirection")]
-    //pub text_direction: Option<TextDirection>,
+    #[xml(child = "w:textDirection")]
+    pub text_direction: Option<TextDirection>,
     ///  Right to Left Section Layout
     #[xml(child = "w:bidi")]
     pub bidi: Option<Bidi>,
@@ -203,6 +203,74 @@ pub struct NoEndnote {
 pub struct Bidi {
     #[xml(attr = "w:val")]
     pub val: Option<bool>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:paperSrc")]
+pub struct PaperSource {
+    #[xml(attr = "w:first")]
+    pub first: Option<usize>,
+    #[xml(attr = "w:other")]
+    pub other: Option<usize>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:textDirection")]
+pub struct TextDirection {
+    #[xml(attr = "w:val")]
+    pub val: TextDirectionType,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum TextDirectionType {
+    #[default]
+    LrTb, //	Left to Right, Top to Bottom
+    TbRl,  //		Top to Bottom, Right to Left
+    BtLr,  //		Bottom to Top, Left to Right
+    LrTbV, //		Left to Right, Top to Bottom Rotated
+    TbRlV, //		Top to Bottom, Right to Left Rotated
+    TbLrV, //		Top to Bottom, Left to Right Rotated
+}
+
+__string_enum! {
+    TextDirectionType {
+        LrTb = "lrTb",
+        TbRl = "tbRl",
+        BtLr = "btLr",
+        LrTbV = "lrTbV",
+        TbRlV = "tbRlV",
+        TbLrV = "tbLrV",
+    }
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:vAlign")]
+pub struct VAlign {
+    #[xml(attr = "w:val")]
+    pub val: TextDirectionType,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum VAlignType {
+    #[default]
+    Top, //	Align Top
+    Center, //	Align Center
+    Both,   //	Vertical Justification
+    Bottom, //	Align Bottom
+}
+
+__string_enum! {
+    VAlignType {
+        Top = "top",
+        Center = "center",
+        Both = "both",
+        Bottom = "bottom",
+    }
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

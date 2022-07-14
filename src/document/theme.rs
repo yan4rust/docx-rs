@@ -27,7 +27,7 @@ pub struct Theme<'a> {
     //#[xml(child = "a:custClrLst")]
     //pub cust_clr_lst: Option<CustClrLst>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 // #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -80,7 +80,7 @@ pub struct ThemeElements<'a> {
     #[xml(child = "a:fmtScheme")]
     pub fmt_scheme: FmtScheme<'a>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -102,7 +102,7 @@ pub struct FontScheme<'a> {
     #[xml(child = "a:minorFont")]
     pub minor_font: MinorFont<'a>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -118,7 +118,7 @@ pub struct MajorFont<'a> {
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -134,7 +134,7 @@ pub struct MinorFont<'a> {
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst>,
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -238,7 +238,10 @@ pub struct ExtraClrSchemeLst {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:extLst")]
-pub struct ExtLst {}
+pub struct ExtLst<'a> {
+    #[xml(attr = "uri")]
+    pub uri: Cow<'a, str>,
+}
 
 impl<'a> XmlWrite for Theme<'a> {
     fn to_writer<W: Write>(&self, writer: &mut XmlWriter<W>) -> XmlResult<()> {
