@@ -8,7 +8,7 @@ use crate::{
     formatting::{PageCols, PageGrid, PageMargin, PageSize},
 };
 
-/// Previous Section Properties
+/// Section Properties
 ///
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -81,8 +81,96 @@ pub struct SectionProperty<'a> {
     /////  Reference to Printer Settings Data
     //#[xml(child = "w:printerSettings")]
     //pub printer_settings: Option<PrinterSettings>,
-    //#[xml(child = "w:sectPrChange")]
-    //pub revision: Option<Revision>,
+    /// Revision Information for Section Properties
+    #[xml(child = "w:sectPrChange")]
+    pub revision: Option<Revision<'a>>,
+}
+
+/// Previous Section Properties
+///
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:sectPr")]
+pub struct PreviousSectionProperty<'a> {
+    //#[xml(attr = "w14:paraId")]
+    //pub id: Option<Cow<'a, str>>,
+    //#[xml(attr = "w14:textId")]
+    //pub text_id: Option<Cow<'a, str>>,
+    #[xml(attr = "w:rsidR")]
+    pub rsid_r: Option<Cow<'a, str>>,
+    #[xml(attr = "w:rsidRDefault")]
+    pub rsid_r_default: Option<Cow<'a, str>>,
+
+    ///  Section-Wide Footnote Properties
+    //#[xml(child = "w:footnotePr")]
+    //pub footnote_property: Option<FootnoteProperty>,
+    ///  Section-Wide Endnote Properties
+    //#[xml(child = "w:endnotePr")]
+    //pub endnote_property: Option<EndnoteProperty>,
+    ///  Section Type
+    #[xml(child = "w:type")]
+    pub ty: Option<SectionTypeP>,
+    #[xml(child = "w:pgSz")]
+    pub page_size: Option<PageSize>,
+    #[xml(child = "w:pgMar")]
+    pub page_margin: Option<PageMargin>,
+    ///  Paper Source Information
+    //#[xml(child = "w:paperSrc")]
+    //pub paper_source: Option<PaperSource>,
+    ///  Page Borders
+    //#[xml(child = "w:pgBorders")]
+    //pub page_borders: Option<PgBorders>,
+    ///  Line Numbering Settings
+    //#[xml(child = "w:lnNumType")]
+    //pub line_numbering: Option<LnNumType>,
+    ///  Page Numbering Settings
+    //#[xml(child = "w:pgNumType")]
+    //pub page_numbering: Option<PgNumType>,
+    ///  Column Definitions
+    #[xml(child = "w:cols")]
+    pub cols: Option<PageCols>,
+    ///  Only Allow Editing of Form Fields
+    #[xml(child = "w:formProt")]
+    pub form_prot: Option<FormProt>,
+    /////  Vertical Text Alignment on Page
+    //#[xml(child = "w:vAlign")]
+    //pub v_align: Option<VAlign>,
+    ///  Suppress Endnotes In Document
+    #[xml(child = "w:noEndnote")]
+    pub no_endnote: Option<NoEndnote>,
+    ///  Different First Page Headers and Footers
+    #[xml(child = "w:titlePg")]
+    pub title_page: Option<TitlePage>,
+    ///  Text Flow Direction
+    //#[xml(child = "w:textDirection")]
+    //pub text_direction: Option<TextDirection>,
+    ///  Right to Left Section Layout
+    #[xml(child = "w:bidi")]
+    pub bidi: Option<Bidi>,
+    ///  Gutter on Right Side of Page
+    #[xml(child = "w:rtlGutter")]
+    pub rtl_gutter: Option<RtlGutter>,
+    ///  Document Grid
+    #[xml(child = "w:docGrid")]
+    pub grid: Option<PageGrid>,
+    /////  Reference to Printer Settings Data
+    //#[xml(child = "w:printerSettings")]
+    //pub printer_settings: Option<PrinterSettings>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:sectPrChange")]
+pub struct Revision<'a> {
+    #[xml(attr = "w:id")]
+    pub id: usize,
+    #[xml(attr = "w:author")]
+    pub author: Cow<'a, str>,
+    #[xml(attr = "w:date")]
+    pub date: Option<Cow<'a, str>>,
+
+    #[xml(child = "w:secPr")]
+    pub section_property: Option<PreviousSectionProperty<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
