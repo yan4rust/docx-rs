@@ -3,7 +3,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    formatting::{TableBorders, TableIndent, TableJustification, TableWidth},
+    formatting::{TableBorders, TableIndent, TableJustification, TableWidth}, __string_enum,
 };
 
 use super::table_margin::TableMargins;
@@ -56,6 +56,63 @@ pub struct TableStyleId<'a> {
 impl<'a, T: Into<Cow<'a, str>>> From<T> for TableStyleId<'a> {
     fn from(val: T) -> Self {
         TableStyleId { value: val.into() }
+    }
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:tblStylePr")]
+pub struct ConditionalTableProperty<'a> {
+    #[xml(attr = "type")]
+    pub condition: ConditionType,
+    /// Specifies a set of paragraph properties
+    #[xml(default, child = "w:pPr")]
+    pub paragraph: Option<super::ParagraphProperty<'a>>,
+    /// Specifies a set of character properties
+    #[xml(default, child = "w:rPr")]
+    pub character: Option<super::CharacterProperty<'a>>,
+    #[xml(default, child = "w:tblPr")]
+    pub table: Option<TableProperty<'a>>,
+    #[xml(child = "w:trPr")]
+    pub table_row: Option<crate::formatting::TableRowProperty>,
+    #[xml(child = "w:tcPr")]
+    pub table_cell: Option<crate::formatting::TableCellProperty>,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum ConditionType {
+    #[default]
+    WholeTable, //Whole table formatting.
+    FirstRow, //First Row Conditional Formatting.
+    LastRow, //Last table row formatting.
+    FirstCol, //First Column Conditional Formatting.
+    LastCol, //Last table column formatting.
+    Band1Vert, //Banded Column Conditional Formatting.
+    Band2Vert, //Even Column Stripe Conditional Formatting.
+    Band1Horz, //Banded Row Conditional Formatting.
+    Band2Horz, //Even Row Stripe Conditional Formatting.
+    NeCell, //Top right table cell formatting.
+    NwCell, //Top left table cell formatting.
+    SeCell, //Bottom right table cell formatting.
+    SwCell, //Bottom left table cell formatting.
+}
+
+__string_enum! {
+    ConditionType {
+        WholeTable = "wholeTable",
+        FirstRow = "firstRow",
+        LastRow = "lastRow",
+        FirstCol = "firstCol",
+        LastCol = "lastCol",
+        Band1Vert = "band1Vert",
+        Band2Vert = "band2Vert",
+        Band1Horz = "band1Horz",
+        Band2Horz = "band2Horz",
+        NeCell = "neCell",
+        NwCell = "nwCell",
+        SeCell = "seCell",
+        SwCell = "swCell",
     }
 }
 
