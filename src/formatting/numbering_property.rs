@@ -15,19 +15,19 @@ use crate::formatting::{IndentLevel, NumberingId};
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:numPr")]
 pub struct NumberingProperty {
-    /// Specifies a reference to a numbering definition instance
-    #[xml(child = "w:numId")]
-    pub id: NumberingId,
     /// Specifies the numbering level of the numbering definition to use for the paragraph.
     #[xml(child = "w:ilvl")]
-    pub level: IndentLevel,
+    pub level: Option<IndentLevel>,
+    /// Specifies a reference to a numbering definition instance
+    #[xml(child = "w:numId")]
+    pub id: Option<NumberingId>,
 }
 
 impl From<(usize, usize)> for NumberingProperty {
     fn from(val: (usize, usize)) -> Self {
         NumberingProperty {
-            id: NumberingId { value: val.0 },
-            level: IndentLevel { value: val.1 },
+            id: Some(NumberingId { value: val.0 }),
+            level: Some(IndentLevel { value: val.1 }),
         }
     }
 }
@@ -35,7 +35,7 @@ impl From<(usize, usize)> for NumberingProperty {
 __xml_test_suites!(
     NumberingProperty,
     NumberingProperty::default(),
-    r#"<w:numPr><w:numId w:val="0"/><w:ilvl w:val="0"/></w:numPr>"#,
+    r#"<w:numPr/>"#,
     NumberingProperty::from((20, 40)),
-    r#"<w:numPr><w:numId w:val="20"/><w:ilvl w:val="40"/></w:numPr>"#,
+    r#"<w:numPr><w:ilvl w:val="40"/><w:numId w:val="20"/></w:numPr>"#,
 );

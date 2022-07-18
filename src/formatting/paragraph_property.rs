@@ -327,5 +327,5 @@ __xml_test_suites!(
     ParagraphProperty::default().border(Borders::default()),
     r#"<w:pPr><w:pBdr/></w:pPr>"#,
     ParagraphProperty::default().numbering(NumberingProperty::default()),
-    r#"<w:pPr><w:numPr><w:numId w:val="0"/><w:ilvl w:val="0"/></w:numPr></w:pPr>"#,
+    r#"<w:pPr><w:numPr/></w:pPr>"#,
 );

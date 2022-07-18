@@ -16,7 +16,7 @@ pub use self::{default_style::*, style::*};
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::__xml_test_suites;
+use crate::{__xml_test_suites, write_attr};
 use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 
 /// Styles of the document
@@ -35,10 +35,10 @@ use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 #[xml(tag = "w:styles")]
 pub struct Styles<'a> {
     /// Specifies the default set of properties.
-    #[xml(default, child = "w:docDefaults")]
-    pub default: DefaultStyle<'a>,
+    #[xml(child = "w:docDefaults")]
+    pub default: Option<DefaultStyle<'a>>,
     #[xml(child = "w:latentStyles")]
-    pub latent_styles: LatentStyles<'a>,
+    pub latent_styles: Option<LatentStyles<'a>>,
     /// Specifies a set of properties.
     #[xml(child = "w:style")]
     pub styles: Vec<Style<'a>>,
@@ -61,8 +61,8 @@ impl<'a> XmlWrite for Styles<'a> {
 
         writer.write_element_end_open()?;
 
-        default.to_writer(writer)?;
-        latent_styles.to_writer(writer)?;
+        write_attr(default, writer)?;
+        write_attr(latent_styles, writer)?;
 
         for ele in styles {
             ele.to_writer(writer)?;
@@ -82,7 +82,7 @@ impl<'a> Styles<'a> {
     }
 
     pub fn default(&mut self, style: DefaultStyle<'a>) -> &mut Self {
-        self.default = style;
+        self.default = Some(style);
         self
     }
 
@@ -96,7 +96,7 @@ __xml_test_suites!(
     Styles,
     Styles::new(),
     format!(
-        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault/><w:pPrDefault/></w:docDefaults><w:latentStyles/></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"></w:styles>"#,
         SCHEMA_XML,
         SCHEMA_MAIN
     )
@@ -106,7 +106,7 @@ __xml_test_suites!(
         ..Default::default()
     },
     format!(
-        r#"{}<w:styles xmlns:w="{}"><w:docDefaults><w:rPrDefault/><w:pPrDefault/></w:docDefaults><w:latentStyles/><w:style w:type="paragraph" w:styleId="id"/></w:styles>"#,
+        r#"{}<w:styles xmlns:w="{}"><w:style w:type="paragraph" w:styleId="id"/></w:styles>"#,
         SCHEMA_XML,
         SCHEMA_MAIN
     )
