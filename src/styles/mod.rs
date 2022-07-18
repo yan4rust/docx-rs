@@ -16,8 +16,8 @@ pub use self::{default_style::*, style::*};
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::{__xml_test_suites, write_attr};
 use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
+use crate::{__xml_test_suites, write_attr};
 
 /// Styles of the document
 ///
@@ -97,8 +97,7 @@ __xml_test_suites!(
     Styles::new(),
     format!(
         r#"{}<w:styles xmlns:w="{}"></w:styles>"#,
-        SCHEMA_XML,
-        SCHEMA_MAIN
+        SCHEMA_XML, SCHEMA_MAIN
     )
     .as_str(),
     Styles {
@@ -107,8 +106,7 @@ __xml_test_suites!(
     },
     format!(
         r#"{}<w:styles xmlns:w="{}"><w:style w:type="paragraph" w:styleId="id"/></w:styles>"#,
-        SCHEMA_XML,
-        SCHEMA_MAIN
+        SCHEMA_XML, SCHEMA_MAIN
     )
     .as_str(),
 );

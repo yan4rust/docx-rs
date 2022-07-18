@@ -41,7 +41,7 @@ pub struct ParagraphProperty<'a> {
     pub widow_control: Option<WidowControl>,
     /// Specifies that the paragraph should be numbered.
     #[xml(child = "w:numPr")]
-    pub numbering: Option<NumberingProperty>,
+    pub numbering: Option<NumberingProperty<'a>>,
     ///  Suppress Line Numbers for Paragraph
     #[xml(child = "w:suppressLineNumbers")]
     pub suppress_line_numbers: Option<SuppressLineNumbers>,
@@ -132,7 +132,7 @@ impl<'a> ParagraphProperty<'a> {
     __setter!(style_id: Option<ParagraphStyleId<'a>>);
     __setter!(justification: Option<Justification>);
     __setter!(border: Option<Borders<'a>>);
-    __setter!(numbering: Option<NumberingProperty>);
+    __setter!(numbering: Option<NumberingProperty<'a>>);
     __setter!(spacing: Option<Spacing>);
     __setter!(indent: Option<Indent>);
 }
