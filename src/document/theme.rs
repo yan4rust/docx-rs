@@ -40,6 +40,222 @@ pub struct CustClrLst<'a> {
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:dk1")]
+pub struct Dk1<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:lt1")]
+pub struct Lt1<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:dk2")]
+pub struct Dk2<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:lt2")]
+pub struct Lt2<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent1")]
+pub struct Accent1<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent2")]
+pub struct Accent2<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent3")]
+pub struct Accent3<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent4")]
+pub struct Accent4<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent5")]
+pub struct Accent5<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:accent6")]
+pub struct Accent6<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:hlink")]
+pub struct HLink<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "a:folHlink")]
+pub struct FolHlink<'a> {
+    #[xml(attr = "name")]
+    pub name: Option<Cow<'a, str>>,
+
+    #[xml(
+        child = "a:scrgbClr",
+        child = "a:srgbClr",
+        child = "a:hslClr",
+        child = "a:sysClr",
+        child = "a:schemeClr",
+        child = "a:prstClr"
+    )]
+    pub custom_color: Vec<CustClrChoice<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:custClr")]
 pub struct CustClr<'a> {
     #[xml(attr = "name")]
@@ -95,7 +311,7 @@ pub struct ScrgbClr {
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:srgbClr")]
 pub struct SrgbClr<'a> {
-    #[xml(attr = "w:val")]
+    #[xml(attr = "val")]
     pub value: Option<Cow<'a, str>>,
 }
 
@@ -564,6 +780,46 @@ pub struct ThemeElements<'a> {
 pub struct ClrScheme<'a> {
     #[xml(attr = "name")]
     pub name: Cow<'a, str>,
+
+    ///    Dark 1
+    #[xml(child = "a:dk1")]
+    pub dk1: Dk1<'a>,
+    ///    Light 1
+    #[xml(child = "a:lt1")]
+    pub lt1: Lt1<'a>,
+    ///    Dark 2
+    #[xml(child = "a:dk2")]
+    pub dk2: Dk2<'a>,
+    ///    Light 2
+    #[xml(child = "a:lt2")]
+    pub lt2: Lt2<'a>,
+    ///    Accent
+    #[xml(child = "a:accent1")]
+    pub accent1: Accent1<'a>,
+    ///    Accent 2
+    #[xml(child = "a:accent2")]
+    pub accent2: Accent2<'a>,
+    ///    Accent 3
+    #[xml(child = "a:accent3")]
+    pub accent3: Accent3<'a>,
+    ///    Accent 4
+    #[xml(child = "a:accent4")]
+    pub accent4: Accent4<'a>,
+    ///    Accent 5
+    #[xml(child = "a:accent5")]
+    pub accent5: Accent5<'a>,
+    ///    Accent 6
+    #[xml(child = "a:accent6")]
+    pub accent6: Accent6<'a>,
+    ///    Hyperlink
+    #[xml(child = "a:hlink")]
+    pub hlink: HLink<'a>,
+    ///    Followed Hyperlink
+    #[xml(child = "a:folHlink")]
+    pub fol_hlink: FolHlink<'a>,
+    ///    Extension List
+    #[xml(child = "a:extLst")]
+    pub ext_lst: Option<ExtLst<'a>>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -760,7 +1016,7 @@ __xml_test_suites!(
     Theme,
     Theme::default(),
     format!(
-        r#"{}<a:theme xmlns:a="{}"><a:themeElements><a:clrScheme name=""/><a:fontScheme><a:majorFont><a:latin/><a:ea/><a:cs/></a:majorFont><a:minorFont><a:latin/><a:ea/><a:cs/></a:minorFont></a:fontScheme><a:fmtScheme><a:fillStyleLst/><a:lnStyleLst/><a:effectStyleLst/><a:bgFillStyleLst/></a:fmtScheme></a:themeElements></a:theme>"#,
+        r#"{}<a:theme xmlns:a="{}"><a:themeElements><a:clrScheme name=""><a:dk1/><a:lt1/><a:dk2/><a:lt2/><a:accent1/><a:accent2/><a:accent3/><a:accent4/><a:accent5/><a:accent6/><a:hlink/><a:folHlink/></a:clrScheme><a:fontScheme><a:majorFont><a:latin/><a:ea/><a:cs/></a:majorFont><a:minorFont><a:latin/><a:ea/><a:cs/></a:minorFont></a:fontScheme><a:fmtScheme><a:fillStyleLst/><a:lnStyleLst/><a:effectStyleLst/><a:bgFillStyleLst/></a:fmtScheme></a:themeElements></a:theme>"#,
         crate::schema::SCHEMA_XML,
         SCHEMA_DRAWINGML,
     )
