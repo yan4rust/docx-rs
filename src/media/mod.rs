@@ -15,7 +15,7 @@ pub fn get_media_type_relation_type(mt: &MediaType) -> &'static str {
 }
 
 pub fn get_media_type(filename: &str) -> Option<MediaType> {
-    let mt = if filename.ends_with("png")
+    if filename.ends_with("png")
         | filename.ends_with("jpg")
         | filename.ends_with("jpeg")
         | filename.ends_with("bmp")
@@ -23,7 +23,5 @@ pub fn get_media_type(filename: &str) -> Option<MediaType> {
         Some(MediaType::Image)
     } else {
         None
-    };
-
-    mt
+    }
 }
