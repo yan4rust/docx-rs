@@ -7,6 +7,7 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
+use crate::formatting::FootnoteProperty;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
 use crate::{__string_enum, __xml_test_suites, write_attr};
 
@@ -89,7 +90,7 @@ pub struct Settings<'a> {
     pub forms_design: Option<FormsDesign>,
     ///  Attached Document Template
     #[xml(child = "w:attachedTemplate")]
-    pub attached_template: Option<AttachedTemplate>,
+    pub attached_template: Option<AttachedTemplate<'a>>,
     ///  Automatically Update Styles From Document Template
     #[xml(child = "w:linkStyles")]
     pub link_styles: Option<LinkStyles>,
@@ -251,16 +252,16 @@ pub struct Settings<'a> {
     pub hdr_shape_defaults: Option<HdrShapeDefaults>,
     ///  Document-Wide Footnote Properties
     #[xml(child = "w:footnotePr")]
-    pub footnote_pr: Option<FootnotePr>,
+    pub footnote_pr: Option<FootnoteProperty>,
     ///  Document-Wide Endnote Properties
     #[xml(child = "w:endnotePr")]
-    pub endnote_pr: Option<EndnotePr>,
+    pub endnote_pr: Option<crate::formatting::EndnoteProperty>,
     ///  Compatibility Settings
     #[xml(child = "w:compat")]
     pub compat: Option<Compat>,
     ///  Document Variables
     #[xml(child = "w:docVars")]
-    pub doc_vars: Option<DocVars>,
+    pub doc_vars: Option<DocVars<'a>>,
     ///  Listing of All Revision Save ID Values
     #[xml(child = "w:rsids")]
     pub rsids: Option<Rsids>,
@@ -327,102 +328,206 @@ pub struct SmartTagType {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:view")]
-pub struct View {}
+pub struct View {
+    #[xml(attr = "w:val")]
+    pub val: ViewType,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum ViewType {
+    #[default]
+    None, //	Default View
+    Print,       //	Print Layout View
+    Outline,     //	Outline View
+    MasterPages, //	Master Document View
+    Normal,      //	Draft View
+    Web,         //	Web Page View
+}
+
+__string_enum! {
+    ViewType {
+        None = "none",
+        Print = "print",
+        Outline = "outline",
+        MasterPages = "masterPages",
+        Normal = "normal",
+        Web = "web",
+    }
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:zoom")]
-pub struct Zoom {}
+pub struct Zoom {
+    #[xml(attr = "w:val")]
+    pub val: Option<ZoomType>,
+    #[xml(attr = "w:percent")]
+    pub percent: u8,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum ZoomType {
+    #[default]
+    None, //	No Preset Magnification
+    FullPage, //	Display One Full Page
+    BestFit,  //	Display Page Width
+    TextFit,  //	Display Text Width
+}
+
+__string_enum! {
+    ZoomType {
+        None = "none",
+        FullPage = "fullPage",
+        BestFit = "bestFit",
+        TextFit = "textFit",
+    }
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:removePersonalInformation")]
-pub struct RemovePersonalInformation {}
+pub struct RemovePersonalInformation {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:removeDateAndTime")]
-pub struct RemoveDateAndTime {}
+pub struct RemoveDateAndTime {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotDisplayPageBoundaries")]
-pub struct DoNotDisplayPageBoundaries {}
+pub struct DoNotDisplayPageBoundaries {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:displayBackgroundShape")]
-pub struct DisplayBackgroundShape {}
+pub struct DisplayBackgroundShape {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:printPostScriptOverText")]
-pub struct PrintPostScriptOverText {}
+pub struct PrintPostScriptOverText {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:printFractionalCharacterWidth")]
-pub struct PrintFractionalCharacterWidth {}
+pub struct PrintFractionalCharacterWidth {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:printFormsData")]
-pub struct PrintFormsData {}
+pub struct PrintFormsData {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:embedTrueTypeFonts")]
-pub struct EmbedTrueTypeFonts {}
+pub struct EmbedTrueTypeFonts {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:embedSystemFonts")]
-pub struct EmbedSystemFonts {}
+pub struct EmbedSystemFonts {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:saveSubsetFonts")]
-pub struct SaveSubsetFonts {}
+pub struct SaveSubsetFonts {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:saveFormsData")]
-pub struct SaveFormsData {}
+pub struct SaveFormsData {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:mirrorMargins")]
-pub struct MirrorMargins {}
+pub struct MirrorMargins {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:alignBordersAndEdges")]
-pub struct AlignBordersAndEdges {}
+pub struct AlignBordersAndEdges {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:bordersDoNotSurroundHeader")]
-pub struct BordersDoNotSurroundHeader {}
+pub struct BordersDoNotSurroundHeader {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:bordersDoNotSurroundFooter")]
-pub struct BordersDoNotSurroundFooter {}
+pub struct BordersDoNotSurroundFooter {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:gutterAtTop")]
-pub struct GutterAtTop {}
+pub struct GutterAtTop {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:hideSpellingErrors")]
-pub struct HideSpellingErrors {}
+pub struct HideSpellingErrors {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:hideGrammaticalErrors")]
-pub struct HideGrammaticalErrors {}
+pub struct HideGrammaticalErrors {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -437,17 +542,26 @@ pub struct ProofState {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:formsDesign")]
-pub struct FormsDesign {}
+pub struct FormsDesign {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:attachedTemplate")]
-pub struct AttachedTemplate {}
+pub struct AttachedTemplate<'a> {
+    #[xml(attr = "r:id")]
+    pub val: Cow<'a, str>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:linkStyles")]
-pub struct LinkStyles {}
+pub struct LinkStyles {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -477,17 +591,26 @@ pub struct RevisionView {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:trackRevisions")]
-pub struct TrackRevisions {}
+pub struct TrackRevisions {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotTrackMoves")]
-pub struct DoNotTrackMoves {}
+pub struct DoNotTrackMoves {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotTrackFormatting")]
-pub struct DoNotTrackFormatting {}
+pub struct DoNotTrackFormatting {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -502,12 +625,18 @@ pub struct AutoFormatOverride {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:styleLockTheme")]
-pub struct StyleLockTheme {}
+pub struct StyleLockTheme {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:styleLockQFSet")]
-pub struct StyleLockQfset {}
+pub struct StyleLockQfset {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -520,7 +649,10 @@ pub struct DefaultTabStop {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:autoHyphenation")]
-pub struct AutoHyphenation {}
+pub struct AutoHyphenation {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -535,12 +667,18 @@ pub struct HyphenationZone {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotHyphenateCaps")]
-pub struct DoNotHyphenateCaps {}
+pub struct DoNotHyphenateCaps {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:showEnvelope")]
-pub struct ShowEnvelope {}
+pub struct ShowEnvelope {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -560,12 +698,18 @@ pub struct DefaultTableStyle {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:bookFoldRevPrinting")]
-pub struct BookFoldRevPrinting {}
+pub struct BookFoldRevPrinting {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:bookFoldPrinting")]
-pub struct BookFoldPrinting {}
+pub struct BookFoldPrinting {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -607,7 +751,10 @@ pub struct DisplayVerticalDrawingGridEvery {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotUseMarginsForDrawingGridOrigin")]
-pub struct DoNotUseMarginsForDrawingGridOrigin {}
+pub struct DoNotUseMarginsForDrawingGridOrigin {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -622,12 +769,18 @@ pub struct DrawingGridVerticalOrigin {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotShadeFormData")]
-pub struct DoNotShadeFormData {}
+pub struct DoNotShadeFormData {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:noPunctuationKerning")]
-pub struct NoPunctuationKerning {}
+pub struct NoPunctuationKerning {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -657,12 +810,18 @@ __string_enum! {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:printTwoOnOne")]
-pub struct PrintTwoOnOne {}
+pub struct PrintTwoOnOne {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:strictFirstAndLastChars")]
-pub struct StrictFirstAndLastChars {}
+pub struct StrictFirstAndLastChars {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -677,42 +836,66 @@ pub struct NoLineBreaksBefore {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:savePreviewPicture")]
-pub struct SavePreviewPicture {}
+pub struct SavePreviewPicture {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotValidateAgainstSchema")]
-pub struct DoNotValidateAgainstSchema {}
+pub struct DoNotValidateAgainstSchema {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:saveInvalidXml")]
-pub struct SaveInvalidXml {}
+pub struct SaveInvalidXml {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:ignoreMixedContent")]
-pub struct IgnoreMixedContent {}
+pub struct IgnoreMixedContent {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:alwaysShowPlaceholderText")]
-pub struct AlwaysShowPlaceholderText {}
+pub struct AlwaysShowPlaceholderText {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotDemarcateInvalidXml")]
-pub struct DoNotDemarcateInvalidXml {}
+pub struct DoNotDemarcateInvalidXml {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:saveXmlDataOnly")]
-pub struct SaveXmlDataOnly {}
+pub struct SaveXmlDataOnly {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:useXSLTWhenSaving")]
-pub struct UseXsltwhenSaving {}
+pub struct UseXsltwhenSaving {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -722,32 +905,31 @@ pub struct SaveThroughXslt {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:showXMLTags")]
-pub struct ShowXmltags {}
+pub struct ShowXmltags {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:alwaysMergeEmptyNamespace")]
-pub struct AlwaysMergeEmptyNamespace {}
+pub struct AlwaysMergeEmptyNamespace {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:updateFields")]
-pub struct UpdateFields {}
+pub struct UpdateFields {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:hdrShapeDefaults")]
 pub struct HdrShapeDefaults {}
-
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "w:footnotePr")]
-pub struct FootnotePr {}
-
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "w:endnotePr")]
-pub struct EndnotePr {}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -757,7 +939,20 @@ pub struct Compat {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:docVars")]
-pub struct DocVars {}
+pub struct DocVars<'a> {
+    #[xml(child = "w:docVar")]
+    pub vars: Vec<DocVar<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:docVar")]
+pub struct DocVar<'a> {
+    #[xml(attr = "w:name")]
+    pub name: Cow<'a, str>,
+    #[xml(attr = "w:val")]
+    pub val: Cow<'a, str>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -767,7 +962,10 @@ pub struct Rsids {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:uiCompat97To2003")]
-pub struct UiCompat97to2003 {}
+pub struct UiCompat97to2003 {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -777,12 +975,18 @@ pub struct ClrSchemeMapping {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotIncludeSubdocsInStats")]
-pub struct DoNotIncludeSubdocsInStats {}
+pub struct DoNotIncludeSubdocsInStats {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotAutoCompressPictures")]
-pub struct DoNotAutoCompressPictures {}
+pub struct DoNotAutoCompressPictures {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -807,7 +1011,10 @@ pub struct ShapeDefaults {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:doNotEmbedSmartTags")]
-pub struct DoNotEmbedSmartTags {}
+pub struct DoNotEmbedSmartTags {
+    #[xml(attr = "w:value")]
+    pub val: Option<bool>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
