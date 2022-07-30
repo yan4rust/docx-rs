@@ -340,6 +340,58 @@ pub struct EndnoteProperty {
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:footnotePr")]
+pub struct FootnoteProperty2 {
+    #[xml(child = "w:pos")]
+    pub position: Option<FootnotePosition>,
+    #[xml(child = "w:numFmt")]
+    pub num_fmt: Option<NumFmt>,
+    /// Footnote and Endnote Numbering Starting Value
+    #[xml(child = "w:numStart")]
+    pub num_start: Option<NumStart>,
+    /// Footnote and Endnote Numbering Restart Location
+    #[xml(child = "w:numRestart")]
+    pub num_restart: Option<NumRestart>,
+    #[xml(child = "w:footnote")]
+    pub footnote: Vec<Footnote>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:footnote")]
+pub struct Footnote {
+    #[xml(attr = "w:id")]
+    pub id: isize,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:endnotePr")]
+pub struct EndnoteProperty2 {
+    #[xml(child = "w:pos")]
+    pub position: Option<EndnotePosition>,
+    #[xml(child = "w:numFmt")]
+    pub num_fmt: Option<NumFmt>,
+    /// Footnote and Endnote Numbering Starting Value
+    #[xml(child = "w:numStart")]
+    pub num_start: Option<NumStart>,
+    /// Footnote and Endnote Numbering Restart Location
+    #[xml(child = "w:numRestart")]
+    pub num_restart: Option<NumRestart>,
+    #[xml(child = "w:endnote")]
+    pub endnote: Vec<Endnote>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:endnote")]
+pub struct Endnote {
+    #[xml(attr = "w:id")]
+    pub id: isize,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:numRestart")]
 pub struct NumRestart {
     #[xml(attr = "w:val")]

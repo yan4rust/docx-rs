@@ -7,7 +7,6 @@ use std::borrow::Cow;
 use std::io::Write;
 use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
-use crate::formatting::FootnoteProperty;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
 use crate::{__string_enum, __xml_test_suites, write_attr};
 
@@ -252,10 +251,10 @@ pub struct Settings<'a> {
     pub hdr_shape_defaults: Option<HdrShapeDefaults>,
     ///  Document-Wide Footnote Properties
     #[xml(child = "w:footnotePr")]
-    pub footnote_pr: Option<FootnoteProperty>,
+    pub footnote_pr: Option<crate::formatting::FootnoteProperty2>,
     ///  Document-Wide Endnote Properties
     #[xml(child = "w:endnotePr")]
-    pub endnote_pr: Option<crate::formatting::EndnoteProperty>,
+    pub endnote_pr: Option<crate::formatting::EndnoteProperty2>,
     ///  Compatibility Settings
     #[xml(child = "w:compat")]
     pub compat: Option<Compat>,
@@ -264,7 +263,7 @@ pub struct Settings<'a> {
     pub doc_vars: Option<DocVars<'a>>,
     ///  Listing of All Revision Save ID Values
     #[xml(child = "w:rsids")]
-    pub rsids: Option<Rsids>,
+    pub rsids: Option<Rsids<'a>>,
     ///// properties of math in the document
     //#[xml(child = "m:mathPr")]
     //pub mathPr: Option<mathPr>,
@@ -537,7 +536,27 @@ pub struct ActiveWritingStyle {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:proofState")]
-pub struct ProofState {}
+pub struct ProofState {
+    #[xml(attr = "w:spelling")]
+    pub spelling: Option<ProofStateType>,
+    #[xml(attr = "w:grammar")]
+    pub grammar: Option<ProofStateType>,
+}
+
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum ProofStateType {
+    #[default]
+    Clean, //	Check Completed
+    Dirty, //	Check Not Completed
+}
+
+__string_enum! {
+    ProofStateType {
+        Clean ="clean",
+        Dirty = "dirty",
+    }
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -957,7 +976,28 @@ pub struct DocVar<'a> {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:rsids")]
-pub struct Rsids {}
+pub struct Rsids<'a> {
+    #[xml(child = "w:rsidRoot")]
+    pub ro: Option<RsidRoot<'a>>,
+    #[xml(child = "w:rsid")]
+    pub rsids: Vec<Rsid<'a>>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:rsid")]
+pub struct Rsid<'a> {
+    #[xml(attr = "w:val")]
+    pub val: Cow<'a, str>,
+}
+
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:rsidRoot")]
+pub struct RsidRoot<'a> {
+    #[xml(attr = "w:val")]
+    pub val: Cow<'a, str>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
