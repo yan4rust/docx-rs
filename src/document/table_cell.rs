@@ -1,4 +1,6 @@
 #![allow(unused_must_use)]
+use std::borrow::Cow;
+
 use derive_more::From;
 use strong_xml::{XmlRead, XmlWrite};
 
@@ -33,6 +35,24 @@ impl<'a> TableCell<'a> {
             property: TableCellProperty::default(),
             content: vec![TableCellContent::Paragraph(par.into())],
         }
+    }
+
+    pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
+        self.content
+            .iter()
+            .filter_map(|content| match content {
+                TableCellContent::Paragraph(p) => Some(p.iter_text()),
+            })
+            .flatten()
+    }
+
+    pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
+        self.content
+            .iter_mut()
+            .filter_map(|content| match content {
+                TableCellContent::Paragraph(p) => Some(p.iter_text_mut()),
+            })
+            .flatten()
     }
 }
 

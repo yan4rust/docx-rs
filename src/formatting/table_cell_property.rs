@@ -5,7 +5,10 @@ use crate::__xml_test_suites;
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:tcPr")]
-pub struct TableCellProperty {}
+pub struct TableCellProperty {
+    #[xml(child = "w:tcW")]
+    pub wide: Option<super::TableCellWidth>,
+}
 
 impl TableCellProperty {}
 

@@ -1,4 +1,6 @@
 #![allow(unused_must_use)]
+use std::borrow::Cow;
+
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
@@ -42,6 +44,20 @@ impl<'a> Table<'a> {
     pub fn push_row<T: Into<TableRow<'a>>>(mut self, row: T) -> Self {
         self.rows.push(row.into());
         self
+    }
+
+    pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
+        self.rows
+            .iter()
+            .filter_map(|content| Some(content.iter_text()))
+            .flatten()
+    }
+
+    pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
+        self.rows
+            .iter_mut()
+            .filter_map(|content| Some(content.iter_text_mut()))
+            .flatten()
     }
 }
 

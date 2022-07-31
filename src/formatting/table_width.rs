@@ -21,6 +21,16 @@ pub struct TableWidth {
     pub unit: Option<TableWidthUnit>,
 }
 
+#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+#[cfg_attr(test, derive(PartialEq))]
+#[xml(tag = "w:tcW")]
+pub struct TableCellWidth {
+    #[xml(attr = "w:w")]
+    pub value: Option<usize>,
+    #[xml(attr = "w:type")]
+    pub unit: Option<TableWidthUnit>,
+}
+
 impl From<usize> for TableWidth {
     fn from(val: usize) -> Self {
         TableWidth {

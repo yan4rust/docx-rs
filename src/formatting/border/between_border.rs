@@ -7,16 +7,24 @@ use crate::{__setter, __xml_test_suites, formatting::BorderStyle};
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:between")]
 pub struct BetweenBorder<'a> {
+    #[xml(attr = "w:val")]
+    pub style: super::BorderStyle,
     #[xml(attr = "w:color")]
     pub color: Option<Cow<'a, str>>,
-    #[xml(attr = "w:shadow")]
-    pub shadow: Option<bool>,
+    #[xml(attr = "w:themeColor")]
+    pub theme_color: Option<crate::formatting::ThemeColor>,
+    #[xml(attr = "w:themeTint")]
+    pub theme_tint: Option<Cow<'a, str>>,
+    #[xml(attr = "w:themeShade")]
+    pub theme_shade: Option<Cow<'a, str>>,
+    #[xml(attr = "w:sz")]
+    pub size: Option<usize>, // Measurement in Eighths of a Point
     #[xml(attr = "w:space")]
     pub space: Option<usize>,
-    #[xml(attr = "w:sz")]
-    pub size: Option<usize>,
-    #[xml(attr = "w:val")]
-    pub style: Option<BorderStyle>,
+    #[xml(attr = "w:shadow")]
+    pub shadow: Option<bool>,
+    #[xml(attr = "w:frame")]
+    pub frame: Option<bool>,
 }
 
 impl<'a> BetweenBorder<'a> {
@@ -24,21 +32,21 @@ impl<'a> BetweenBorder<'a> {
     __setter!(shadow: Option<bool>);
     __setter!(space: Option<usize>);
     __setter!(size: Option<usize>);
-    __setter!(style: Option<BorderStyle>);
+    __setter!(style: BorderStyle);
 }
 
 __xml_test_suites!(
     BetweenBorder,
     BetweenBorder::default(),
-    r#"<w:between/>"#,
+    r#"<w:between w:val="none"/>"#,
     BetweenBorder::default().color("000000"),
-    r#"<w:between w:color="000000"/>"#,
+    r#"<w:between w:val="none" w:color="000000"/>"#,
     BetweenBorder::default().shadow(false),
-    r#"<w:between w:shadow="false"/>"#,
+    r#"<w:between w:val="none" w:shadow="false"/>"#,
     BetweenBorder::default().space(40usize),
-    r#"<w:between w:space="40"/>"#,
+    r#"<w:between w:val="none" w:space="40"/>"#,
     BetweenBorder::default().size(20usize),
-    r#"<w:between w:sz="20"/>"#,
+    r#"<w:between w:val="none" w:sz="20"/>"#,
     BetweenBorder::default().style(BorderStyle::Dotted),
     r#"<w:between w:val="dotted"/>"#,
 );

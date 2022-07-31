@@ -25,16 +25,16 @@ use super::table_margin::TableMargins;
 pub struct TableProperty<'a> {
     #[xml(child = "w:tblStyle")]
     pub style_id: Option<TableStyleId<'a>>,
-    #[xml(child = "w:jc")]
-    pub justification: Option<TableJustification>,
-    #[xml(child = "w:tblBorders")]
-    pub borders: Option<TableBorders<'a>>,
-    #[xml(child = "w:tblInd")]
-    pub indent: Option<TableIndent>,
-    #[xml(child = "w:tblCellMar")]
-    pub margins: Option<TableMargins<'a>>,
     #[xml(child = "w:tblW")]
     pub width: Option<TableWidth>,
+    #[xml(child = "w:jc")]
+    pub justification: Option<TableJustification>,
+    #[xml(child = "w:tblInd")]
+    pub indent: Option<TableIndent>,
+    #[xml(child = "w:tblBorders")]
+    pub borders: Option<TableBorders<'a>>,
+    #[xml(child = "w:tblCellMar")]
+    pub margins: Option<TableMargins<'a>>,
 }
 
 impl<'a> TableProperty<'a> {
