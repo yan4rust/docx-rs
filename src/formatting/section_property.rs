@@ -163,7 +163,7 @@ pub struct PreviousSectionProperty<'a> {
 #[xml(tag = "w:sectPrChange")]
 pub struct Revision<'a> {
     #[xml(attr = "w:id")]
-    pub id: usize,
+    pub id: isize,
     #[xml(attr = "w:author")]
     pub author: Cow<'a, str>,
     #[xml(attr = "w:date")]

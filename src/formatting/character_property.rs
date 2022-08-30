@@ -338,7 +338,7 @@ __string_enum! {
 #[xml(tag = "w:eastAsianLayout")]
 pub struct EastAsianLayout {
     #[xml(attr = "w:id")]
-    pub id: Option<usize>,
+    pub id: Option<isize>,
     #[xml(attr = "w:combine")]
     pub combine: Option<bool>,
     #[xml(attr = "w:combineBrackets")]
@@ -378,7 +378,7 @@ pub struct FitText {
     #[xml(attr = "w:val")]
     pub value: Option<usize>,
     #[xml(attr = "w:id")]
-    pub id: Option<usize>,
+    pub id: Option<isize>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
