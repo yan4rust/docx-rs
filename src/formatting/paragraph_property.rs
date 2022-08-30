@@ -233,7 +233,7 @@ pub struct AutoSpaceDE {
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "AutoSpaceDN")]
+#[xml(tag = "w:autoSpaceDN")]
 pub struct AutoSpaceDN {
     #[xml(attr = "w:val")]
     pub value: Option<bool>,
