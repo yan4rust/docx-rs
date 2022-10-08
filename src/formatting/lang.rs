@@ -9,7 +9,7 @@ use crate::{__setter, __xml_test_suites};
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let sz = Size::from(42usize);
+/// let sz = Size::from(42isize);
 /// ```
 #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
 #[cfg_attr(test, derive(PartialEq))]

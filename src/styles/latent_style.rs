@@ -25,7 +25,7 @@ pub struct LatentStyle<'a> {
     #[xml(attr = "w:locked")]
     pub locked: Option<bool>,
     #[xml(attr = "w:uiPriority")]
-    pub priority: Option<usize>,
+    pub priority: Option<isize>,
     #[xml(attr = "w:semiHidden")]
     pub semi_hidden: Option<bool>,
     #[xml(attr = "w:unhideWhenUsed")]

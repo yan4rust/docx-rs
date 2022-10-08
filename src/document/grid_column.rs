@@ -14,17 +14,17 @@ use crate::__xml_test_suites;
 #[xml(tag = "w:gridCol")]
 pub struct GridColumn {
     #[xml(attr = "w:w")]
-    pub width: usize,
+    pub width: isize,
 }
 
-impl From<usize> for GridColumn {
-    fn from(width: usize) -> GridColumn {
+impl From<isize> for GridColumn {
+    fn from(width: isize) -> GridColumn {
         GridColumn { width }
     }
 }
 
 __xml_test_suites!(
     GridColumn,
-    GridColumn::from(42usize),
+    GridColumn::from(42isize),
     r#"<w:gridCol w:w="42"/>"#,
 );

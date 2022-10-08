@@ -7,17 +7,17 @@ use crate::__xml_test_suites;
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let lvl = IndentLevel::from(42usize);
+/// let lvl = IndentLevel::from(42isize);
 /// ```
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:ilvl")]
 pub struct IndentLevel {
     #[xml(attr = "w:val")]
-    pub value: usize,
+    pub value: isize,
 }
 
-impl<T: Into<usize>> From<T> for IndentLevel {
+impl<T: Into<isize>> From<T> for IndentLevel {
     fn from(val: T) -> Self {
         IndentLevel { value: val.into() }
     }
@@ -25,6 +25,6 @@ impl<T: Into<usize>> From<T> for IndentLevel {
 
 __xml_test_suites!(
     IndentLevel,
-    IndentLevel::from(40usize),
+    IndentLevel::from(40isize),
     r#"<w:ilvl w:val="40"/>"#,
 );

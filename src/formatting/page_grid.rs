@@ -7,7 +7,7 @@ use crate::__string_enum;
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let id = NumberingId::from(42usize);
+/// let id = NumberingId::from(42isize);
 /// ```
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -16,9 +16,9 @@ pub struct PageGrid {
     #[xml(attr = "w:type")]
     pub ty: Option<GridType>,
     #[xml(attr = "w:linePitch")]
-    pub line_pitch: Option<usize>,
+    pub line_pitch: Option<isize>,
     #[xml(attr = "w:charSpace")]
-    pub char_space: Option<usize>,
+    pub char_space: Option<isize>,
 }
 
 #[derive(Debug, Clone)]
@@ -39,7 +39,7 @@ __string_enum! {
     }
 }
 
-// impl<T: Into<usize>> From<T> for NumberingId {
+// impl<T: Into<isize>> From<T> for NumberingId {
 //     fn from(val: T) -> Self {
 //         NumberingId { value: val.into() }
 //     }
@@ -47,6 +47,6 @@ __string_enum! {
 
 // __xml_test_suites!(
 //     NumberingId,
-//     NumberingId::from(40usize),
+//     NumberingId::from(40isize),
 //     r#"<w:numId w:val="40"/>"#,
 // );

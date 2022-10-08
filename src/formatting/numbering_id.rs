@@ -7,17 +7,17 @@ use crate::__xml_test_suites;
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let id = NumberingId::from(42usize);
+/// let id = NumberingId::from(42isize);
 /// ```
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:numId")]
 pub struct NumberingId {
     #[xml(attr = "w:val")]
-    pub value: usize,
+    pub value: isize,
 }
 
-impl<T: Into<usize>> From<T> for NumberingId {
+impl<T: Into<isize>> From<T> for NumberingId {
     fn from(val: T) -> Self {
         NumberingId { value: val.into() }
     }
@@ -25,6 +25,6 @@ impl<T: Into<usize>> From<T> for NumberingId {
 
 __xml_test_suites!(
     NumberingId,
-    NumberingId::from(40usize),
+    NumberingId::from(40isize),
     r#"<w:numId w:val="40"/>"#,
 );

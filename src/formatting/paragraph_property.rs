@@ -14,7 +14,7 @@ use crate::{
 /// let prop = ParagraphProperty::default()
 ///     .style_id("foo")
 ///     .justification(JustificationVal::Start)
-///     .numbering((10usize, 20usize));
+///     .numbering((10isize, 20isize));
 /// ```
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -292,7 +292,7 @@ pub struct SuppressOverlap {
 #[xml(tag = "w:outlineLvl")]
 pub struct OutlineLvl {
     #[xml(attr = "w:val")]
-    pub value: usize,
+    pub value: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -300,7 +300,7 @@ pub struct OutlineLvl {
 #[xml(tag = "w:divId")]
 pub struct DivId {
     #[xml(attr = "w:val")]
-    pub value: usize,
+    pub value: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

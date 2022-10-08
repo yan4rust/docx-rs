@@ -29,8 +29,8 @@ impl TableGrid {
     }
 }
 
-impl From<Vec<usize>> for TableGrid {
-    fn from(cols: Vec<usize>) -> TableGrid {
+impl From<Vec<isize>> for TableGrid {
+    fn from(cols: Vec<isize>) -> TableGrid {
         TableGrid {
             columns: cols.into_iter().map(Into::into).collect(),
         }

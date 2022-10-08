@@ -13,7 +13,7 @@ fn main() -> DocxResult<()> {
     docx.styles.default(
         DefaultStyle::default().character(
             CharacterProperty::default()
-                .size(42usize)
+                .size(42isize)
                 .color((0x00, 0xff, 0x00)),
         ),
     );

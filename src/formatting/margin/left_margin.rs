@@ -9,14 +9,14 @@ use crate::__setter;
 #[xml(tag = "w:left")]
 pub struct LeftMargin<'a> {
     #[xml(attr = "w:w")]
-    pub size: Option<usize>,
+    pub size: Option<isize>,
     #[xml(attr = "w:type")]
     pub ty: Option<Cow<'a, str>>,
 }
 
 impl<'a> LeftMargin<'a> {
     __setter!(ty: Option<Cow<'a, str>>);
-    __setter!(size: Option<usize>);
+    __setter!(size: Option<isize>);
 }
 
 // __xml_test_suites!(
@@ -27,9 +27,9 @@ impl<'a> LeftMargin<'a> {
 //     r#"<w:top w:color="000000"/>"#,
 //     TopBorder::default().shadow(false),
 //     r#"<w:top w:shadow="false"/>"#,
-//     TopBorder::default().space(40usize),
+//     TopBorder::default().space(40isize),
 //     r#"<w:top w:space="40"/>"#,
-//     TopBorder::default().size(20usize),
+//     TopBorder::default().size(20isize),
 //     r#"<w:top w:sz="20"/>"#,
 //     TopBorder::default().style(BorderStyle::Dotted),
 //     r#"<w:top w:val="dotted"/>"#,

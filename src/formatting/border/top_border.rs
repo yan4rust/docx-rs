@@ -18,9 +18,9 @@ pub struct TopBorder<'a> {
     #[xml(attr = "w:themeShade")]
     pub theme_shade: Option<Cow<'a, str>>,
     #[xml(attr = "w:sz")]
-    pub size: Option<usize>, // Measurement in Eighths of a Point
+    pub size: Option<isize>, // Measurement in Eighths of a Point
     #[xml(attr = "w:space")]
-    pub space: Option<usize>,
+    pub space: Option<isize>,
     #[xml(attr = "w:shadow")]
     pub shadow: Option<bool>,
     #[xml(attr = "w:frame")]
@@ -30,8 +30,8 @@ pub struct TopBorder<'a> {
 impl<'a> TopBorder<'a> {
     __setter!(color: Option<Cow<'a, str>>);
     __setter!(shadow: Option<bool>);
-    __setter!(space: Option<usize>);
-    __setter!(size: Option<usize>);
+    __setter!(space: Option<isize>);
+    __setter!(size: Option<isize>);
     __setter!(style: BorderStyle);
 }
 
@@ -43,9 +43,9 @@ __xml_test_suites!(
     r#"<w:top w:val="none" w:color="000000"/>"#,
     TopBorder::default().shadow(false),
     r#"<w:top w:val="none" w:shadow="false"/>"#,
-    TopBorder::default().space(40usize),
+    TopBorder::default().space(40isize),
     r#"<w:top w:val="none" w:space="40"/>"#,
-    TopBorder::default().size(20usize),
+    TopBorder::default().size(20isize),
     r#"<w:top w:val="none" w:sz="20"/>"#,
     TopBorder::default().style(BorderStyle::Dotted),
     r#"<w:top w:val="dotted"/>"#,

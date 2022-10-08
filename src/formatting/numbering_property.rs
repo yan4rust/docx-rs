@@ -57,8 +57,8 @@ pub struct NumberingChange<'a> {
     pub original: Option<Cow<'a, str>>,
 }
 
-impl From<(usize, usize)> for NumberingProperty<'_> {
-    fn from(val: (usize, usize)) -> Self {
+impl From<(isize, isize)> for NumberingProperty<'_> {
+    fn from(val: (isize, isize)) -> Self {
         NumberingProperty {
             id: Some(NumberingId { value: val.0 }),
             level: Some(IndentLevel { value: val.1 }),

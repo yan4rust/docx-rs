@@ -18,7 +18,7 @@ use super::{BoldComplex, Caps, Highlight, ItalicsComplex, Position, SmallCaps, V
 ///     .color("00ff00")
 ///     .color(0xff0000)
 ///     .color((0x00, 0x00, 0xff))
-///     .size(42usize)
+///     .size(42isize)
 ///     .bold(true)
 ///     .italics(false)
 ///     .strike(true)
@@ -288,7 +288,7 @@ pub struct Scale {
 #[xml(tag = "w:szCs")]
 pub struct SizeComplex {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<isize>,
 }
 
 /// Measurement in Half-Points
@@ -297,7 +297,7 @@ pub struct SizeComplex {
 #[xml(tag = "w:kern")]
 pub struct Kern {
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<isize>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -376,7 +376,7 @@ __string_enum! {
 pub struct FitText {
     // Measurement in Twentieths of a Point
     #[xml(attr = "w:val")]
-    pub value: Option<usize>,
+    pub value: Option<isize>,
     #[xml(attr = "w:id")]
     pub id: Option<isize>,
 }
@@ -396,9 +396,9 @@ pub struct TextBorder<'a> {
     #[xml(attr = "w:themeShade")]
     pub theme_shade: Option<Cow<'a, str>>,
     #[xml(attr = "w:sz")]
-    pub size: Option<usize>, // Measurement in Eighths of a Point
+    pub size: Option<isize>, // Measurement in Eighths of a Point
     #[xml(attr = "w:space")]
-    pub space: Option<usize>,
+    pub space: Option<isize>,
     #[xml(attr = "w:shadow")]
     pub shadow: Option<bool>,
     #[xml(attr = "w:frame")]
@@ -598,7 +598,7 @@ __xml_test_suites!(
     r#"<w:rPr><w:rStyle w:val="id"/></w:rPr>"#,
     CharacterProperty::default().color("00ff00"),
     r#"<w:rPr><w:color w:val="00ff00"/></w:rPr>"#,
-    CharacterProperty::default().size(42usize),
+    CharacterProperty::default().size(42isize),
     r#"<w:rPr><w:sz w:val="42"/></w:rPr>"#,
     CharacterProperty::default().bold(true),
     r#"<w:rPr><w:b w:val="true"/></w:rPr>"#,

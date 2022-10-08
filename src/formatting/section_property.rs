@@ -210,9 +210,9 @@ pub struct Bidi {
 #[xml(tag = "w:paperSrc")]
 pub struct PaperSource {
     #[xml(attr = "w:first")]
-    pub first: Option<usize>,
+    pub first: Option<isize>,
     #[xml(attr = "w:other")]
-    pub other: Option<usize>,
+    pub other: Option<isize>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

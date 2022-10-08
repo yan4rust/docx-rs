@@ -7,7 +7,7 @@ use crate::{__string_enum, __xml_test_suites};
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let width = TableWidth::from(42usize);
+/// let width = TableWidth::from(42isize);
 /// let width = TableWidth::from(TableWidthUnit::Pct);
 /// let width = TableWidth::from((42, TableWidthUnit::Dxa));
 /// ```
@@ -16,7 +16,7 @@ use crate::{__string_enum, __xml_test_suites};
 #[xml(tag = "w:tblW")]
 pub struct TableWidth {
     #[xml(attr = "w:w")]
-    pub value: Option<usize>,
+    pub value: Option<isize>,
     #[xml(attr = "w:type")]
     pub unit: Option<TableWidthUnit>,
 }
@@ -26,13 +26,13 @@ pub struct TableWidth {
 #[xml(tag = "w:tcW")]
 pub struct TableCellWidth {
     #[xml(attr = "w:w")]
-    pub value: Option<usize>,
+    pub value: Option<isize>,
     #[xml(attr = "w:type")]
     pub unit: Option<TableWidthUnit>,
 }
 
-impl From<usize> for TableWidth {
-    fn from(val: usize) -> Self {
+impl From<isize> for TableWidth {
+    fn from(val: isize) -> Self {
         TableWidth {
             value: Some(val),
             unit: None,
@@ -49,8 +49,8 @@ impl From<TableWidthUnit> for TableWidth {
     }
 }
 
-impl From<(usize, TableWidthUnit)> for TableWidth {
-    fn from(val: (usize, TableWidthUnit)) -> Self {
+impl From<(isize, TableWidthUnit)> for TableWidth {
+    fn from(val: (isize, TableWidthUnit)) -> Self {
         TableWidth {
             value: Some(val.0),
             unit: Some(val.1),

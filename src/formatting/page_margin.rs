@@ -5,29 +5,29 @@ use strong_xml::{XmlRead, XmlWrite};
 /// ```rust
 /// use docx_rust::formatting::*;
 ///
-/// let id = NumberingId::from(42usize);
+/// let id = NumberingId::from(42isize);
 /// ```
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:pgMar")]
 pub struct PageMargin {
     #[xml(attr = "w:top")]
-    pub top: Option<usize>,
+    pub top: Option<isize>,
     #[xml(attr = "w:right")]
-    pub right: Option<usize>,
+    pub right: Option<isize>,
     #[xml(attr = "w:bottom")]
-    pub bottom: Option<usize>,
+    pub bottom: Option<isize>,
     #[xml(attr = "w:left")]
-    pub left: Option<usize>,
+    pub left: Option<isize>,
     #[xml(attr = "w:header")]
-    pub header: Option<usize>,
+    pub header: Option<isize>,
     #[xml(attr = "w:footer")]
-    pub footer: Option<usize>,
+    pub footer: Option<isize>,
     #[xml(attr = "w:gutter")]
-    pub gutter: Option<usize>,
+    pub gutter: Option<isize>,
 }
 
-// impl<T: Into<usize>> From<T> for NumberingId {
+// impl<T: Into<isize>> From<T> for NumberingId {
 //     fn from(val: T) -> Self {
 //         NumberingId { value: val.into() }
 //     }
@@ -35,6 +35,6 @@ pub struct PageMargin {
 
 // __xml_test_suites!(
 //     NumberingId,
-//     NumberingId::from(40usize),
+//     NumberingId::from(40isize),
 //     r#"<w:numId w:val="40"/>"#,
 // );

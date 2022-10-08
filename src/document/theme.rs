@@ -320,11 +320,11 @@ pub struct SrgbClr<'a> {
 #[xml(tag = "a:hslClr")]
 pub struct HslClr {
     #[xml(attr = "hue")]
-    pub hue: Option<usize>,
+    pub hue: Option<isize>,
     #[xml(attr = "sat")]
-    pub sat: Option<usize>,
+    pub sat: Option<isize>,
     #[xml(attr = "lum")]
-    pub lum: Option<usize>,
+    pub lum: Option<isize>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

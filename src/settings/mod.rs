@@ -662,7 +662,7 @@ pub struct StyleLockQfset {
 #[xml(tag = "w:defaultTabStop")]
 pub struct DefaultTabStop {
     #[xml(attr = "w:val")]
-    pub val: usize,
+    pub val: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -740,7 +740,7 @@ pub struct BookFoldPrintingSheets {}
 #[xml(tag = "w:drawingGridHorizontalSpacing")]
 pub struct DrawingGridHorizontalSpacing {
     #[xml(attr = "w:val")]
-    pub val: usize,
+    pub val: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -748,7 +748,7 @@ pub struct DrawingGridHorizontalSpacing {
 #[xml(tag = "w:drawingGridVerticalSpacing")]
 pub struct DrawingGridVerticalSpacing {
     #[xml(attr = "w:val")]
-    pub val: usize,
+    pub val: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -756,7 +756,7 @@ pub struct DrawingGridVerticalSpacing {
 #[xml(tag = "w:displayHorizontalDrawingGridEvery")]
 pub struct DisplayHorizontalDrawingGridEvery {
     #[xml(attr = "w:val")]
-    pub val: usize,
+    pub val: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -764,7 +764,7 @@ pub struct DisplayHorizontalDrawingGridEvery {
 #[xml(tag = "w:displayVerticalDrawingGridEvery")]
 pub struct DisplayVerticalDrawingGridEvery {
     #[xml(attr = "w:val")]
-    pub val: usize,
+    pub val: isize,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
