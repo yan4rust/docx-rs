@@ -2,7 +2,7 @@ use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __setter, __xml_test_suites,
-    formatting::{BetweenBorder, BottomBorder, LeftBorder, RightBorder, TopBorder},
+    formatting::{BarBorder, BetweenBorder, BottomBorder, LeftBorder, RightBorder, TopBorder},
 };
 
 /// Borders
@@ -12,14 +12,16 @@ use crate::{
 pub struct Borders<'a> {
     #[xml(child = "w:top")]
     pub top: Option<TopBorder<'a>>,
-    #[xml(child = "w:bottom")]
-    pub bottom: Option<BottomBorder<'a>>,
     #[xml(child = "w:left")]
     pub left: Option<LeftBorder<'a>>,
+    #[xml(child = "w:bottom")]
+    pub bottom: Option<BottomBorder<'a>>,
     #[xml(child = "w:right")]
     pub right: Option<RightBorder<'a>>,
     #[xml(child = "w:between")]
     pub between: Option<BetweenBorder<'a>>,
+    #[xml(child = "w:bar")]
+    pub bar: Option<BarBorder<'a>>,
 }
 
 impl<'a> Borders<'a> {
