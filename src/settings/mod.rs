@@ -600,7 +600,56 @@ pub struct DocumentType {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "w:mailMerge")]
-pub struct MailMerge {}
+pub struct MailMerge {
+    // ///required    Source Document Type
+    // #[xml(child = "w:mainDocumentType")]
+    // pub main_document_type: Option<mainDocumentType>,
+    // ///required    Query Contains Link to External Query File
+    // #[xml(child = "w:linkToQuery")]
+    // pub link_to_query: Option<linkToQuery>,
+    // ///required    Data Source Type
+    // #[xml(child = "w:dataType")]
+    // pub data_type: Option<dataType>,
+    // ///required    Data Source Connection String
+    // #[xml(child = "w:connectString")]
+    // pub connect_string: Option<connectString>,
+    // ///required    Query For Data Source Records To Merge
+    // #[xml(child = "w:query")]
+    // pub query: Option<query>,
+    // ///required    Data Source File Path
+    // #[xml(child = "w:dataSource")]
+    // pub data_source: Option<dataSource>,
+    // ///required    Header Definition File Path
+    // #[xml(child = "w:headerSource")]
+    // pub header_source: Option<headerSource>,
+    // ///required    Remove Blank Lines from Merged Documents
+    // #[xml(child = "w:doNotSuppressBlankLines")]
+    // pub do_not_suppress_blank_lines: Option<doNotSuppressBlankLines>,
+    // ///required    Merged Document Destination
+    // #[xml(child = "w:destination")]
+    // pub destination: Option<destination>,
+    // ///required    Column Containing E-mail Address
+    // #[xml(child = "w:addressFieldName")]
+    // pub address_field_name: Option<addressFieldName>,
+    // ///required    Merged E-mail or Fax Subject Line
+    // #[xml(child = "w:mailSubject")]
+    // pub mail_subject: Option<mailSubject>,
+    // ///required    Merged Document To E-Mail Attachment
+    // #[xml(child = "w:mailAsAttachment")]
+    // pub mail_as_attachment: Option<mailAsAttachment>,
+    // ///required    View Merged Data Within Document
+    // #[xml(child = "w:viewMergedData")]
+    // pub view_merged_data: Option<viewMergedData>,
+    // ///required    Record Currently Displayed In Merged Document
+    // #[xml(child = "w:activeRecord")]
+    // pub active_record: Option<activeRecord>,
+    // ///required    Mail Merge Error Reporting Setting
+    // #[xml(child = "w:checkErrors")]
+    // pub check_errors: Option<checkErrors>,
+    // ///required    Office Data Source Object Settings
+    // #[xml(child = "w:odso")]
+    // pub odso: Option<odso>,
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
