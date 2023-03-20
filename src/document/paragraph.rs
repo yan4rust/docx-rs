@@ -78,7 +78,10 @@ impl<'a> Paragraph<'a> {
     }
 
     pub fn text(&self) -> String {
-        self.iter_text().map(|c| c.to_string()).collect::<Vec<_>>().join("")
+        self.iter_text()
+            .map(|c| c.to_string())
+            .collect::<Vec<_>>()
+            .join("")
     }
 
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {

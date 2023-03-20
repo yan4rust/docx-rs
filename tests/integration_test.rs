@@ -19,5 +19,8 @@ fn read_list() {
     let book = DocxFile::from_file(path).unwrap();
     let docx = book.parse().unwrap();
     let text = docx.document.body.text();
-    assert_eq!("Dock。 List \r\nTest list\r\nNano editor\r\nTest\r\nNano", text);
+    assert_eq!(
+        "Dock。 List \r\nTest list\r\nNano editor\r\nTest\r\nNano",
+        text
+    );
 }
