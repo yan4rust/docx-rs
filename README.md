@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cstkingkey/docx-rs/Test)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/cstkingkey/docx-rs/test.yml?branch=master)
 [![Crates.io](https://img.shields.io/crates/v/docx-rust.svg)](https://crates.io/crates/docx-rust)
 [![Document](https://docs.rs/docx/badge.svg)](https://docs.rs/docx-rust)
 
