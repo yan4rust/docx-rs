@@ -49,14 +49,14 @@ impl<'a> Table<'a> {
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
         self.rows
             .iter()
-            .filter_map(|content| Some(content.iter_text()))
+            .map(|content| content.iter_text())
             .flatten()
     }
 
     pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
         self.rows
             .iter_mut()
-            .filter_map(|content| Some(content.iter_text_mut()))
+            .map(|content| content.iter_text_mut())
             .flatten()
     }
 }

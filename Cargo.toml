@@ -1,6 +1,6 @@
 [package]
 name = "docx-rust"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["cstkingkey <cstkingkey@gmail.com>"]
 edition = "2021"
 license = "MIT"
@@ -16,4 +16,4 @@ strong-xml = { version = "0.6.3", features = ["log"] }
 zip = {version = "0.6", default-features = false, features = ["deflate"]}
 
 [dev-dependencies]
-env_logger = "0.9.0"
+env_logger = "0.10.0"
