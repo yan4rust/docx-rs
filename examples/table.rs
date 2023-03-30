@@ -18,7 +18,7 @@ fn main() -> DocxResult<()> {
                 .property(TableRowProperty::default())
                 .push_cell(Paragraph::default())
                 .push_cell(
-                    TableCell::pargraph(Paragraph::default())
+                    TableCell::paragraph(Paragraph::default())
                         .property(TableCellProperty::default()),
                 ),
         );

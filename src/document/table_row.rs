@@ -17,7 +17,7 @@ use crate::{__setter, __xml_test_suites, document::TableCell, formatting::TableR
 ///     .property(TableRowProperty::default())
 ///     .push_cell(Paragraph::default())
 ///     .push_cell(
-///         TableCell::pargraph(Paragraph::default())
+///         TableCell::paragraph(Paragraph::default())
 ///             .property(TableCellProperty::default())
 ///     );
 /// ```
@@ -37,7 +37,20 @@ pub enum TableRowContent<'a> {
     #[xml(tag = "w:tc")]
     TableCell(TableCell<'a>),
     #[xml(tag = "w:sdt")]
-    SDT(SDT<'a>)
+    SDT(SDT<'a>),
+}
+
+impl<'a> From<TableCell<'a>> for TableRowContent<'a> {
+    fn from(value: TableCell<'a>) -> Self {
+        TableRowContent::TableCell(value)
+    }
+}
+
+impl<'a> From<crate::document::Paragraph<'a>> for TableRowContent<'a> {
+    fn from(value: crate::document::Paragraph<'a>) -> Self {
+        let tc = TableCell::paragraph(value);
+        TableRowContent::TableCell(tc)
+    }
 }
 
 impl<'a> TableRow<'a> {
@@ -48,30 +61,27 @@ impl<'a> TableRow<'a> {
         self
     }
 
-    
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
         self.cells
             .iter()
             .filter_map(|content| match content {
                 //Some(content.iter_text())
                 TableRowContent::TableCell(tc) => Some(tc.iter_text()),
-                TableRowContent::SDT(_) => None
+                TableRowContent::SDT(_) => None,
             })
             .flatten()
     }
-    
-    
+
     pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
         self.cells
             .iter_mut()
             .filter_map(|content| match content {
                 //Some(content.iter_text_mut())
                 TableRowContent::TableCell(tc) => Some(tc.iter_text_mut()),
-                TableRowContent::SDT(_) => None
+                TableRowContent::SDT(_) => None,
             })
             .flatten()
     }
-    
 }
 
 #[cfg(test)]

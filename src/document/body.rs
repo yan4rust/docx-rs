@@ -34,7 +34,7 @@ impl<'a> Body<'a> {
                 BodyContent::Table(_) => None,
                 BodyContent::SectionProperty(_) => None,
                 BodyContent::Sdt(_) => None,
-                BodyContent::TableCell(_) => None
+                BodyContent::TableCell(_) => None,
             })
             .collect();
         v.join("\r\n")
@@ -100,7 +100,7 @@ pub enum BodyContent<'a> {
     #[xml(tag = "w:sectPr")]
     SectionProperty(SectionProperty<'a>),
     #[xml(tag = "w:tc")]
-    TableCell(TableCell<'a>)
+    TableCell(TableCell<'a>),
 }
 
 __xml_test_suites!(
