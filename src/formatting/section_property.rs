@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use strong_xml::{XmlRead, XmlWrite};
 
 use crate::{
-    __string_enum,
+    __define_enum, __define_struct, __string_enum,
     document::HeaderFooterReference,
     formatting::{PageCols, PageGrid, PageMargin, PageSize},
 };
@@ -215,6 +215,38 @@ pub struct PaperSource {
     pub first: Option<isize>,
     #[xml(attr = "w:other")]
     pub other: Option<isize>,
+}
+
+__define_struct! {
+    (TextAlignment, "w:textAlignment") {
+        "w:val", val, TextAlignmentType,
+    }
+}
+
+__define_enum! {
+    TextAlignmentType {
+        Top = "top", // Align Text at Top
+        Center = "center", // Align Text at Center
+        Baseline = "baseline", // Align Text at Baseline
+        Bottom = "bottom", // Align Text at Bottom
+        Auto = "auto", // Automatically Determine Alignment
+    }
+}
+
+__define_struct! {
+    (TextboxTightWrap, "w:textboxTightWrap") {
+        "w:val", val, TextboxTightWrapType,
+    }
+}
+
+__define_enum! {
+    TextboxTightWrapType {
+        None = "none", // Do Not Tight Wrap
+        AllLines = "allLines", // Tight Wrap All Lines
+        FirstAndLastLine = "firstAndLastLine", // Tight Wrap First and Last Lines
+        FirstLineOnly = "firstLineOnly", // Tight Wrap First Line
+        LastLineOnly = "lastLineOnly", // Tight Wrap Last Line
+    }
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

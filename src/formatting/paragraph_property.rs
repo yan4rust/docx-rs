@@ -103,14 +103,14 @@ pub struct ParagraphProperty<'a> {
     #[xml(child = "w:jc")]
     pub justification: Option<Justification>,
     ///  Paragraph Text Flow Direction
-    //#[xml(child = "w:textDirection")]
-    //pub textDirection: Option<TextDirection>,
+    #[xml(child = "w:textDirection")]
+    pub text_direction: Option<super::TextDirection>,
     ///  Vertical Character Alignment on Line
-    //#[xml(child = "w:textAlignment")]
-    //pub textAlignment: Option<TextAlignment>,
+    #[xml(child = "w:textAlignment")]
+    pub text_alignment: Option<super::TextAlignment>,
     ///  Allow Surrounding Paragraphs to Tight Wrap to Text Box Contents
-    //#[xml(child = "w:textboxTightWrap")]
-    //pub textboxTightWrap: Option<TextboxTightWrap>,
+    #[xml(child = "w:textboxTightWrap")]
+    pub textbox_tight_wrap: Option<super::TextboxTightWrap>,
     ///  Associated Outline Level
     #[xml(child = "w:outlineLvl")]
     pub outline_lvl: Option<OutlineLvl>,
