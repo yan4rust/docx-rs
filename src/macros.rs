@@ -1,5 +1,88 @@
 #[macro_export]
 #[doc(hidden)]
+macro_rules! __define_struct {
+    ( ($name:ident, $tag:expr, $a:lifetime) { $($variant:ident, $ty: ty, $value:expr, )* }) => {
+        #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
+        #[cfg_attr(test, derive(PartialEq))]
+        #[xml(tag = $tag)]
+        pub struct $name<$a> {
+            $(
+                #[xml(attr = $value)]
+                pub $variant: Option<$ty>,
+            )*
+        }
+
+        impl<$a> $name<$a> {
+            $(
+                #[inline(always)]
+                pub fn $variant<T: Into<$ty>>(mut self, value: T) -> Self {
+                    self.$variant = Some(value.into());
+                    self
+                }
+            )*
+        }
+    };
+
+    ( ($name:ident, $tag:expr) { $($variant:ident, $ty: ty, $value:expr, )* }) => {
+        #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
+        #[cfg_attr(test, derive(PartialEq))]
+        #[xml(tag = $tag)]
+        pub struct $name {
+            $(
+                #[xml(attr = $value)]
+                pub $variant: Option<$ty>,
+            )*
+        }
+
+        impl $name {
+            $(
+                #[inline(always)]
+                pub fn $variant<T: Into<$ty>>(mut self, value: T) -> Self {
+                    self.$variant = Some(value.into());
+                    self
+                }
+            )*
+        }
+    };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __define_enum {
+    ($name:ident { $($variant:ident = $value:expr, )* }) => {
+        #[derive(Debug, Clone)]
+        #[cfg_attr(test, derive(PartialEq))]
+        pub enum $name {
+            $( $variant, )*
+        }
+
+        impl std::fmt::Display for $name {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                match *self {
+                    $( $name::$variant => write!(f, $value), )*
+                }
+            }
+        }
+
+        impl std::str::FromStr for $name {
+            type Err = String;
+
+            fn from_str(s: &str) -> Result<Self, Self::Err> {
+                match s {
+                    $($value => Ok($name::$variant),)*
+                    s => Err(format!(
+                        "Unkown Value. Found `{}`, Expected `{}`",
+                        s,
+                        stringify!($($value,)*)
+                    ))
+                }
+            }
+        }
+    }
+}
+
+#[macro_export]
+#[doc(hidden)]
 macro_rules! __string_enum {
     ($name:ident { $($variant:ident = $value:expr, )* }) => {
         impl std::fmt::Display for $name {

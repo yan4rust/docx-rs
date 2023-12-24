@@ -77,7 +77,7 @@ pub struct CharacterProperty<'a> {
     pub no_proof: Option<NoProof>,
     /// Use Document Grid Settings For Inter-Character Spacing
     #[xml(child = "w:snapToGrid")]
-    pub snap_to_grid: Option<SnapToGrid>,
+    pub snap_to_grid: Option<super::SnapToGrid>,
     ///  Hidden Text
     #[xml(child = "w:vanish")]
     pub vanish: Option<Vanish>,
@@ -208,13 +208,13 @@ pub struct NoProof {
     pub value: Option<bool>,
 }
 
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "w:snapToGrid")]
-pub struct SnapToGrid {
-    #[xml(attr = "w:val")]
-    pub value: Option<bool>,
-}
+// #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[xml(tag = "w:snapToGrid")]
+// pub struct SnapToGrid {
+//     #[xml(attr = "w:val")]
+//     pub value: Option<bool>,
+// }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

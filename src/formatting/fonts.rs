@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{__setter, __string_enum, __xml_test_suites};
+use crate::{__define_enum, __setter, __xml_test_suites, __define_struct};
 
 /// Size
 ///
@@ -26,13 +26,13 @@ pub struct Fonts<'a> {
     #[xml(attr = "w:cs")]
     pub custom: Option<Cow<'a, str>>,
     #[xml(attr = "w:asciiTheme")]
-    pub ascii_theme: Option<Cow<'a, str>>,
+    pub ascii_theme: Option<ThemeFont>,
     #[xml(attr = "w:eastAsiaTheme")]
-    pub east_asia_theme: Option<Cow<'a, str>>,
+    pub east_asia_theme: Option<ThemeFont>,
     #[xml(attr = "w:hAnsiTheme")]
-    pub h_ansi_theme: Option<Cow<'a, str>>,
+    pub h_ansi_theme: Option<ThemeFont>,
     #[xml(attr = "w:cstheme")]
-    pub cs_theme: Option<Cow<'a, str>>,
+    pub cs_theme: Option<ThemeFont>,
 }
 
 impl<'a> Fonts<'a> {
@@ -41,19 +41,39 @@ impl<'a> Fonts<'a> {
     __setter!(h_ansi: Option<Cow<'a, str>>);
 }
 
-#[derive(Debug, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-pub enum FontHint {
-    Default,       //	High ANSI Font
-    EastAsia,      //	East Asian Font
-    ComplexScript, //	Complex Script Font
+__define_struct!{
+    (Fontss, "w:rFonts", 'a) {
+        hint, FontHint, "w:hint",
+        ascii, Cow<'a, str>, "w:ascii",
+    }
 }
 
-__string_enum! {
+// #[derive(Debug, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// pub enum FontHint {
+//     Default,       //	High ANSI Font
+//     EastAsia,      //	East Asian Font
+//     ComplexScript, //	Complex Script Font
+// }
+
+__define_enum! {
     FontHint {
-        Default= "default",
-        EastAsia = "eastAsia",
-        ComplexScript = "cs",
+        Default= "default",  //	High ANSI Font
+        EastAsia = "eastAsia", //	East Asian Font
+        ComplexScript = "cs",//	Complex Script Font
+    }
+}
+
+__define_enum! {
+    ThemeFont {
+        MajorEastAsia = "majorEastAsia", // Major East Asian Theme Font
+        MajorBidi = "majorBidi", // Major Complex Script Theme Font
+        MajorAscii = "majorAscii", // Major ASCII Theme Font
+        MajorHansi = "majorHAnsi", // Major High ANSI Theme Font
+        MinorEastAsia = "minorEastAsia", // Minor East Asian Theme Font
+        MinorBidi = "minorBidi", // Minor Complex Script Theme Font
+        MinorAscii = "minorAscii", // Minor ASCII Theme Font
+        MinorHansi = "minorHAnsi", // Minor High ANSI Theme Font
     }
 }
 

@@ -8,6 +8,8 @@ use crate::{
     formatting::{PageCols, PageGrid, PageMargin, PageSize},
 };
 
+use super::Bidi;
+
 /// Section Properties
 ///
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -197,13 +199,13 @@ pub struct NoEndnote {
     pub val: Option<bool>,
 }
 
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "w:bidi")]
-pub struct Bidi {
-    #[xml(attr = "w:val")]
-    pub val: Option<bool>,
-}
+// #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[xml(tag = "w:bidi")]
+// pub struct Bidi {
+//     #[xml(attr = "w:val")]
+//     pub val: Option<bool>,
+// }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
