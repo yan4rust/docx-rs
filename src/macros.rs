@@ -1,7 +1,7 @@
 #[macro_export]
 #[doc(hidden)]
 macro_rules! __define_struct {
-    ( ($name:ident, $tag:expr, $a:lifetime) { $($variant:ident, $ty: ty, $value:expr, )* }) => {
+    ( ($name:ident, $tag:expr, $a:lifetime) { $($value:expr, $variant:ident, $ty: ty, )* }) => {
         #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
         #[cfg_attr(test, derive(PartialEq))]
         #[xml(tag = $tag)]
@@ -23,7 +23,7 @@ macro_rules! __define_struct {
         }
     };
 
-    ( ($name:ident, $tag:expr) { $($variant:ident, $ty: ty, $value:expr, )* }) => {
+    ( ($name:ident, $tag:expr) { $($value:expr, $variant:ident, $ty: ty, )* }) => {
         #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
         #[cfg_attr(test, derive(PartialEq))]
         #[xml(tag = $tag)]

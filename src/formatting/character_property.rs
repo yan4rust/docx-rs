@@ -36,7 +36,7 @@ pub struct CharacterProperty<'a> {
     pub style_id: Option<CharacterStyleId<'a>>,
     /// Specifies the font.
     #[xml(child = "w:rFonts")]
-    pub fonts: Option<Fonts<'a>>,
+    pub fonts: Option<Fonts>,
     /// Specifies that the text of the text run is to be bold.
     #[xml(child = "w:b")]
     pub bold: Option<Bold>,
@@ -159,7 +159,7 @@ impl<'a> CharacterProperty<'a> {
     __setter!(strike: Option<Strike>);
     __setter!(size: Option<Size>);
     __setter!(underline: Option<Underline<'a>>);
-    __setter!(fonts: Option<Fonts<'a>>);
+    __setter!(fonts: Option<Fonts>);
 }
 
 #[derive(Debug, XmlRead, XmlWrite, Clone)]

@@ -1,50 +1,26 @@
-use std::borrow::Cow;
-
 use strong_xml::{XmlRead, XmlWrite};
 
-use crate::{__define_enum, __setter, __xml_test_suites, __define_struct};
+use crate::{__define_enum, __define_struct, __xml_test_suites};
 
-/// Size
-///
-/// ```rust
-/// use docx_rust::formatting::*;
-///
-/// let sz = Size::from(42isize);
-/// ```
-#[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "w:rFonts")]
-pub struct Fonts<'a> {
-    #[xml(attr = "w:hint")]
-    pub hint: Option<FontHint>,
-    #[xml(attr = "w:ascii")]
-    pub ascii: Option<Cow<'a, str>>,
-    #[xml(attr = "w:eastAsia")]
-    pub east_asia: Option<Cow<'a, str>>,
-    #[xml(attr = "w:hAnsi")]
-    pub h_ansi: Option<Cow<'a, str>>,
-    #[xml(attr = "w:cs")]
-    pub custom: Option<Cow<'a, str>>,
-    #[xml(attr = "w:asciiTheme")]
-    pub ascii_theme: Option<ThemeFont>,
-    #[xml(attr = "w:eastAsiaTheme")]
-    pub east_asia_theme: Option<ThemeFont>,
-    #[xml(attr = "w:hAnsiTheme")]
-    pub h_ansi_theme: Option<ThemeFont>,
-    #[xml(attr = "w:cstheme")]
-    pub cs_theme: Option<ThemeFont>,
-}
+// __define_struct!{
+//     (Fontss, "w:rFonts", 'a) {
+//         hint, FontHint, "w:hint",
+//         ascii, Cow<'a, str>, "w:ascii",
+//         east_asia, Cow<'a, str>, "w:eastAsia",
+//     }
+// }
 
-impl<'a> Fonts<'a> {
-    __setter!(east_asia: Option<Cow<'a, str>>);
-    __setter!(ascii: Option<Cow<'a, str>>);
-    __setter!(h_ansi: Option<Cow<'a, str>>);
-}
-
-__define_struct!{
-    (Fontss, "w:rFonts", 'a) {
-        hint, FontHint, "w:hint",
-        ascii, Cow<'a, str>, "w:ascii",
+__define_struct! {
+    (Fonts, "w:rFonts") {
+        "w:hint", hint, FontHint,
+        "w:ascii", ascii, String,
+        "w:eastAsia", east_asia, String,
+        "w:hAnsi", h_ansi, String,
+        "w:cs", custom, String,
+        "w:asciiTheme", ascii_theme, ThemeFont,
+        "w:eastAsiaTheme", east_asia_theme, ThemeFont,
+        "w:hAnsiTheme", h_ansi_theme, ThemeFont,
+        "w:cstheme", custom_theme, String,
     }
 }
 
