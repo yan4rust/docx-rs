@@ -10,8 +10,8 @@ mod pitch;
 
 pub use self::{charset::*, family::*, font::*, pitch::*};
 
-use std::io::Write;
 use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use std::io::Write;
 
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT, SCHEMA_XML};

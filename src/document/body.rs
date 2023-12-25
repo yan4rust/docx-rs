@@ -116,5 +116,5 @@ __xml_test_suites!(
     Body {
         content: vec![Table::default().into()]
     },
-    r#"<w:body><w:tbl><w:tblPr/></w:tbl></w:body>"#,
+    r#"<w:body><w:tbl><w:tblPr/><w:tblGrid/></w:tbl></w:body>"#,
 );

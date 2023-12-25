@@ -1,5 +1,5 @@
-use std::borrow::Cow;
 use hard_xml::{XmlRead, XmlWrite};
+use std::borrow::Cow;
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]

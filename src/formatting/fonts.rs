@@ -11,7 +11,7 @@ use crate::{__define_enum, __define_struct, __xml_test_suites};
 // }
 
 __define_struct! {
-    (Fonts, "w:rFonts") {
+    ("w:rFonts", Fonts) {
         "w:hint", hint, FontHint,
         "w:ascii", ascii, String,
         "w:eastAsia", east_asia, String,

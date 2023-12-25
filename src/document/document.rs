@@ -3,8 +3,8 @@
 //! The corresponding ZIP item is `/word/document.xml`.
 //!
 
-use std::io::Write;
 use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use std::io::Write;
 
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_RELATIONSHIPS_DOCUMENT, SCHEMA_WORDML_14, SCHEMA_WP};

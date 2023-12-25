@@ -13,8 +13,8 @@ mod unhidden_when_used;
 use self::latent_styles::LatentStyles;
 pub use self::{default_style::*, style::*};
 
-use std::io::Write;
 use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use std::io::Write;
 
 use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 use crate::{__xml_test_suites, write_attr};

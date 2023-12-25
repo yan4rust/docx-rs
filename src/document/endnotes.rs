@@ -3,9 +3,9 @@
 //! The corresponding ZIP item is `/word/endnotes.xml`.
 //!
 
+use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 use std::borrow::Cow;
 use std::io::Write;
-use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};

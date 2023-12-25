@@ -4,9 +4,9 @@
 //!
 #![allow(unused_must_use)]
 #![allow(unused_imports)]
+use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 use std::borrow::Cow;
 use std::io::Write;
-use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::{SCHEMA_DRAWINGML, SCHEMA_MAIN, SCHEMA_WORDML_14};
 use crate::{__string_enum, __xml_test_suites, write_attr};

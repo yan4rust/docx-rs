@@ -1,7 +1,7 @@
 #![allow(unused_must_use)]
 use derive_more::From;
-use std::borrow::Cow;
 use hard_xml::{XmlRead, XmlWrite};
+use std::borrow::Cow;
 
 use crate::{
     __setter, __xml_test_suites,
@@ -10,7 +10,7 @@ use crate::{
         r#break::LastRenderedPageBreak, tab::Tab, text::Text,
     },
     formatting::CharacterProperty,
-    DocxResult,
+    DocxResult, __define_enum, __define_struct,
 };
 
 use super::{
@@ -80,7 +80,7 @@ pub struct Run<'a> {
         child = "w:endnoteReference", //Endnote Reference
         child = "w:commentReference", //Comment Content Reference Mark
         child = "w:drawing", //DrawingML Object
-        //child = "w:ptab", //Absolute Position Tab Character
+        child = "w:ptab", //Absolute Position Tab Character
         child = "w:lastRenderedPageBreak", //Position of Last Calculated Page Break
     )]
     /// Specifies the content of a run
@@ -235,10 +235,43 @@ pub enum RunContent<'a> {
     CommentReference(CommentReference<'a>),
     #[xml(tag = "w:drawing")]
     Drawing(Drawing<'a>),
-    //#[xml(tag = "w:ptab")]
-    //PTab(Ptab<'a>),
+    #[xml(tag = "w:ptab")]
+    PTab(PTab),
     #[xml(tag = "w:lastRenderedPageBreak")]
     LastRenderedPageBreak(LastRenderedPageBreak),
+}
+
+__define_struct! {
+    ("w:ptab", PTab) {
+        "w:alignment", alignment,	PTabAlignment,	//Positional Tab Stop Alignment
+        "w:relativeTo",	relative_to,	PTabRelativeTo,	//Positional Tab Base
+        "w:leader",	leader,	PTabLeader,	//Tab Leader Character
+    }
+}
+
+__define_enum! {
+    PTabAlignment {
+        Left = "left", // Left
+        Center = "center", // Center
+        Right = "right", // Right
+    }
+}
+
+__define_enum! {
+    PTabRelativeTo {
+        Margin = "margin", // Relative To Text Margins
+        Indent = "indent", // Relative To Indents
+    }
+}
+
+__define_enum! {
+    PTabLeader {
+        None = "none", // No Leader Character
+        Dot = "dot", // Dot Leader Character
+        Hyphen = "hyphen", // Hyphen Leader Character
+        Underscore = "underscore", // Underscore Leader Character
+        MiddleDot = "middleDot", // Centered Dot Leader Character
+    }
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

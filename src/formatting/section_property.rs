@@ -1,6 +1,6 @@
 #![allow(dead_code)]
-use std::borrow::Cow;
 use hard_xml::{XmlRead, XmlWrite};
+use std::borrow::Cow;
 
 use crate::{
     __define_enum, __define_struct, __string_enum,
@@ -218,7 +218,7 @@ pub struct PaperSource {
 }
 
 __define_struct! {
-    (TextAlignment, "w:textAlignment") {
+    ("w:textAlignment", TextAlignment) {
         "w:val", val, TextAlignmentType,
     }
 }
@@ -234,7 +234,7 @@ __define_enum! {
 }
 
 __define_struct! {
-    (TextboxTightWrap, "w:textboxTightWrap") {
+    ("w:textboxTightWrap", TextboxTightWrap) {
         "w:val", val, TextboxTightWrapType,
     }
 }

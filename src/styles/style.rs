@@ -1,6 +1,6 @@
 #![allow(unused_must_use)]
-use std::borrow::Cow;
 use hard_xml::{XmlRead, XmlWrite};
+use std::borrow::Cow;
 
 use crate::{
     __setter, __string_enum, __xml_test_suites,

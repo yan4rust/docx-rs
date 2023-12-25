@@ -3,8 +3,8 @@
 //! The corresponding ZIP item is `/word/comments.xml`.
 #![allow(unused_must_use)]
 
-use std::{borrow::Cow, io::Write};
 use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use std::{borrow::Cow, io::Write};
 
 use crate::{
     document::Paragraph,

@@ -11,8 +11,6 @@ fn main() -> DocxResult<()> {
     // Create a table and populate it with data
     let tbl = Table::default()
         .property(TableProperty::default())
-        .push_grid(vec![1, 2, 3])
-        .push_grid(TableGrid::default())
         .push_row(
             TableRow::default()
                 .property(TableRowProperty::default())

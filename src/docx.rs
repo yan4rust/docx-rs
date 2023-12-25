@@ -1,8 +1,8 @@
+use hard_xml::{XmlRead, XmlWrite, XmlWriter};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Read, Seek, Write};
 use std::path::Path;
-use hard_xml::{XmlRead, XmlWrite, XmlWriter};
 use zip::{result::ZipError, write::FileOptions, CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::document::{Comments, EndNotes, FootNotes, Footer, Header, Theme};

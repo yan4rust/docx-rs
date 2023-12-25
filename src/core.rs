@@ -2,9 +2,9 @@
 //!
 //! The corresponding ZIP item is `/docProps/core.xml`.
 
+use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 use std::borrow::Cow;
 use std::io::Write;
-use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::{SCHEMA_CORE_2, SCHEMA_DC, SCHEMA_XML};
 
