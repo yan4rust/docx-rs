@@ -3,7 +3,7 @@ use std::borrow::Cow;
 
 use super::SDT;
 
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 use crate::{__setter, __xml_test_suites, document::TableCell, formatting::TableRowProperty};
 

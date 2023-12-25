@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 /// Symbol Character
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]

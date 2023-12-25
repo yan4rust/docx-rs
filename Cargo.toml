@@ -12,7 +12,7 @@ keywords = ["docx", "generator", "openxml", "parser"]
 [dependencies]
 derive_more = "0.99.17"
 log = "0.4.14"
-strong-xml = { version = "0.6.3", features = ["log"] }
+hard-xml = "1.27.0"
 zip = {version = "0.6", default-features = false, features = ["deflate"]}
 
 [dev-dependencies]

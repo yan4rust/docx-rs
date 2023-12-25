@@ -1,7 +1,7 @@
 #![allow(unused_must_use)]
 use std::borrow::Cow;
 
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 use crate::__xml_test_suites;
 use crate::formatting::{IndentLevel, NumberingId};

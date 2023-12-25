@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use std::borrow::Cow;
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 use crate::{
     __define_enum, __define_struct, __string_enum,

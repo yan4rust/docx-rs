@@ -1,6 +1,6 @@
 #![allow(unused_must_use)]
 use std::borrow::Cow;
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 /// Style
 ///

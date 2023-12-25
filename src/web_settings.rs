@@ -4,7 +4,7 @@
 //!
 
 use std::io::Write;
-use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::__xml_test_suites;
 use crate::schema::{SCHEMA_MAIN, SCHEMA_WORDML_14};
@@ -73,7 +73,7 @@ impl XmlWrite for WebSettings {
 fn write_attr<W: Write, T: XmlWrite>(
     element: &Option<T>,
     writer: &mut XmlWriter<W>,
-) -> Result<(), strong_xml::XmlError> {
+) -> Result<(), hard_xml::XmlError> {
     if let Some(e) = element {
         e.to_writer(writer)?;
     };

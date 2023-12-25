@@ -14,7 +14,7 @@ use self::latent_styles::LatentStyles;
 pub use self::{default_style::*, style::*};
 
 use std::io::Write;
-use strong_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
+use hard_xml::{XmlRead, XmlResult, XmlWrite, XmlWriter};
 
 use crate::schema::{SCHEMA_MAIN, SCHEMA_XML};
 use crate::{__xml_test_suites, write_attr};

@@ -3,7 +3,7 @@
 use std::borrow::Cow;
 
 use derive_more::From;
-use strong_xml::{XmlRead, XmlWrite};
+use hard_xml::{XmlRead, XmlWrite};
 
 use crate::__string_enum;
 
