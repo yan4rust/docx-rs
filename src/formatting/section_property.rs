@@ -45,14 +45,14 @@ pub struct SectionProperty<'a> {
     #[xml(child = "w:paperSrc")]
     pub paper_source: Option<PaperSource>,
     ///  Page Borders
-    //#[xml(child = "w:pgBorders")]
-    //pub page_borders: Option<PgBorders>,
+    #[xml(child = "w:pgBorders")]
+    pub page_borders: Option<PgBorders>,
     ///  Line Numbering Settings
-    //#[xml(child = "w:lnNumType")]
-    //pub line_numbering: Option<LnNumType>,
+    #[xml(child = "w:lnNumType")]
+    pub line_numbering: Option<PgLnNumType>,
     ///  Page Numbering Settings
-    //#[xml(child = "w:pgNumType")]
-    //pub page_numbering: Option<PgNumType>,
+    #[xml(child = "w:pgNumType")]
+    pub page_numbering: Option<PgNumType>,
     ///  Column Definitions
     #[xml(child = "w:cols")]
     pub cols: Option<PageCols>,
@@ -120,14 +120,14 @@ pub struct PreviousSectionProperty<'a> {
     #[xml(child = "w:paperSrc")]
     pub paper_source: Option<PaperSource>,
     ///  Page Borders
-    //#[xml(child = "w:pgBorders")]
-    //pub page_borders: Option<PgBorders>,
+    #[xml(child = "w:pgBorders")]
+    pub page_borders: Option<PgBorders>,
     ///  Line Numbering Settings
-    //#[xml(child = "w:lnNumType")]
-    //pub line_numbering: Option<LnNumType>,
+    #[xml(child = "w:lnNumType")]
+    pub line_numbering: Option<PgLnNumType>,
     ///  Page Numbering Settings
-    //#[xml(child = "w:pgNumType")]
-    //pub page_numbering: Option<PgNumType>,
+    #[xml(child = "w:pgNumType")]
+    pub page_numbering: Option<PgNumType>,
     ///  Column Definitions
     #[xml(child = "w:cols")]
     pub cols: Option<PageCols>,
@@ -158,6 +158,199 @@ pub struct PreviousSectionProperty<'a> {
     /////  Reference to Printer Settings Data
     //#[xml(child = "w:printerSettings")]
     //pub printer_settings: Option<PrinterSettings>,
+}
+
+__define_struct! {
+    ("w:pgBorders", PgBorders) {
+        "w:zOrder",	z_order, PageBorderZOrder	//Z-Ordering of Page Border
+        "w:display", display, PageBorderDisplay //Pages to Display Page Borders
+        "w:offsetFrom",	offset_from, PageBorderOffset 	//Page Border Positioning
+    } {
+        "w:top", top, PgTopBorder
+        "w:left", left, PgLeftBorder
+        "w:bottom", bottom, PgBottomBorder
+        "w:right", right, PgRightBorder
+    }
+}
+
+__define_enum! {
+    PageBorderZOrder {
+        Front = "front", // Page Border Ahead of Text
+        Back = "back", // Page Border Behind Text
+    }
+}
+
+__define_enum! {
+    PageBorderDisplay {
+        AllPages = "allPages", // Display Page Border on All Pages
+        FirstPage = "firstPage", // Display Page Border on First Page
+        NotFirstPage = "notFirstPage", // Display Page Border on All Pages Except First
+    }
+}
+
+__define_enum! {
+    PageBorderOffset {
+        Page = "page", // Page Border Is Positioned Relative to Page Edges
+        Text = "text", // Page Border Is Positioned Relative to Text Extents
+    }
+}
+
+__define_struct! {
+    ("w:top", PgTopBorder) {
+        "w:val", style, super::BorderStyle
+        "w:color", color, String
+        "w:themeColor", theme_color, crate::formatting::ThemeColor
+        "w:themeTint", theme_tint, String
+        "w:themeShade", theme_shade, String
+        "w:sz", size, isize // Measurement in Eighths of a Point
+        "w:space", space, isize
+        "w:shadow", shadow, bool
+        "w:frame", frame, bool
+    }
+}
+
+__define_struct! {
+    ("w:bottom", PgBottomBorder) {
+        "w:val", style, super::BorderStyle
+        "w:color", color, String
+        "w:themeColor", theme_color, crate::formatting::ThemeColor
+        "w:themeTint", theme_tint, String
+        "w:themeShade", theme_shade, String
+        "w:sz", size, isize // Measurement in Eighths of a Point
+        "w:space", space, isize
+        "w:shadow", shadow, bool
+        "w:frame", frame, bool
+    }
+}
+
+__define_struct! {
+    ("w:left", PgLeftBorder) {
+        "w:val", style, super::BorderStyle
+        "w:color", color, String
+        "w:themeColor", theme_color, crate::formatting::ThemeColor
+        "w:themeTint", theme_tint, String
+        "w:themeShade", theme_shade, String
+        "w:sz", size, isize // Measurement in Eighths of a Point
+        "w:space", space, isize
+        "w:shadow", shadow, bool
+        "w:frame", frame, bool
+    }
+}
+
+__define_struct! {
+    ("w:right", PgRightBorder) {
+        "w:val", style, super::BorderStyle
+        "w:color", color, String
+        "w:themeColor", theme_color, crate::formatting::ThemeColor
+        "w:themeTint", theme_tint, String
+        "w:themeShade", theme_shade, String
+        "w:sz", size, isize // Measurement in Eighths of a Point
+        "w:space", space, isize
+        "w:shadow", shadow, bool
+        "w:frame", frame, bool
+    }
+}
+
+__define_struct! {
+    ("w:lnNumType", PgLnNumType) {
+        "w:countBy", count_by, isize //	[0..1]	w:ST_DecimalNumber	Line Number Increments to Display
+        "w:start", start, isize //	[0..1]	w:ST_DecimalNumber	Line Numbering Starting Value
+        "w:distance", distance, isize //	[0..1]	w:ST_TwipsMeasure	Distance Between Text and Line Numbering
+        "w:restart", restart, LineNumberRestart //	[0..1]	w:ST_LineNumberRestart	Line Numbering Restart Setting
+    }
+}
+
+__define_enum! {
+    LineNumberRestart
+    {
+        NewPage = "newPage", // Restart Line Numbering on Each Page
+        NewSection = "newSection", // Restart Line Numbering for Each Section
+        Continuous = "continuous", // Continue Line Numbering From Previous Section
+    }
+}
+
+__define_struct! {
+    ("w:pgNumType", PgNumType) {
+        "w:fmt", fmt, NumberFormat	//Page Number Format
+        "w:start", start, isize //	[0..1]	w:ST_DecimalNumber	Starting Page Number
+        "w:chapStyle", chap_style, isize//	[0..1]	w:ST_DecimalNumber	Chapter Heading Style
+        "w:chapSep", chap_sep, ChapterSep//	Chapter Separator Character
+    }
+}
+
+__define_enum! {
+    NumberFormat {
+        Decimal = "decimal", // Decimal Numbers
+        UpperRoman = "upperRoman", // Uppercase Roman Numerals
+        LowerRoman = "lowerRoman", // Lowercase Roman Numerals
+        UpperLetter = "upperLetter", // Uppercase Latin Alphabet
+        LowerLetter = "lowerLetter", // Lowercase Latin Alphabet
+        Ordinal = "ordinal", // Ordinal
+        CardinalText = "cardinalText", // Cardinal Text
+        OrdinalText = "ordinalText", // Ordinal Text
+        Hex = "hex", // Hexadecimal Numbering
+        Chicago = "chicago", // Chicago Manual of Style
+        IdeographDigital = "ideographDigital", // Ideographs
+        JapaneseCounting = "japaneseCounting", // Japanese Counting System
+        Aiueo = "aiueo", // AIUEO Order Hiragana
+        Iroha = "iroha", // Iroha Ordered Katakana
+        DecimalFullWidth = "decimalFullWidth", // Double Byte Arabic Numerals
+        DecimalHalfWidth = "decimalHalfWidth", // Single Byte Arabic Numerals
+        JapaneseLegal = "japaneseLegal", // Japanese Legal Numbering
+        JapaneseDigitalTenThousand = "japaneseDigitalTenThousand", // Japanese Digital Ten Thousand Counting System
+        DecimalEnclosedCircle = "decimalEnclosedCircle", // Decimal Numbers Enclosed in a Circle
+        DecimalFullWidth2 = "decimalFullWidth2", // Double Byte Arabic Numerals Alternate
+        AiueoFullWidth = "aiueoFullWidth", // Full-Width AIUEO Order Hiragana
+        IrohaFullWidth = "irohaFullWidth", // Full-Width Iroha Ordered Katakana
+        DecimalZero = "decimalZero", // Initial Zero Arabic Numerals
+        Bullet = "bullet", // Bullet
+        Ganada = "ganada", // Korean Ganada Numbering
+        Chosung = "chosung", // Korean Chosung Numbering
+        DecimalEnclosedFullstop = "decimalEnclosedFullstop", // Decimal Numbers Followed by a Period
+        DecimalEnclosedParen = "decimalEnclosedParen", // Decimal Numbers Enclosed in Parenthesis
+        DecimalEnclosedCircleChinese = "decimalEnclosedCircleChinese", // Decimal Numbers Enclosed in a Circle
+        IdeographEnclosedCircle = "ideographEnclosedCircle", // Ideographs Enclosed in a Circle
+        IdeographTraditional = "ideographTraditional", // Traditional Ideograph Format
+        IdeographZodiac = "ideographZodiac", // Zodiac Ideograph Format
+        IdeographZodiacTraditional = "ideographZodiacTraditional", // Traditional Zodiac Ideograph Format
+        TaiwaneseCounting = "taiwaneseCounting", // Taiwanese Counting System
+        IdeographLegalTraditional = "ideographLegalTraditional", // Traditional Legal Ideograph Format
+        TaiwaneseCountingThousand = "taiwaneseCountingThousand", // Taiwanese Counting Thousand System
+        TaiwaneseDigital = "taiwaneseDigital", // Taiwanese Digital Counting System
+        ChineseCounting = "chineseCounting", // Chinese Counting System
+        ChineseLegalSimplified = "chineseLegalSimplified", // Chinese Legal Simplified Format
+        ChineseCountingThousand = "chineseCountingThousand", // Chinese Counting Thousand System
+        KoreanDigital = "koreanDigital", // Korean Digital Counting System
+        KoreanCounting = "koreanCounting", // Korean Counting System
+        KoreanLegal = "koreanLegal", // Korean Legal Numbering
+        KoreanDigital2 = "koreanDigital2", // Korean Digital Counting System Alternate
+        VietnameseCounting = "vietnameseCounting", // Vietnamese Numerals
+        RussianLower = "russianLower", // Lowercase Russian Alphabet
+        RussianUpper = "russianUpper", // Uppercase Russian Alphabet
+        None = "none", // No Numbering
+        NumberInDash = "numberInDash", // Number With Dashes
+        Hebrew1 = "hebrew1", // Hebrew Numerals
+        Hebrew2 = "hebrew2", // Hebrew Alphabet
+        ArabicAlpha = "arabicAlpha", // Arabic Alphabet
+        ArabicAbjad = "arabicAbjad", // Arabic Abjad Numerals
+        HindiVowels = "hindiVowels", // Hindi Vowels
+        HindiConsonants = "hindiConsonants", // Hindi Consonants
+        HindiNumbers = "hindiNumbers", // Hindi Numbers
+        HindiCounting = "hindiCounting", // Hindi Counting System
+        ThaiLetters = "thaiLetters", // Thai Letters
+        ThaiNumbers = "thaiNumbers", // Thai Numerals
+        ThaiCounting = "thaiCounting", // Thai Counting System
+    }
+}
+
+__define_enum! {
+    ChapterSep {
+        Hyphen = "hyphen", // Hyphen Chapter Separator
+        Period = "period", // Period Chapter Separator
+        Colon = "colon", // Colon Chapter Separator
+        EmDash = "emDash", // Em Dash Chapter Separator
+        EnDash = "enDash", // En Dash Chapter Separator
+    }
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -219,7 +412,7 @@ pub struct PaperSource {
 
 __define_struct! {
     ("w:textAlignment", TextAlignment) {
-        "w:val", val, TextAlignmentType,
+        "w:val", val, TextAlignmentType
     }
 }
 
@@ -235,7 +428,7 @@ __define_enum! {
 
 __define_struct! {
     ("w:textboxTightWrap", TextboxTightWrap) {
-        "w:val", val, TextboxTightWrapType,
+        "w:val", val, TextboxTightWrapType
     }
 }
 

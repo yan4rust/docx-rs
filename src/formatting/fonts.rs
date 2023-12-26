@@ -12,15 +12,15 @@ use crate::{__define_enum, __define_struct, __xml_test_suites};
 
 __define_struct! {
     ("w:rFonts", Fonts) {
-        "w:hint", hint, FontHint,
-        "w:ascii", ascii, String,
-        "w:eastAsia", east_asia, String,
-        "w:hAnsi", h_ansi, String,
-        "w:cs", custom, String,
-        "w:asciiTheme", ascii_theme, ThemeFont,
-        "w:eastAsiaTheme", east_asia_theme, ThemeFont,
-        "w:hAnsiTheme", h_ansi_theme, ThemeFont,
-        "w:cstheme", custom_theme, String,
+        "w:hint", hint, FontHint
+        "w:ascii", ascii, String
+        "w:eastAsia", east_asia, String
+        "w:hAnsi", h_ansi, String
+        "w:cs", custom, String
+        "w:asciiTheme", ascii_theme, ThemeFont
+        "w:eastAsiaTheme", east_asia_theme, ThemeFont
+        "w:hAnsiTheme", h_ansi_theme, ThemeFont
+        "w:cstheme", custom_theme, String
     }
 }
 

@@ -243,9 +243,9 @@ pub enum RunContent<'a> {
 
 __define_struct! {
     ("w:ptab", PTab) {
-        "w:alignment", alignment,	PTabAlignment,	//Positional Tab Stop Alignment
-        "w:relativeTo",	relative_to,	PTabRelativeTo,	//Positional Tab Base
-        "w:leader",	leader,	PTabLeader,	//Tab Leader Character
+        "w:alignment", alignment,	PTabAlignment	//Positional Tab Stop Alignment
+        "w:relativeTo",	relative_to,	PTabRelativeTo	//Positional Tab Base
+        "w:leader",	leader,	PTabLeader	//Tab Leader Character
     }
 }
 

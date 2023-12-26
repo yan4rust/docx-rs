@@ -28,7 +28,7 @@ macro_rules! __define_struct_vec {
 #[macro_export]
 #[doc(hidden)]
 macro_rules! __define_struct {
-    ( ($tag:expr, $name:ident, $a:lifetime) { $($value:expr, $variant:ident, $ty: ty, )* }) => {
+    ( ($tag:expr, $name:ident, $a:lifetime) { $($value:expr, $variant:ident, $ty: ty)* }) => {
         #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
         #[cfg_attr(test, derive(PartialEq))]
         #[xml(tag = $tag)]
@@ -50,7 +50,7 @@ macro_rules! __define_struct {
         }
     };
 
-    ( ($tag:expr, $name:ident) { $($value:expr, $variant:ident, $ty: ty, )* }) => {
+    ( ($tag:expr, $name:ident) { $($value:expr, $variant:ident, $ty: ty)* }) => {
         #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
         #[cfg_attr(test, derive(PartialEq))]
         #[xml(tag = $tag)]
@@ -66,6 +66,40 @@ macro_rules! __define_struct {
                 #[inline(always)]
                 pub fn $variant<T: Into<$ty>>(mut self, value: T) -> Self {
                     self.$variant = Some(value.into());
+                    self
+                }
+            )*
+        }
+    };
+
+    ( ($tag:expr, $name:ident) { $($value:expr, $variant:ident, $ty: ty)* } { $($value2:expr, $variant2:ident, $ty2: ty)* }) => {
+        #[derive(Debug, XmlRead, XmlWrite, Clone, Default)]
+        #[cfg_attr(test, derive(PartialEq))]
+        #[xml(tag = $tag)]
+        pub struct $name {
+            $(
+                #[xml(attr = $value)]
+                pub $variant: Option<$ty>,
+            )*
+            $(
+                #[xml(child = $value2)]
+                pub $variant2: Option<$ty2>,
+            )*
+        }
+
+        impl $name {
+            $(
+                #[inline(always)]
+                pub fn $variant<T: Into<$ty>>(mut self, value: T) -> Self {
+                    self.$variant = Some(value.into());
+                    self
+                }
+            )*
+
+            $(
+                #[inline(always)]
+                pub fn $variant2<T: Into<$ty2>>(mut self, value: T) -> Self {
+                    self.$variant2 = Some(value.into());
                     self
                 }
             )*

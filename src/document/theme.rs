@@ -9,7 +9,7 @@ use std::borrow::Cow;
 use std::io::Write;
 
 use crate::schema::{SCHEMA_DRAWINGML, SCHEMA_MAIN, SCHEMA_WORDML_14};
-use crate::{__string_enum, __xml_test_suites, write_attr, __define_struct, __define_struct_vec};
+use crate::{__define_struct, __define_struct_vec, __string_enum, __xml_test_suites, write_attr};
 
 /// The root element of the main document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -1011,7 +1011,7 @@ pub struct ExtLst {
 
 __define_struct! {
     ("a:ext", ExtAny) {
-        "uri", uri, String,
+        "uri", uri, String
     }
 }
 
