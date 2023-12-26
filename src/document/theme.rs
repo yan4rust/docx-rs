@@ -980,10 +980,16 @@ pub struct InStyleLst {}
 #[xml(tag = "a:effectStyleLst")]
 pub struct EffectStyleLst {}
 
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "a:bgFillStyleLst")]
-pub struct BgFillStyleLst {}
+__define_struct_vec! {
+    ("a:bgFillStyleLst", BgFillStyleLst, BgFillStyleLstChoice) {
+        "a:noFill", NoFill    //No Fill
+        "a:solidFill", SolidFill    //Solid Fill
+        //"a:gradFill", gradFill    //Gradient Fill
+        //"a:blipFill", blipFill    //Picture Fill
+        //"a:pattFill", pattFill    //Pattern Fill
+        "a:grpFill", GrpFill    //Group Fill
+    }
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
