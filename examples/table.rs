@@ -1,5 +1,5 @@
 use docx_rust::{
-    document::{Paragraph, Table, TableCell, TableGrid, TableRow},
+    document::{Paragraph, Table, TableCell, TableRow},
     formatting::{TableCellProperty, TableProperty, TableRowProperty},
     Docx, DocxResult,
 };

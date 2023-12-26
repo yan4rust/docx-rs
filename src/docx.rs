@@ -49,7 +49,7 @@ pub struct Docx<'a> {
     pub headers: HashMap<String, Header<'a>>,
     pub footers: HashMap<String, Footer<'a>>,
     pub themes: HashMap<String, Theme<'a>>,
-    pub medias: HashMap<String, (MediaType, &'a Vec<u8>)>,
+    pub media: HashMap<String, (MediaType, &'a Vec<u8>)>,
     pub footnotes: Option<FootNotes<'a>>,
     pub endnotes: Option<EndNotes<'a>>,
     pub settings: Option<Settings<'a>>,
@@ -136,7 +136,7 @@ impl<'a> Docx<'a> {
                 .add_rel(SCHEMA_THEME, theme.0);
         }
 
-        for media in &self.medias {
+        for media in &self.media {
             let rel = crate::media::get_media_type_relation_type(&media.1 .0);
             self.document_rels
                 .get_or_insert(Relationships::default())
@@ -205,7 +205,7 @@ impl<'a> Docx<'a> {
             );
         }
 
-        for media in self.medias.iter() {
+        for media in self.media.iter() {
             let file_path = format!("word/{}", media.0);
             writer.inner.start_file(file_path, opt)?;
             writer.inner.write_all(media.1 .1)?;
@@ -378,13 +378,13 @@ impl DocxFile {
             footers.insert(name, ft);
         }
 
-        let mut medias = HashMap::new();
+        let mut media = HashMap::new();
         for m in self.medias.iter() {
             let mt = crate::media::get_media_type(&m.0);
             if let Some(mt) = mt {
                 let name = m.0.replace("word/", "");
                 let m = (mt, &m.1);
-                medias.insert(name, m);
+                media.insert(name, m);
             }
         }
 
@@ -507,7 +507,7 @@ impl DocxFile {
             headers,
             footers,
             themes,
-            medias,
+            media,
             footnotes,
             endnotes,
             settings,

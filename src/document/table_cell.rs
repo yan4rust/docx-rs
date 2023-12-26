@@ -61,8 +61,8 @@ impl<'a> TableCell<'a> {
         T: IntoIterator<Item = &'b (S, S)> + std::marker::Copy,
     {
         for content in self.content.iter_mut() {
-            if let TableCellContent::Paragraph(p) = content {
-                p.replace_text(dic)?
+            match content {
+                TableCellContent::Paragraph(p) => p.replace_text(dic)?,
             }
         }
         Ok(())
