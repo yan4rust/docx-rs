@@ -9,7 +9,7 @@ use std::borrow::Cow;
 use std::io::Write;
 
 use crate::schema::{SCHEMA_DRAWINGML, SCHEMA_MAIN, SCHEMA_WORDML_14};
-use crate::{__string_enum, __xml_test_suites, write_attr};
+use crate::{__string_enum, __xml_test_suites, write_attr, __define_struct, __define_struct_vec};
 
 /// The root element of the main document part.
 #[derive(Debug, Default, XmlRead, Clone)]
@@ -27,7 +27,7 @@ pub struct Theme<'a> {
     #[xml(child = "a:custClrLst")]
     pub cust_clr_lst: Option<CustClrLst<'a>>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -53,7 +53,7 @@ pub struct Dk1<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -71,7 +71,7 @@ pub struct Lt1<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -89,7 +89,7 @@ pub struct Dk2<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -107,7 +107,7 @@ pub struct Lt2<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -125,7 +125,7 @@ pub struct Accent1<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -143,7 +143,7 @@ pub struct Accent2<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -161,7 +161,7 @@ pub struct Accent3<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -179,7 +179,7 @@ pub struct Accent4<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -197,7 +197,7 @@ pub struct Accent5<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -215,7 +215,7 @@ pub struct Accent6<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -233,7 +233,7 @@ pub struct HLink<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -251,7 +251,7 @@ pub struct FolHlink<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -269,24 +269,24 @@ pub struct CustClr<'a> {
         child = "a:schemeClr",
         child = "a:prstClr"
     )]
-    pub custom_color: Vec<CustClrChoice<'a>>,
+    pub custom_color: Vec<CustClrChoice>,
 }
 
 #[derive(Debug, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
-pub enum CustClrChoice<'a> {
+pub enum CustClrChoice {
     ///  RGB Color Model - Percentage Variant
     #[xml(tag = "a:scrgbClr")]
     ScrgbClr(ScrgbClr),
     ///  RGB Color Model - Hex Variant
     #[xml(tag = "a:srgbClr")]
-    SrgbClr(SrgbClr<'a>),
+    SrgbClr(SrgbClr),
     ///  Hue, Saturation, Luminance Color Model
     #[xml(tag = "a:hslClr")]
     HslClr(HslClr),
     ///  System Color
     #[xml(tag = "a:sysClr")]
-    SysClr(SysClr<'a>),
+    SysClr(SysClr),
     ///  Scheme Color
     #[xml(tag = "a:schemeClr")]
     SchemeClr(SchemeClr),
@@ -310,9 +310,9 @@ pub struct ScrgbClr {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:srgbClr")]
-pub struct SrgbClr<'a> {
+pub struct SrgbClr {
     #[xml(attr = "val")]
-    pub value: Option<Cow<'a, str>>,
+    pub value: Option<String>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -330,11 +330,11 @@ pub struct HslClr {
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:sysClr")]
-pub struct SysClr<'a> {
+pub struct SysClr {
     #[xml(attr = "val")]
     pub val: SysClrType,
     #[xml(attr = "lastClr")]
-    pub last_color: Option<Cow<'a, str>>,
+    pub last_color: Option<String>,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -771,7 +771,7 @@ pub struct ThemeElements<'a> {
     #[xml(child = "a:fmtScheme")]
     pub fmt_scheme: FmtScheme<'a>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -819,7 +819,7 @@ pub struct ClrScheme<'a> {
     pub fol_hlink: FolHlink<'a>,
     ///    Extension List
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -833,7 +833,7 @@ pub struct FontScheme<'a> {
     #[xml(child = "a:minorFont")]
     pub minor_font: MinorFont<'a>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -849,7 +849,7 @@ pub struct MajorFont<'a> {
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -865,7 +865,7 @@ pub struct MinorFont<'a> {
     #[xml(child = "a:font")]
     pub fonts: Vec<Font<'a>>,
     #[xml(child = "a:extLst")]
-    pub ext_lst: Option<ExtLst<'a>>,
+    pub ext_lst: Option<ExtLst>,
 }
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -936,10 +936,39 @@ pub struct FmtScheme<'a> {
     pub bg_fill_style_lst: BgFillStyleLst,
 }
 
-#[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
-#[cfg_attr(test, derive(PartialEq))]
-#[xml(tag = "a:fillStyleLst")]
-pub struct FillStyleLst {}
+__define_struct_vec! {
+    ("a:fillStyleLst", FillStyleLst, FillStyleLstChoice) {
+        "a:noFill", NoFill    //No Fill
+        "a:solidFill", SolidFill    //Solid Fill
+        //"a:gradFill", gradFill    //Gradient Fill
+        //"a:blipFill", blipFill    //Picture Fill
+        //"a:pattFill", pattFill    //Pattern Fill
+        "a:grpFill", GrpFill    //Group Fill
+    }
+}
+
+__define_struct! {
+    ("a:noFill", NoFill) {
+
+    }
+}
+
+__define_struct! {
+    ("a:grpFill", GrpFill) {
+
+    }
+}
+
+__define_struct_vec! {
+    ("a:solidFill", SolidFill, SolidFillChoice) {
+        "a:scrgbClr", ScrgbClr
+        "a:srgbClr", SrgbClr
+        "a:hslClr", HslClr
+        "a:sysClr", SysClr
+        "a:schemeClr", SchemeClr
+        "a:prstClr", PrstClr
+    }
+}
 
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -969,9 +998,15 @@ pub struct ExtraClrSchemeLst {}
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
 #[cfg_attr(test, derive(PartialEq))]
 #[xml(tag = "a:extLst")]
-pub struct ExtLst<'a> {
-    #[xml(attr = "uri")]
-    pub uri: Option<Cow<'a, str>>,
+pub struct ExtLst {
+    #[xml(child = "a:ext")]
+    pub ext: Vec<ExtAny>,
+}
+
+__define_struct! {
+    ("a:ext", ExtAny) {
+        "uri", uri, String,
+    }
 }
 
 impl<'a> XmlWrite for Theme<'a> {

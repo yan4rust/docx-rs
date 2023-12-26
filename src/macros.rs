@@ -1,12 +1,29 @@
-// #[macro_export]
-// #[doc(hidden)]
-// macro_rules! __define_struct_vec {
-//     ($tag:expr, $name:ident { $($value:expr, $variant:ident)* }) => {
-//         $(
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __define_struct_vec {
+    ( ($tag:expr, $name:ident, $choicename:ident) { $($value:expr, $variant:ident)* }) => {
+        #[derive(Debug, XmlRead, XmlWrite, Clone)]
+        #[cfg_attr(test, derive(PartialEq))]
+        pub enum $choicename {
+            $(
+                #[xml(tag = $value)]
+                $variant($variant),
+            )*
+        }
 
-//         )
-//     }
-// }
+        #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
+        #[cfg_attr(test, derive(PartialEq))]
+        #[xml(tag = $tag)]
+        pub struct $name {
+            #[xml(
+                $(
+                    child = $value,
+                )*
+            )]
+            pub content: Vec<$choicename>,
+        }
+    }
+}
 
 #[macro_export]
 #[doc(hidden)]
