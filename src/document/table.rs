@@ -39,17 +39,13 @@ impl<'a> Table<'a> {
     }
 
     pub fn iter_text(&self) -> impl Iterator<Item = &Cow<'a, str>> {
-        self.rows
-            .iter()
-            .map(|content| content.iter_text())
-            .flatten()
+        self.rows.iter().flat_map(|content| content.iter_text())
     }
 
     pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
         self.rows
             .iter_mut()
-            .map(|content| content.iter_text_mut())
-            .flatten()
+            .flat_map(|content| content.iter_text_mut())
     }
 
     pub fn replace_text<'b, T, S>(&mut self, dic: T) -> crate::DocxResult<()>

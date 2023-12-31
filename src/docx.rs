@@ -355,7 +355,7 @@ impl DocxFile {
     }
 
     /// Parses content into `Docx` struct
-    pub fn parse<'a>(&'a self) -> DocxResult<Docx<'a>> {
+    pub fn parse(&self) -> DocxResult<Docx<'_>> {
         let app = if let Some(content) = &self.app {
             Some(App::from_str(content)?)
         } else {

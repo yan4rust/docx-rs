@@ -32,5 +32,5 @@ pub use self::{
     body::*, bookmark_end::*, bookmark_start::*, comment_range::*, comments::*, document::*,
     drawing::*, endnotes::*, field_char::*, footer::*, footnotes::*, grid_column::*, header::*,
     header_footer_reference::*, hyperlink::*, paragraph::*, r#break::*, run::*, sdt::*, tab::*,
-    table::*, table::*, table_cell::*, table_grid::*, table_row::*, text::*, theme::*,
+    table::*, table_cell::*, table_grid::*, table_row::*, text::*, theme::*,
 };

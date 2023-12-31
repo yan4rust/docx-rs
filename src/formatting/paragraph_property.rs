@@ -2,8 +2,8 @@ use hard_xml::{XmlRead, XmlWrite};
 use std::borrow::Cow;
 
 use crate::{
-    __define_enum, __define_struct, __setter, __xml_test_suites,
-    formatting::{Borders, Indent, Justification, NumberingProperty, Spacing, WidowControl}, __define_struct_vec,
+    __define_enum, __define_struct, __define_struct_vec, __setter, __xml_test_suites,
+    formatting::{Borders, Indent, Justification, NumberingProperty, Spacing, WidowControl},
 };
 
 /// Paragraph Property
@@ -465,7 +465,7 @@ __define_struct! {
 
 __define_struct_vec! {
     ("w:tabs", CustomTabStopSet, CustomTabStopSetChoice) {} {
-        "w:tab", CustomTabStop        
+        "w:tab", CustomTabStop
     }
 }
 
