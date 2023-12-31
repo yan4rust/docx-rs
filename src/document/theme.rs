@@ -937,7 +937,7 @@ pub struct FmtScheme<'a> {
 }
 
 __define_struct_vec! {
-    ("a:fillStyleLst", FillStyleLst, FillStyleLstChoice) {
+    ("a:fillStyleLst", FillStyleLst, FillStyleLstChoice) {} {
         "a:noFill", NoFill    //No Fill
         "a:solidFill", SolidFill    //Solid Fill
         //"a:gradFill", gradFill    //Gradient Fill
@@ -960,7 +960,7 @@ __define_struct! {
 }
 
 __define_struct_vec! {
-    ("a:solidFill", SolidFill, SolidFillChoice) {
+    ("a:solidFill", SolidFill, SolidFillChoice) {} {
         "a:scrgbClr", ScrgbClr
         "a:srgbClr", SrgbClr
         "a:hslClr", HslClr
@@ -981,7 +981,7 @@ pub struct InStyleLst {}
 pub struct EffectStyleLst {}
 
 __define_struct_vec! {
-    ("a:bgFillStyleLst", BgFillStyleLst, BgFillStyleLstChoice) {
+    ("a:bgFillStyleLst", BgFillStyleLst, BgFillStyleLstChoice) {} {
         "a:noFill", NoFill    //No Fill
         "a:solidFill", SolidFill    //Solid Fill
         //"a:gradFill", gradFill    //Gradient Fill

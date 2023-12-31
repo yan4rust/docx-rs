@@ -1,7 +1,7 @@
 #[macro_export]
 #[doc(hidden)]
 macro_rules! __define_struct_vec {
-    ( ($tag:expr, $name:ident, $choicename:ident) { $($value:expr, $variant:ident)* }) => {
+    ( ($tag:expr, $name:ident, $choicename:ident) { $($value2:expr, $variant2:ident, $ty2: ty)* } { $($value:expr, $variant:ident)* }) => {
         #[derive(Debug, XmlRead, XmlWrite, Clone)]
         #[cfg_attr(test, derive(PartialEq))]
         pub enum $choicename {
@@ -15,12 +15,27 @@ macro_rules! __define_struct_vec {
         #[cfg_attr(test, derive(PartialEq))]
         #[xml(tag = $tag)]
         pub struct $name {
+            $(
+                #[xml(attr = $value2)]
+                pub $variant2: Option<$ty2>,
+            )*
+
             #[xml(
                 $(
                     child = $value,
                 )*
             )]
             pub content: Vec<$choicename>,
+        }
+
+        impl $name {
+            $(
+                #[inline(always)]
+                pub fn $variant2<T: Into<$ty2>>(mut self, value: T) -> Self {
+                    self.$variant2 = Some(value.into());
+                    self
+                }
+            )*
         }
     }
 }

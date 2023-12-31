@@ -464,7 +464,7 @@ __define_struct! {
 }
 
 __define_struct_vec! {
-    ("w:tabs", CustomTabStopSet, CustomTabStopSetChoice) {
+    ("w:tabs", CustomTabStopSet, CustomTabStopSetChoice) {} {
         "w:tab", CustomTabStop        
     }
 }
